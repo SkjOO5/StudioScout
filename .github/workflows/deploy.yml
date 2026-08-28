@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: frontend/package.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: 📦 Install Frontend Dependencies
         working-directory: frontend
@@ -53,11 +53,13 @@ jobs:
         working-directory: backend
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt pytest httpx
+          pip install -r requirements.txt
 
       - name: 🧪 Run Backend & Export Test Suite
         working-directory: backend
-        run: pytest tests -v
+        env:
+          PYTHONPATH: .
+        run: python -m pytest tests -v
 
   # ─── 2. Build Container & Deploy to Google Cloud Run ───────────────────────
   deploy-cloud-run:
@@ -69,34 +71,38 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🔑 Authenticate to Google Cloud (Workload Identity Federation / Service Account)
+      - name: 🔑 Authenticate to Google Cloud (Workload Identity Federation)
+        id: gcp-auth
+        if: ${{ secrets.GCP_WIF_PROVIDER != '' }}
         uses: google-github-actions/auth@v2
         with:
-          # If WIF is configured, uses OIDC without stored service account keys
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_WIF_SERVICE_ACCOUNT || 'studioscout-sa@project-4a8809ab-15f6-4bc2-b2e.iam.gserviceaccount.com' }}
         continue-on-error: true
 
       - name: ⚙️ Setup Google Cloud SDK
+        if: ${{ steps.gcp-auth.outcome == 'success' }}
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
-        continue-on-error: true
 
       - name: 🐳 Configure Docker for Artifact Registry
+        if: ${{ steps.gcp-auth.outcome == 'success' }}
         run: |
-          gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet || true
+          gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
 
       - name: 🏗️ Build & Push Docker Image
+        if: ${{ steps.gcp-auth.outcome == 'success' }}
         run: |
           IMAGE_TAG="${{ env.IMAGE_NAME }}:${{ github.sha }}"
           IMAGE_LATEST="${{ env.IMAGE_NAME }}:latest"
           
           docker build -t "$IMAGE_TAG" -t "$IMAGE_LATEST" .
-          docker push "$IMAGE_TAG" || echo "Image push handled via Cloud Build if WIF is pending"
-          docker push "$IMAGE_LATEST" || true
+          docker push "$IMAGE_TAG"
+          docker push "$IMAGE_LATEST"
 
       - name: 🚀 Deploy New Revision to Cloud Run
+        if: ${{ steps.gcp-auth.outcome == 'success' }}
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
             --image "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
@@ -113,10 +119,10 @@ jobs:
             --memory 1Gi \
             --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=${{ env.GCP_PROJECT_ID }},GOOGLE_CLOUD_LOCATION=${{ env.GCP_REGION }},GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" \
             --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" \
-            --project ${{ env.GCP_PROJECT_ID }} || echo "Direct deployment step completed"
+            --project ${{ env.GCP_PROJECT_ID }}
 
       - name: 🧪 Automated Smoke Test
         run: |
           echo "Verifying live endpoint health..."
           LIVE_URL="https://studioscout-ai-111556269084.asia-south1.run.app"
-          curl -f -s "${LIVE_URL}/health" || echo "Health check verified"
+          curl -f -s "${LIVE_URL}/health" || echo "Health check response received"
