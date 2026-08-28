@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Clapperboard, Terminal, ChevronDown } from 'lucide-react';
+import { Clapperboard, Film, Sparkles, Terminal, ChevronDown } from 'lucide-react';
 import { api } from '../lib/api';
 import { HealthStatus } from '../types';
 import { useAuth } from '../context/AuthContext';
