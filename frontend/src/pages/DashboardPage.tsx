@@ -147,7 +147,7 @@ export const DashboardPage: React.FC = () => {
           <div className="flex items-center justify-center gap-3.5">
             <button onClick={handleQuickDemo} className="btn-candy-yellow !py-2.5 !px-5 text-xs font-display font-bold">
               <PlayCircle className="w-4 h-4 text-[#1E293B]" />
-              <span>Load "Neon Shadows" Demo</span>
+              <span>Load "Cipher Zero" Demo</span>
             </button>
             <Link to="/new" className="btn-candy !py-2.5 !px-5 text-xs">
               <Plus className="w-4 h-4" />
