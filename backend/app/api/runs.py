@@ -3,19 +3,21 @@ import asyncio
 import logging
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Depends
 
 from app.agent.root_agent import StudioScoutAgent
+from app.config import get_settings
 from app.models.agent_run import AgentRun, AgentStep, RunState
 from app.models.plan import ReplanRequest
 from app.models.project import ProjectStatus
+from app.rate_limiter import rate_limit_scout
 from app.store import store
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/projects/{project_id}/scout")
+@router.post("/projects/{project_id}/scout", dependencies=[Depends(rate_limit_scout)])
 async def start_scout(project_id: str, background_tasks: BackgroundTasks):
     """Start the autonomous scouting workflow for a project."""
     project = store.get_project(project_id)
@@ -44,7 +46,7 @@ async def start_scout(project_id: str, background_tasks: BackgroundTasks):
     return {"run_id": run.id, "status": run.state, "project_id": project_id}
 
 
-@router.post("/projects/{project_id}/replan")
+@router.post("/projects/{project_id}/replan", dependencies=[Depends(rate_limit_scout)])
 async def start_replan(
     project_id: str,
     request: ReplanRequest,
@@ -118,12 +120,13 @@ async def _execute_scout(project_id: str, run_id: str):
         logger.error(f"[Scout] Run or project not found | run_id={run_id} | project_id={project_id}")
         return
 
+    settings = get_settings()
     agent = StudioScoutAgent(on_step_update=_step_update_handler)
 
     try:
-        scenes, candidates_by_scene, searches_by_scene, plan = await agent.run_scout(
-            project=project,
-            run=run,
+        scenes, candidates_by_scene, searches_by_scene, plan = await asyncio.wait_for(
+            agent.run_scout(project=project, run=run),
+            timeout=settings.max_run_time_seconds,
         )
 
         # Persist results
@@ -173,17 +176,21 @@ async def _execute_replan(
     if not run or not project:
         return
 
+    settings = get_settings()
     agent = StudioScoutAgent(on_step_update=_step_update_handler)
 
     try:
-        new_candidates, new_plan = await agent.run_replan(
-            project=project,
-            run=run,
-            replan_request=request,
-            current_scenes=scenes,
-            current_candidates=candidates_by_scene,
-            current_plan=current_plan,
-            current_searches=searches_by_scene,
+        new_candidates, new_plan = await asyncio.wait_for(
+            agent.run_replan(
+                project=project,
+                run=run,
+                replan_request=request,
+                current_scenes=scenes,
+                current_candidates=candidates_by_scene,
+                current_plan=current_plan,
+                current_searches=searches_by_scene,
+            ),
+            timeout=settings.max_run_time_seconds,
         )
 
         # Persist updated data

@@ -122,3 +122,36 @@ def test_project_crud_flow():
     get_del_res = client.get(f"/api/projects/{project_id}")
     assert get_del_res.status_code == 404
 
+
+def test_root_health_endpoint():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+
+
+def test_rate_limiter_logic():
+    from app.rate_limiter import SlidingWindowRateLimiter
+    from fastapi import Request, HTTPException
+
+    limiter = SlidingWindowRateLimiter(limit=3, window_seconds=10)
+
+    class DummyClient:
+        host = "192.168.1.100"
+
+    class DummyRequest:
+        client = DummyClient()
+        headers = {}
+
+    req = DummyRequest()
+
+    # First 3 should pass
+    assert limiter(req) is True
+    assert limiter(req) is True
+    assert limiter(req) is True
+
+    # 4th should trigger 429
+    with pytest.raises(HTTPException) as exc_info:
+        limiter(req)
+    assert exc_info.value.status_code == 429
+
+

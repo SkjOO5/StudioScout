@@ -17,6 +17,7 @@ import logging
 from datetime import datetime
 from typing import Optional, Callable
 
+from app.config import get_settings
 from app.models.agent_run import AgentRun, AgentStep, RunState, StepStatus
 from app.models.candidate import LocationCandidate
 from app.models.plan import ProductionPlan, PlanConstraint, ReplanRequest
@@ -71,7 +72,10 @@ class StudioScoutAgent:
             await self.on_step_update(run, step)
 
     def _add_step(self, run: AgentRun, name: str, tool_used: Optional[str] = None) -> AgentStep:
-        """Add a new step to the run."""
+        """Add a new step to the run with safety limits."""
+        settings = get_settings()
+        if len(run.steps) >= settings.max_agent_steps:
+            logger.warning(f"[Agent] Max steps limit ({settings.max_agent_steps}) reached for run {run.id}")
         step = AgentStep(
             run_id=run.id,
             step_index=len(run.steps),

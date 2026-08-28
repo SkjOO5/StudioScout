@@ -3,9 +3,10 @@ StudioScout AI — Lyria 3 Soundtrack & Audio Atmosphere API Routes
 """
 import logging
 from typing import Dict, Any
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from app.models.project import Project
+from app.rate_limiter import rate_limit_expensive
 from app.store import store
 from app.tools.audio_generator import generate_scene_audio_cue
 
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/projects/{project_id}/scenes/{scene_id}/audio")
+@router.post("/projects/{project_id}/scenes/{scene_id}/audio", dependencies=[Depends(rate_limit_expensive)])
 async def create_scene_audio_cue(project_id: str, scene_id: str):
     """Generate or retrieve a Lyria 3 audio soundtrack cue for a scene."""
     project = store.get_project(project_id)

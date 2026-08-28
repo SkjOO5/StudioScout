@@ -10,13 +10,14 @@ from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from app.config import get_settings
 from app.models.project import Project, ProjectCreate, ProjectUpdate, ProjectStatus
 from app.models.scene import Scene, SceneCreate, SceneUpdate
+from app.rate_limiter import rate_limit_expensive
 from app.store import store
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/projects", response_model=Project)
+@router.post("/projects", response_model=Project, dependencies=[Depends(rate_limit_expensive)])
 async def create_project(
     name: str = Form(...),
     genre: str = Form("thriller"),
