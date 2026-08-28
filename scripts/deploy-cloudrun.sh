@@ -30,8 +30,15 @@ echo "Region      : ${REGION}"
 echo "Identity    : ${SA_EMAIL}"
 echo "============================================================"
 
-# Deploy to Cloud Run as a tagged candidate revision (0% initial traffic for smoke testing)
-echo "➡️  Building and deploying candidate revision to Cloud Run..."
+# Check if service already exists
+SERVICE_EXISTS=$(gcloud run services describe "${SERVICE_NAME}" --region="${REGION}" --project="${PROJECT_ID}" >/dev/null 2>&1 && echo "yes" || echo "no")
+
+EXTRA_FLAGS=()
+if [[ "${SERVICE_EXISTS}" == "yes" ]]; then
+  EXTRA_FLAGS+=(--no-traffic --tag candidate)
+fi
+
+echo "➡️  Building and deploying container to Cloud Run..."
 gcloud run deploy "${SERVICE_NAME}" \
   --source . \
   --platform managed \
@@ -47,8 +54,7 @@ gcloud run deploy "${SERVICE_NAME}" \
   --memory 1Gi \
   --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" \
   --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" \
-  --no-traffic \
-  --tag candidate \
+  "${EXTRA_FLAGS[@]}" \
   --project "${PROJECT_ID}"
 
 echo ""
