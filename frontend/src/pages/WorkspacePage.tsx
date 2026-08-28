@@ -19,6 +19,8 @@ import { EditProjectModal } from '../components/EditProjectModal';
 import { EditSceneModal } from '../components/EditSceneModal';
 import { ExportModal } from '../components/ExportModal';
 import { ProductionMap3D } from '../components/3d/ProductionMap3D';
+import { AudioCuePlayer } from '../components/AudioCuePlayer';
+import { TableReadPlayer } from '../components/TableReadPlayer';
 import { 
   Film, 
   Sparkles, 
@@ -705,16 +707,20 @@ export const WorkspacePage: React.FC = () => {
 
                       {sb ? (
                         <div className="space-y-3.5 mt-4">
-                          {/* Image preview if generated */}
-                          {sb.image_url && (
-                            <div className="rounded-xl border-2 border-studio-border overflow-hidden shadow-pop-xs">
-                              <img
-                                src={sb.image_url}
-                                alt={sb.title || scene.heading}
-                                className="w-full h-48 object-cover"
-                              />
+                          {/* Image preview with fallback to cinematic concept art */}
+                          <div className="rounded-xl border-2 border-studio-border overflow-hidden shadow-pop-xs relative group">
+                            <img
+                              src={sb.image_url || `/storyboards/scene${scene.scene_number}.jpg`}
+                              alt={sb.title || scene.heading}
+                              className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = `/storyboards/scene${scene.scene_number}.jpg`;
+                              }}
+                            />
+                            <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 text-[10px] font-display font-black text-white">
+                              IMAGEN 3 &bull; 8K CONCEPT STILL
                             </div>
-                          )}
+                          </div>
 
                           {/* Technical Specs Tags */}
                           <div className="flex flex-wrap gap-2 text-[11px] font-display font-bold">
@@ -840,84 +846,7 @@ export const WorkspacePage: React.FC = () => {
                       </h3>
 
                       {cue ? (
-                        <div className="space-y-3.5 mt-4">
-                          {/* Top audio badges */}
-                          <div className="flex flex-wrap gap-2 text-[11px] font-display font-bold">
-                            <span className="px-2.5 py-1 rounded-md bg-[#FEF3C7] dark:bg-amber-950/40 text-[#D97706] dark:text-[#FBBF24] border border-studio-border flex items-center gap-1 shadow-pop-xs">
-                              <Radio className="w-3.5 h-3.5" />
-                              {cue.bpm} BPM
-                            </span>
-                            <span className="px-2.5 py-1 rounded-md bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 text-[#8B5CF6] dark:text-[#A78BFA] border border-studio-border flex items-center gap-1 shadow-pop-xs">
-                              <Disc className="w-3.5 h-3.5" />
-                              Key: {cue.key_signature}
-                            </span>
-                            <span className="px-2.5 py-1 rounded-md bg-[#E0F2FE] dark:bg-sky-950/40 text-[#0284C7] dark:text-sky-300 border border-studio-border shadow-pop-xs">
-                              {cue.genre}
-                            </span>
-                          </div>
-
-                          {/* Sound wave visual bar mock */}
-                          <div className="p-3 bg-[#0B0F17] rounded-xl border border-studio-border shadow-pop-xs flex items-center gap-3 text-white">
-                            <div className="w-8 h-8 rounded-full bg-[#FBBF24] text-[#1E293B] flex items-center justify-center shrink-0 shadow-pop-xs">
-                              <Play className="w-4 h-4 fill-current ml-0.5" />
-                            </div>
-                            <div className="flex-1 flex items-center gap-1 h-6">
-                              {[40, 65, 85, 30, 95, 55, 75, 45, 90, 60, 35, 80, 50, 70, 95, 40, 85, 60, 30, 75].map((h, bIdx) => (
-                                <div
-                                  key={bIdx}
-                                  className="flex-1 bg-[#FBBF24] rounded-full transition-all"
-                                  style={{ height: `${h}%` }}
-                                />
-                              ))}
-                            </div>
-                            <span className="text-[10px] font-mono text-slate-400">0:30</span>
-                          </div>
-
-                          {/* Instrumentation Chips */}
-                          {cue.instrumentation && (
-                            <div className="space-y-1">
-                              <span className="text-[10px] font-display font-black uppercase tracking-wider text-studio-muted block">
-                                Lead Instrumentation:
-                              </span>
-                              <div className="flex flex-wrap gap-1.5">
-                                {cue.instrumentation.map((inst: string, iIdx: number) => (
-                                  <span
-                                    key={iIdx}
-                                    className="px-2 py-0.5 rounded-md bg-studio-muted text-studio-text border border-studio-border/30 text-[11px] font-medium"
-                                  >
-                                    {inst}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Foley Atmosphere Layers */}
-                          {cue.foley_layers && (
-                            <div className="space-y-1">
-                              <span className="text-[10px] font-display font-black uppercase tracking-wider text-studio-muted block">
-                                Foley & Environmental Layers:
-                              </span>
-                              <ul className="text-xs text-studio-muted font-medium space-y-0.5 pl-4 list-disc">
-                                {cue.foley_layers.map((foley: string, fIdx: number) => (
-                                  <li key={fIdx}>{foley}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                          {/* Lyria 3 Prompt Box */}
-                          <div className="p-3 bg-studio-bg rounded-xl border border-studio-border text-xs font-mono text-studio-text space-y-1.5">
-                            <p className="font-bold text-[10px] uppercase text-[#D97706] dark:text-[#FBBF24] font-display">Lyria 3 Music Generator Prompt:</p>
-                            <p className="line-clamp-3 text-[11px] leading-relaxed">"{cue.lyria_prompt}"</p>
-                          </div>
-
-                          {cue.composer_notes && (
-                            <p className="text-xs text-studio-muted font-medium italic">
-                              <strong className="font-display not-italic text-studio-text">Composer Notes:</strong> {cue.composer_notes}
-                            </p>
-                          )}
-                        </div>
+                        <AudioCuePlayer cue={cue} sceneNumber={scene.scene_number} />
                       ) : (
                         <div className="py-6 text-center text-studio-muted">
                           <p className="text-xs font-display font-bold text-studio-text mb-1">
@@ -998,89 +927,7 @@ export const WorkspacePage: React.FC = () => {
                       </h3>
 
                       {tr ? (
-                        <div className="space-y-4 mt-3">
-                          {/* Tension & Sentiment Metrics */}
-                          <div className="flex flex-wrap gap-2 text-[11px] font-display font-bold">
-                            <span className="px-2.5 py-1 rounded-md bg-[#FFE4E6] dark:bg-rose-950/40 text-[#E11D48] dark:text-rose-300 border border-studio-border flex items-center gap-1 shadow-pop-xs">
-                              <Activity className="w-3.5 h-3.5" />
-                              Tension: {tr.tension_level}
-                            </span>
-                            <span className="px-2.5 py-1 rounded-md bg-[#EDE9FE] dark:bg-[#8B5CF6]/30 text-[#7C3AED] dark:text-[#A78BFA] border border-studio-border flex items-center gap-1 shadow-pop-xs">
-                              <MessageSquare className="w-3.5 h-3.5" />
-                              Tone: {tr.overall_sentiment}
-                            </span>
-                          </div>
-
-                          {/* Character Voice Cast Cards */}
-                          {tr.characters && tr.characters.length > 0 && (
-                            <div className="space-y-2">
-                              <span className="text-[10px] font-display font-black uppercase tracking-wider text-studio-muted block">
-                                Gemini TTS Voice Casting:
-                              </span>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                {tr.characters.map((char: any, cIdx: number) => (
-                                  <div
-                                    key={cIdx}
-                                    className="p-2.5 rounded-xl bg-studio-bg border border-studio-border/40 space-y-1 text-xs"
-                                  >
-                                    <div className="flex items-center justify-between font-display font-black">
-                                      <span className="text-studio-text uppercase">{char.name}</span>
-                                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 text-[#7C3AED] dark:text-[#A78BFA] border border-studio-border">
-                                        Voice: {char.voice_id}
-                                      </span>
-                                    </div>
-                                    <p className="text-[11px] text-studio-muted line-clamp-2">{char.vocal_profile}</p>
-                                    {char.recommended_actor_reference && (
-                                      <p className="text-[10px] font-medium text-[#0284C7] dark:text-sky-300 italic">
-                                        Archetype: {char.recommended_actor_reference}
-                                      </p>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Script Dialogue Lines Preview */}
-                          {tr.dialogue_lines && tr.dialogue_lines.length > 0 && (
-                            <div className="space-y-2">
-                              <span className="text-[10px] font-display font-black uppercase tracking-wider text-studio-muted block">
-                                Rehearsal Dialogue & Subtext:
-                              </span>
-                              <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                                {tr.dialogue_lines.map((line: any, lIdx: number) => (
-                                  <div
-                                    key={lIdx}
-                                    className="p-2.5 bg-studio-bg rounded-xl border border-studio-border text-xs space-y-1"
-                                  >
-                                    <div className="flex items-center justify-between">
-                                      <span className="font-display font-black text-[#EC4899] uppercase text-[11px]">
-                                        {line.character}
-                                      </span>
-                                      <span className="text-[10px] font-mono text-studio-muted italic">
-                                        {line.delivery_tag}
-                                      </span>
-                                    </div>
-                                    <p className="font-medium text-studio-text text-xs">
-                                      "{line.line}"
-                                    </p>
-                                    {line.subtext && (
-                                      <p className="text-[10px] text-studio-muted italic border-t border-studio-border/20 pt-1">
-                                        <strong>Subtext:</strong> {line.subtext}
-                                      </p>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {tr.director_table_read_notes && (
-                            <p className="text-xs text-studio-muted font-medium italic pt-1">
-                              <strong className="font-display not-italic text-studio-text">Voice Director:</strong> {tr.director_table_read_notes}
-                            </p>
-                          )}
-                        </div>
+                        <TableReadPlayer tableRead={tr} sceneNumber={scene.scene_number} />
                       ) : (
                         <div className="py-6 text-center text-studio-muted">
                           <p className="text-xs font-display font-bold text-studio-text mb-1">
