@@ -495,4 +495,330 @@ def seed_demo_project() -> Project:
     )
     store.save_run(run)
 
+    # 6. Pre-seeded VFX & Storyboard Concept Boards (Imagen 3 Visual Frames)
+    store.save_storyboard(s1_id, DEMO_PROJECT_ID, {
+        "scene_id": s1_id,
+        "scene_number": 1,
+        "location": "Subterranean Quantum Lab & Server Vault",
+        "title": "Subterranean Quantum Core Breach",
+        "aspect_ratio": "2.39:1 (Anamorphic Panavision)",
+        "camera_angle": "Wide Establishing Low-Angle tracking into Tactical Close-Up",
+        "lens_focal_length": "35mm / 50mm Anamorphic",
+        "lighting_style": "High-Contrast Sapphire & Cyan Chiaroscuro with Cryo-Mist Diffusion",
+        "color_palette": ["#030712", "#0284C7", "#06B6D4", "#E0F2FE"],
+        "visual_prompt": "Ultra-detailed 8K cinematic film still from a sci-fi thriller. Subterranean quantum lab and server vault at night. A vast, sterile data center with towering anodized server racks stretching into the distance. Dominant cold blue LED tube lighting casting sharp beams through residual cryo-fog haze. In the center, a glowing glass cube quantum core illuminated in sapphire light. Operative in tactical jumpsuit holding a field terminal. Panavision 2.39:1 widescreen, photorealistic.",
+        "director_notes": "The emotional beat is one of isolated tension and immense pressure. The precision LED tube lighting should be used to create sharp, almost surgical beams that slice through the residual haze, drawing the eye directly to the 'Optical Quantum Core Drive'.",
+        "image_url": "/storyboards/scene1.jpg",
+    })
+
+    store.save_storyboard(s2_id, DEMO_PROJECT_ID, {
+        "scene_id": s2_id,
+        "scene_number": 2,
+        "location": "Container Freight Station & Gantry Terminal",
+        "title": "Industrial Container Labyrinth Pursuit",
+        "aspect_ratio": "2.39:1 (Anamorphic Panavision)",
+        "camera_angle": "High-Angle Gantry Crane Overhead & Wet Low-Angle Tracking",
+        "lens_focal_length": "40mm Anamorphic",
+        "lighting_style": "Sodium Vapor Amber & Cold Rain Cyan Backlight",
+        "color_palette": ["#0B0F17", "#D97706", "#0284C7", "#94A3B8"],
+        "visual_prompt": "Cinematic 8K film still of an outdoor cargo container terminal freight depot at night under heavy coastal rain. Towering multi-colored ISO shipping containers stacked high like a steel canyon labyrinth. Giant overhead gantry crane looms in sea mist. Wet reflective asphalt with sweeping vehicle headlight beams. Tactical operatives in rain gear navigating container aisles. Panavision 2.39:1 widescreen, moody cyan and amber sodium vapor street lighting.",
+        "director_notes": "Emphasize verticality of container stacks. Wet ground reflections capture sweeping vehicle headlights. Drone cameras sweep over crane gantry.",
+        "image_url": "/storyboards/scene2.jpg",
+    })
+
+    store.save_storyboard(s3_id, DEMO_PROJECT_ID, {
+        "scene_id": s3_id,
+        "scene_number": 3,
+        "location": "Mukesh Mills & Heritage Power Hall",
+        "title": "Turbine Hall Barricade & Stand-Off",
+        "aspect_ratio": "2.39:1 (Anamorphic Panavision)",
+        "camera_angle": "Cavernous Cathedral Wide & Dutch Angle Stairwell Framing",
+        "lens_focal_length": "28mm Ultra-Wide Anamorphic",
+        "lighting_style": "Moonlight Shafts through Broken Skylights with Flaring Exterior Floodlights",
+        "color_palette": ["#0F172A", "#334155", "#059669", "#F1F5F9"],
+        "visual_prompt": "Cinematic 8K film still of an abandoned decommissioned thermal power station turbine hall at night. Soaring 30-foot iron truss cathedral ceilings, massive rusty copper generators, weathered steam pipes, steel catwalks stretching into deep shadow. Moonlight filtering through broken glass skylights. Operatives barricading a heavy hydraulic iron hoist door. Dramatic volumetric light rays, industrial film noir, Panavision 2.39:1 widescreen.",
+        "director_notes": "Acoustic resonance is visualised through volumetric dust shafts and iron silhouettes. Contrast warm generator rust with cold moonlight beams.",
+        "image_url": "/storyboards/scene3.jpg",
+    })
+
+    store.save_storyboard(s4_id, DEMO_PROJECT_ID, {
+        "scene_id": s4_id,
+        "scene_number": 4,
+        "location": "One World Center Skydeck & Helipad",
+        "title": "Dawn Skyscraper Extraction",
+        "aspect_ratio": "2.39:1 (Anamorphic Panavision)",
+        "camera_angle": "Epic Skydeck Wide into Golden Hour Helicopter Flare",
+        "lens_focal_length": "50mm / 85mm Prime Anamorphic",
+        "lighting_style": "Golden Hour Dawn Sunbreak & Aerodynamic Rotor Flare",
+        "color_palette": ["#1E1B4B", "#D97706", "#F59E0B", "#FEF3C7"],
+        "visual_prompt": "Cinematic 8K film still of a commercial skyscraper rooftop helipad eighty stories high at dawn. Morning sun breaking through storm clouds casting golden and amber light on modern glass and steel facade. Wind whipping across the helipad surface. A sleek tactical transport helicopter flaring over the edge for extraction. Two operatives with high-tech equipment case waiting on the tarmac. Epic cinematic composition, 2.39:1 widescreen.",
+        "director_notes": "Dramatic sunrise payoff after night of survival. Lens flares reflect off skyscraper glass and spinning helicopter blades.",
+        "image_url": "/storyboards/scene4.jpg",
+    })
+
+    # 7. Pre-seeded Lyria 3 Soundtrack & Acoustic Atmosphere Cues
+    store.save_audio_cue(s1_id, DEMO_PROJECT_ID, {
+        "scene_id": s1_id,
+        "scene_number": 1,
+        "location": "Subterranean Research Center",
+        "track_title": "Subterranean Core Infiltration",
+        "genre": "Dark Ambient / Industrial Sci-Fi / Pulsating Thriller Score",
+        "bpm": 82,
+        "key_signature": "D Minor / F# Phrygian",
+        "mood_descriptors": ["Tense", "Claustrophobic", "Subterranean", "Pulsing"],
+        "instrumentation": [
+            "Deep, resonant analog synth pads (Prophet-5, OB-X)",
+            "Processed metallic percussion (found objects, industrial samples)",
+            "Sub-bass drones with subtle modulation",
+            "Distorted, bowed metal textures",
+            "High-frequency digital artifacts and glitches",
+            "Low, guttural synth bass",
+        ],
+        "foley_layers": [
+            "Constant, low-frequency hum of server racks",
+            "Subtle, high-frequency whine of optical drives",
+            "Distant, muffled hiss of cryo-fog dispersal",
+            "Metallic creaks and groans of blast doors settling",
+            "Barefoot/booted footsteps on polished concrete, slightly muffled",
+            "Low, resonant thrum of the quantum core drive",
+            "Occasional, sharp clack of biometric terminal activation",
+        ],
+        "lyria_prompt": "A 30-second cue beginning with a deep, sustained D minor drone, slowly modulating with a subtle, unsettling vibrato. At 0:05, introduce a sparse, metallic pulse (82 BPM) with a slight reverb tail, reminiscent of distant machinery. Layer in bowed metal textures and high-frequency digital glitches to build tension. At 0:18, add a low, guttural synth bassline that throbs in sync with the pulse. End on an unresolved, high-frequency synth tone with a lingering, hollow decay.",
+        "composer_notes": "Maintain a sparse, almost clinical soundscape. The music should primarily occupy the lower-mid frequencies to allow dialogue and critical foley to cut through clearly. Use dynamic ducking on synth pads during dialogue.",
+    })
+
+    store.save_audio_cue(s2_id, DEMO_PROJECT_ID, {
+        "scene_id": s2_id,
+        "scene_number": 2,
+        "location": "Cargo Freight Terminal",
+        "track_title": "Labyrinth Freight Pursuit",
+        "genre": "High-Octane Industrial Percussion & Kinetic Bass",
+        "bpm": 128,
+        "key_signature": "E Minor",
+        "mood_descriptors": ["Kinetic", "Urgent", "Industrial", "Relentless"],
+        "instrumentation": ["Distorted 909 Kick Drums", "Metallic Slapback Percussion", "Anamorphic Brass Stabs", "Acid Synth Basslines"],
+        "foley_layers": ["Rain drumming on hollow corrugated shipping containers", "Pneumatic air-brake hiss", "Overhead crane cable groans", "Heavy radial tire squeal on wet asphalt"],
+        "lyria_prompt": "Driving 128 BPM industrial chase score featuring heavy distorted kick drums, relentless metallic percussion hits against container steel, and aggressive synth bass risers building into sudden pneumatic silence.",
+        "composer_notes": "Sync heavy downbeats with camera pans past towering container corners. Drop sub-bass during close-up dialogue.",
+    })
+
+    store.save_audio_cue(s3_id, DEMO_PROJECT_ID, {
+        "scene_id": s3_id,
+        "scene_number": 3,
+        "location": "Turbine Power Station",
+        "track_title": "Echoes of the Turbine Floor",
+        "genre": "Acoustic Resonance & Tension Drone",
+        "bpm": 65,
+        "key_signature": "C Minor / G Harmonic",
+        "mood_descriptors": ["Cavernous", "Echoing", "Heavy", "Ominous"],
+        "instrumentation": ["Bowed Cello Solo with 6-second Hall Reverb", "Sub-Harmonic Resonator", "Granular Water Droplet Synth", "Hydraulic Iron Clangs"],
+        "foley_layers": ["Long 4.5s acoustic reverb decay", "Wind whistling through broken glass skylights", "Chain hoist rattles", "Boiler pipe thermal contraction clicks"],
+        "lyria_prompt": "Cavernous industrial atmospheric drone at 65 BPM with haunting solo cello melody, massive 5-second acoustic reverb tail, and rhythmic iron chain impacts.",
+        "composer_notes": "Exploit the hall's natural reverberation. Keep musical space open for acoustic footsteps and perimeter alerts.",
+    })
+
+    store.save_audio_cue(s4_id, DEMO_PROJECT_ID, {
+        "scene_id": s4_id,
+        "scene_number": 4,
+        "location": "Skydeck Helipad",
+        "track_title": "Dawn Extraction Horizon",
+        "genre": "Epic Climactic Orchestral Electronic",
+        "bpm": 110,
+        "key_signature": "A Major / D Major",
+        "mood_descriptors": ["Triumphant", "Climactic", "Expansive", "Cathartic"],
+        "instrumentation": ["Full Orchestral Brass Ensemble", "Analog Arpeggiator (Juno-106)", "Epic Taiko Drums", "Skyline Ambient Synth Pads"],
+        "foley_layers": ["High-altitude 80-story gale force wind wash", "Twin-turbine helicopter rotor chop", "Rooftop door slam", "Dawn birdcalls over metropolis below"],
+        "lyria_prompt": "Climactic dawn score at 110 BPM opening with soaring golden hour brass chords, pulsing synth arpeggio, and thunderous cinematic drums as extraction aircraft arrives.",
+        "composer_notes": "Gradually open low-pass filter on synth brass as sun crests the horizon. Maximize dynamic emotional lift at extraction.",
+    })
+
+    # 8. Pre-seeded Gemini 3.1 Flash TTS Multi-Speaker Table Reads
+    store.save_table_read(s1_id, DEMO_PROJECT_ID, {
+        "scene_id": s1_id,
+        "scene_number": 1,
+        "scene_title": "INT. QUANTUM LAB & SERVER VAULT - NIGHT",
+        "tension_level": "Critical (9.2/10)",
+        "overall_sentiment": "High-Stakes Technical Infiltration",
+        "characters": [
+            {
+                "name": "ELENA",
+                "voice_id": "Aoede",
+                "vocal_profile": "Intense, articulate, urgent cryptographer tone with fast technical precision",
+                "emotional_state": "Laser-focused under extreme time pressure",
+                "pacing": "Rapid & Decisive (155 WPM)",
+                "recommended_actor_reference": "Biometrics Cryptographer",
+            },
+            {
+                "name": "MARCUS",
+                "voice_id": "Fenrir",
+                "vocal_profile": "Low, commanding, tactical operative whisper with measured cadence",
+                "emotional_state": "Perimeter defense readiness, hypervigilant",
+                "pacing": "Measured & Tactical (110 WPM)",
+                "recommended_actor_reference": "Black-Ops Operative",
+            },
+        ],
+        "dialogue_lines": [
+            {
+                "character": "MARCUS",
+                "voice_id": "Fenrir",
+                "delivery_tag": "[low whisper, thermal carbine trained on blast door]",
+                "line": "Neural handshake protocol verified. We have three minutes before containment seals.",
+                "subtext": "Time has expired; perimeter security is descending right now.",
+                "sentiment_score": -0.7,
+            },
+            {
+                "character": "ELENA",
+                "voice_id": "Aoede",
+                "delivery_tag": "[rapid keystrokes, eyes fixed on quantum core]",
+                "line": "The core encryption key is cycling. If I pull the drive prematurely, the neural net wipes.",
+                "subtext": "Exfiltrating the complete payload is worth the lethal risk.",
+                "sentiment_score": 0.3,
+            },
+            {
+                "character": "MARCUS",
+                "voice_id": "Fenrir",
+                "delivery_tag": "[urgent radio click, stepping toward corridor]",
+                "line": "Red klaxon active. Magnetic locks disengaging on sublevel two. Elena, pull it now!",
+                "subtext": "We are out of time; survival takes precedence over total data extraction.",
+                "sentiment_score": -0.9,
+            },
+        ],
+        "director_table_read_notes": "Staccato pacing. Elena's delivery should be clipped and technical, contrasted against Marcus's steady tactical situational awareness.",
+    })
+
+    store.save_table_read(s2_id, DEMO_PROJECT_ID, {
+        "scene_id": s2_id,
+        "scene_number": 2,
+        "scene_title": "EXT. CARGO CONTAINER TERMINAL - NIGHT",
+        "tension_level": "High (8.6/10)",
+        "overall_sentiment": "Tactical Evasion & Evasive Maneuvers",
+        "characters": [
+            {
+                "name": "MARCUS",
+                "voice_id": "Fenrir",
+                "vocal_profile": "Commanding, sharp tactical whisper over rain and engine idle",
+                "emotional_state": "Combat maneuvering",
+                "pacing": "Urgent",
+                "recommended_actor_reference": "Tactical Operative",
+            },
+            {
+                "name": "ELENA",
+                "voice_id": "Aoede",
+                "vocal_profile": "Breathless, shielding insulated drive case",
+                "emotional_state": "Physical exertion and hyper-awareness",
+                "pacing": "Fast",
+                "recommended_actor_reference": "Cryptographer",
+            },
+        ],
+        "dialogue_lines": [
+            {
+                "character": "MARCUS",
+                "voice_id": "Fenrir",
+                "delivery_tag": "[ducking behind container corner, pointing forward]",
+                "line": "Take cover behind the ballast crates. Vehicle clearance incoming on aisle four.",
+                "subtext": "Heavy pursuit vehicles are closing our only exit lane.",
+                "sentiment_score": -0.6,
+            },
+            {
+                "character": "ELENA",
+                "voice_id": "Aoede",
+                "delivery_tag": "[breathless, clutching insulated drive case]",
+                "line": "Gantry drones deploying above. We can't cross open tarmac without thermal cover.",
+                "subtext": "We need to cut through the power substation to avoid overhead radar.",
+                "sentiment_score": -0.4,
+            },
+        ],
+        "director_table_read_notes": "Lines delivered against the backdrop of driving coastal rain and heavy diesel engine rumble.",
+    })
+
+    store.save_table_read(s3_id, DEMO_PROJECT_ID, {
+        "scene_id": s3_id,
+        "scene_number": 3,
+        "scene_title": "INT. DECOMMISSIONED THERMAL POWER STATION - NIGHT",
+        "tension_level": "Suspenseful (8.0/10)",
+        "overall_sentiment": "Echoing Claustrophobia & Barricade Hold",
+        "characters": [
+            {
+                "name": "ELENA",
+                "voice_id": "Aoede",
+                "vocal_profile": "Acoustic assessment whisper, observing vaulted ceiling",
+                "emotional_state": "Analytical relief, setting up field terminal",
+                "pacing": "Deliberate",
+                "recommended_actor_reference": "Cryptographer",
+            },
+            {
+                "name": "MARCUS",
+                "voice_id": "Fenrir",
+                "vocal_profile": "Exerting physical force on iron hoist chain",
+                "emotional_state": "Establishing defensive perimeter",
+                "pacing": "Controlled",
+                "recommended_actor_reference": "Tactical Operative",
+            },
+        ],
+        "dialogue_lines": [
+            {
+                "character": "ELENA",
+                "voice_id": "Aoede",
+                "delivery_tag": "[whispering, looking up at thirty-foot iron trusses]",
+                "line": "Look at the acoustic resonance in this hall. Any perimeter breach will echo across the turbine floor.",
+                "subtext": "The industrial acoustics give us early tactical warning.",
+                "sentiment_score": 0.4,
+            },
+            {
+                "character": "MARCUS",
+                "voice_id": "Fenrir",
+                "delivery_tag": "[locking steel hoist chain in place]",
+                "line": "Good. That gives us sightlines on both stairwells until extraction arrives at dawn.",
+                "subtext": "We only need to hold this position for four more hours.",
+                "sentiment_score": 0.5,
+            },
+        ],
+        "director_table_read_notes": "Use natural pauses to emphasize the cathedral acoustics and echoing metallic environment.",
+    })
+
+    store.save_table_read(s4_id, DEMO_PROJECT_ID, {
+        "scene_id": s4_id,
+        "scene_number": 4,
+        "scene_title": "EXT. COMMERCIAL TOWER HELIPAD - DAWN",
+        "tension_level": "Climactic Release (7.5/10)",
+        "overall_sentiment": "Triumphant Catharsis & Extraction",
+        "characters": [
+            {
+                "name": "MARCUS",
+                "voice_id": "Fenrir",
+                "vocal_profile": "Shouting over eighty-story dawn wind and helicopter rotor chop",
+                "emotional_state": "Exhilarated tactical relief",
+                "pacing": "Decisive",
+                "recommended_actor_reference": "Tactical Operative",
+            },
+            {
+                "name": "ELENA",
+                "voice_id": "Aoede",
+                "vocal_profile": "Triumphant, boarding transport ramp",
+                "emotional_state": "Mission success and survival",
+                "pacing": "Energetic",
+                "recommended_actor_reference": "Cryptographer",
+            },
+        ],
+        "dialogue_lines": [
+            {
+                "character": "MARCUS",
+                "voice_id": "Fenrir",
+                "delivery_tag": "[shouting over twin-turbine rotor wash, signaling pilot]",
+                "line": "Transport locked on approach! Quantum core secured. Boarding ramp is green!",
+                "subtext": "We made it through the night alive.",
+                "sentiment_score": 0.9,
+            },
+            {
+                "character": "ELENA",
+                "voice_id": "Aoede",
+                "delivery_tag": "[smiling against golden sunrise light, drive case in hand]",
+                "line": "Decryption complete. The entire city will see the truth by morning.",
+                "subtext": "The mission was a total victory.",
+                "sentiment_score": 1.0,
+            },
+        ],
+        "director_table_read_notes": "Full vocal projection over helicopter audio and golden dawn wind. Emotional resolution.",
+    })
+
     return project

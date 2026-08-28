@@ -84,41 +84,41 @@ async def generate_table_read_rehearsal(scene: Scene, full_script_text: str = ""
                 "overall_sentiment": "Urgent Dramatic Tension",
                 "characters": [
                     {
-                        "name": "KAVITA",
-                        "voice_id": "Kore",
-                        "vocal_profile": "Intense, articulate, urgent investigative tone",
+                        "name": "ELENA",
+                        "voice_id": "Aoede",
+                        "vocal_profile": "Intense, articulate, urgent cryptographer tone",
                         "emotional_state": "Focused under extreme pressure",
-                        "pacing": "Urgent",
-                        "recommended_actor_reference": "Investigative Journalist",
+                        "pacing": "Rapid & Decisive",
+                        "recommended_actor_reference": "Biometrics Cryptographer",
                     },
                     {
-                        "name": "ARJUN",
+                        "name": "MARCUS",
                         "voice_id": "Fenrir",
-                        "vocal_profile": "Low, commanding, tactical whisper",
+                        "vocal_profile": "Low, commanding, tactical operative whisper",
                         "emotional_state": "Perimeter defense readiness",
                         "pacing": "Measured & Tactical",
-                        "recommended_actor_reference": "Tactical Operative",
+                        "recommended_actor_reference": "Black-Ops Operative",
                     }
                 ],
                 "dialogue_lines": [
                     {
-                        "character": "ARJUN",
+                        "character": "MARCUS",
                         "voice_id": "Fenrir",
-                        "delivery_tag": "[low whisper, checking door lock]",
-                        "line": "We have fifteen minutes before their sweep team hits the perimeter.",
-                        "subtext": "Time has expired; we are already compromised.",
+                        "delivery_tag": "[low whisper, tactical carbine raised]",
+                        "line": "Neural handshake protocol verified. We have three minutes before containment seals.",
+                        "subtext": "Time has expired; perimeter security is descending.",
                         "sentiment_score": -0.7,
                     },
                     {
-                        "character": "KAVITA",
-                        "voice_id": "Kore",
-                        "delivery_tag": "[frantic typing, breathless]",
-                        "line": "The audio files are decrypting. I'm not leaving without the raw logs.",
-                        "subtext": "Exposing the truth is worth dying for.",
-                        "sentiment_score": 0.2,
+                        "character": "ELENA",
+                        "voice_id": "Aoede",
+                        "delivery_tag": "[rapid keystrokes, focused]",
+                        "line": "The core encryption key is cycling. If I pull the drive prematurely, the neural net wipes.",
+                        "subtext": "Exfiltrating the quantum payload is worth the tactical risk.",
+                        "sentiment_score": 0.3,
                     }
                 ],
-                "director_table_read_notes": "Maintain tight staccato pacing. The knock at the door should create total silence.",
+                "director_table_read_notes": "Maintain tight staccato pacing. The klaxon alarm at the end signals instant extraction.",
             }
     except Exception as e:
         logger.error(f"[DialogueDirector] Error generating table read: {e}")

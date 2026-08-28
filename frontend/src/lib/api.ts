@@ -184,7 +184,7 @@ export const api = {
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+    setTimeout(() => window.URL.revokeObjectURL(url), 10000);
   },
 
   downloadCallSheet: async (projectId: string, day: number = 1, filename?: string): Promise<void> => {
@@ -200,7 +200,7 @@ export const api = {
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+    setTimeout(() => window.URL.revokeObjectURL(url), 10000);
   },
 
   downloadCalendar: async (projectId: string, filename?: string): Promise<void> => {
@@ -215,7 +215,7 @@ export const api = {
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+    setTimeout(() => window.URL.revokeObjectURL(url), 10000);
   },
 
   downloadScheduleCsv: async (projectId: string, filename?: string): Promise<void> => {
@@ -230,7 +230,7 @@ export const api = {
     document.body.appendChild(link);
     link.click();
     link.remove();
-    window.URL.revokeObjectURL(url);
+    setTimeout(() => window.URL.revokeObjectURL(url), 10000);
   },
 };
 
