@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Film, Sparkles, Terminal, ChevronDown } from 'lucide-react';
+import { Clapperboard, Terminal, ChevronDown } from 'lucide-react';
 import { api } from '../lib/api';
 import { HealthStatus } from '../types';
 import { useAuth } from '../context/AuthContext';
@@ -41,30 +41,23 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand & Identity */}
         <div className="flex items-center gap-5">
-          <Link to="/" className="flex items-center gap-3.5 group">
-            {/* Holographic Aperture Icon Badge */}
-            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#8B5CF6] via-[#6366F1] to-[#38BDF8] p-[2px] shadow-pop transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3">
-              <div className="w-full h-full rounded-[14px] bg-[#0F172A] flex items-center justify-center relative overflow-hidden">
-                {/* Background glow sweep */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#8B5CF6]/30 via-transparent to-[#38BDF8]/40 opacity-80" />
-                <Sparkles className="w-5 h-5 text-[#38BDF8] absolute top-1 right-1 opacity-60 animate-pulse" />
-                <Film className="w-5 h-5 text-white relative z-10 drop-shadow-md" />
-              </div>
+          <Link to="/" className="flex items-center gap-3 group">
+            {/* Cinema Clapperboard Icon */}
+            <div className="w-10 h-10 rounded-xl bg-studio-surface border-2 border-amber-500/50 text-amber-500 dark:text-amber-400 flex items-center justify-center shadow-pop-xs group-hover:border-amber-400 group-hover:scale-105 transition-all">
+              <Clapperboard className="w-5 h-5" />
             </div>
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display font-black text-xl tracking-tight text-studio-text">
-                  Studio<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A78BFA] via-[#F472B6] to-[#38BDF8]">Scout</span>
+                <span className="font-display font-extrabold text-xl tracking-tight text-studio-text">
+                  STUDIO<span className="text-amber-500 dark:text-amber-400 font-black">SCOUT</span>
                 </span>
-                <span className="px-2 py-0.5 text-[9px] font-display font-black uppercase tracking-wider rounded-full bg-[#10B981]/15 text-[#059669] dark:text-[#34D399] border border-[#10B981]/40 flex items-center gap-1 shadow-pop-xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping" />
-                  <span>AI OS</span>
+                <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold uppercase rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+                  AI
                 </span>
               </div>
-              <span className="text-[9px] font-display font-black text-studio-muted hidden sm:flex items-center gap-1.5 tracking-wider uppercase">
-                <span className="w-1 h-1 rounded-full bg-[#8B5CF6]" />
-                AUTONOMOUS PRODUCTION & SCOUTING OS
+              <span className="text-[9px] font-mono tracking-widest text-studio-muted hidden sm:block uppercase">
+                CINEMA INTELLIGENCE &bull; PRODUCTION OS
               </span>
             </div>
           </Link>
