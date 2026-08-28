@@ -11,17 +11,21 @@ import {
   Layers,
   ArrowRight,
   RefreshCw,
-  Zap
+  Zap,
+  Download,
+  FileText
 } from 'lucide-react';
 
 interface ProductionPlanViewProps {
   plan: ProductionPlan;
   onOpenReplanModal: () => void;
+  onOpenExportModal?: (dayNumber?: number) => void;
 }
 
 export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
   plan,
   onOpenReplanModal,
+  onOpenExportModal,
 }) => {
   return (
     <div className="space-y-6 text-left transition-colors duration-250">
@@ -40,7 +44,7 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
               )}
             </div>
             <h2 className="text-2xl font-display font-extrabold text-studio-text mb-2">
-              Autonomous Shooting & Scouting Schedule
+              Autonomous Shooting &amp; Scouting Schedule
             </h2>
             <p className="text-xs sm:text-sm text-studio-muted leading-relaxed max-w-2xl font-medium">
               {plan.summary || 'Optimized multi-day shooting schedule grouped by location proximity and lighting feasibility.'}
@@ -53,9 +57,19 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
               <span className="text-2xl font-display font-black text-studio-text">{plan.total_days || plan.shooting_days.length}</span>
             </div>
 
+            {onOpenExportModal && (
+              <button
+                onClick={() => onOpenExportModal()}
+                className="btn-candy-purple !py-3.5 !px-5 text-xs font-display font-bold flex items-center gap-2 shadow-pop hover:shadow-pop-hover"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export Hub (PDF / ICS)</span>
+              </button>
+            )}
+
             <button
               onClick={onOpenReplanModal}
-              className="btn-candy-yellow !py-3.5 !px-6 text-xs font-display font-bold flex items-center gap-2"
+              className="btn-candy-yellow !py-3.5 !px-5 text-xs font-display font-bold flex items-center gap-2"
             >
               <RefreshCw className="w-4 h-4 text-[#1E293B]" />
               <span>Modify Constraints</span>
@@ -75,11 +89,23 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
 
       {/* Daily Call Sheets / Day Blocks */}
       <div className="space-y-5">
-        <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-[#8B5CF6]"></span>
-          <h3 className="text-xs font-display font-black uppercase tracking-wider text-studio-text">
-            Day-by-Day Production Schedule
-          </h3>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-[#8B5CF6]"></span>
+            <h3 className="text-xs font-display font-black uppercase tracking-wider text-studio-text">
+              Day-by-Day Production Schedule
+            </h3>
+          </div>
+
+          {onOpenExportModal && (
+            <button
+              onClick={() => onOpenExportModal()}
+              className="text-xs font-display font-bold text-[#8B5CF6] hover:underline flex items-center gap-1.5"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Download Production Bible PDF</span>
+            </button>
+          )}
         </div>
 
         {plan.shooting_days.map((day, idx) => (
@@ -98,7 +124,7 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-display font-bold bg-studio-muted border border-studio-border/30 text-studio-text">
                   <Users className="w-3.5 h-3.5 text-[#8B5CF6]" /> ~{day.crew_size || 25} Crew
                 </span>
@@ -111,6 +137,17 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
                 }`}>
                   {day.complexity} complexity
                 </span>
+
+                {onOpenExportModal && (
+                  <button
+                    onClick={() => onOpenExportModal(day.day_number)}
+                    className="p-1.5 px-3 rounded-xl bg-studio-bg border border-studio-border hover:border-[#F472B6] text-studio-muted hover:text-[#F472B6] text-xs font-display font-bold flex items-center gap-1.5 transition-colors shadow-pop-xs"
+                    title={`Export Day ${day.day_number} Call Sheet PDF`}
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Call Sheet PDF</span>
+                  </button>
+                )}
               </div>
             </div>
 
@@ -156,42 +193,26 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
         ))}
       </div>
 
-      {/* Production Risks & Recommendations Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {plan.overall_risks.length > 0 && (
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop-yellow">
-            <h4 className="text-xs font-display font-black uppercase tracking-wider text-[#D97706] dark:text-[#FBBF24] mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-[#FBBF24]" />
-              Critical Logistics & Production Risks
-            </h4>
-            <ul className="space-y-2 text-xs text-studio-muted font-medium">
-              {plan.overall_risks.map((risk, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-[#FBBF24] font-bold">&bull;</span>
-                  <span>{risk}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+      {/* Constraints & Watchout List */}
+      {plan.constraints.length > 0 && (
+        <div className="p-6 rounded-2xl bg-studio-surface border-2 border-studio-border shadow-pop">
+          <h4 className="text-xs font-display font-black uppercase tracking-wider text-studio-text mb-4 flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FBBF24]"></span>
+            Active Constraints Handled by Agent
+          </h4>
 
-        {plan.recommended_actions.length > 0 && (
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop-violet">
-            <h4 className="text-xs font-display font-black uppercase tracking-wider text-[#8B5CF6] dark:text-[#A78BFA] mb-3 flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] dark:text-[#A78BFA]" />
-              Production Coordinator Checklist
-            </h4>
-            <ul className="space-y-2 text-xs text-studio-muted font-medium">
-              {plan.recommended_actions.map((act, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-[#8B5CF6] dark:text-[#A78BFA] font-bold">&bull;</span>
-                  <span>{act}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {plan.constraints.map((c, idx) => (
+              <div key={idx} className="p-3.5 rounded-xl bg-studio-bg border border-studio-border/60 text-xs font-medium">
+                <span className="px-2 py-0.5 rounded-md bg-studio-muted text-studio-text font-mono text-[10px] uppercase font-bold mr-2">
+                  {c.type}
+                </span>
+                <span className="text-studio-text">{c.description}</span>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

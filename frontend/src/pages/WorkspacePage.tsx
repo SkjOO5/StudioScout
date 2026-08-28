@@ -17,6 +17,7 @@ import { ScoreBreakdownModal } from '../components/ScoreBreakdownModal';
 import { ReplanModal } from '../components/ReplanModal';
 import { EditProjectModal } from '../components/EditProjectModal';
 import { EditSceneModal } from '../components/EditSceneModal';
+import { ExportModal } from '../components/ExportModal';
 import { ProductionMap3D } from '../components/3d/ProductionMap3D';
 import { 
   Film, 
@@ -45,7 +46,8 @@ import {
   Edit3,
   Trash2,
   Plus,
-  Compass
+  Compass,
+  Download
 } from 'lucide-react';
 
 export const WorkspacePage: React.FC = () => {
@@ -72,6 +74,7 @@ export const WorkspacePage: React.FC = () => {
   const [isReplanModalOpen, setIsReplanModalOpen] = useState(false);
   const [isEditProjectOpen, setIsEditProjectOpen] = useState(false);
   const [isSceneModalOpen, setIsSceneModalOpen] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [sceneToEdit, setSceneToEdit] = useState<Scene | null>(null);
   const [isDeletingProject, setIsDeletingProject] = useState(false);
   const [isReplanning, setIsReplanning] = useState(false);
@@ -380,10 +383,21 @@ export const WorkspacePage: React.FC = () => {
             </button>
           )}
 
+          {project && (
+            <button
+              onClick={() => setIsExportModalOpen(true)}
+              className="btn-candy-purple !py-2.5 !px-4 text-xs font-display font-bold flex items-center gap-1.5 shadow-pop-xs"
+              title="Export Production Bible, Call Sheets, Calendar, or CSV"
+            >
+              <Download className="w-4 h-4" />
+              <span>Export Hub</span>
+            </button>
+          )}
+
           {plan && (
             <button
               onClick={() => setIsReplanModalOpen(true)}
-              className="btn-candy-yellow !py-2.5 !px-5 text-xs font-display font-bold flex items-center gap-1.5"
+              className="btn-candy-yellow !py-2.5 !px-4 text-xs font-display font-bold flex items-center gap-1.5"
             >
               <RefreshCw className="w-4 h-4 text-[#1E293B]" />
               <span>Modify Constraint</span>
@@ -1104,6 +1118,7 @@ export const WorkspacePage: React.FC = () => {
             <ProductionPlanView
               plan={plan}
               onOpenReplanModal={() => setIsReplanModalOpen(true)}
+              onOpenExportModal={() => setIsExportModalOpen(true)}
             />
           ) : (
             <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted transition-colors duration-250">
@@ -1206,6 +1221,15 @@ export const WorkspacePage: React.FC = () => {
         onClose={() => setIsSceneModalOpen(false)}
         onSuccess={handleSceneSaved}
       />
+
+      {project && (
+        <ExportModal
+          isOpen={isExportModalOpen}
+          onClose={() => setIsExportModalOpen(false)}
+          project={project}
+          plan={plan}
+        />
+      )}
     </div>
   );
 };

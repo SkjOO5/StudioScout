@@ -200,24 +200,42 @@ npm run build
 
 ## 🎬 3-Minute Demo Walkthrough (For Hackathon Judges)
 
-1. Open `http://localhost:5173`.
-2. Click **"Explore Demo ("Neon Shadows")"** — the database instantly seeds and navigates to the 5-scene Mumbai neo-noir production.
-3. Observe Scene 3 (Mukesh Mills & Heritage Compound):
+1. Open `http://localhost:5173` (or the [Live Production App](https://studioscout-ai-111556269084.asia-south1.run.app)).
+2. Click **"Explore Demo ("Cipher Zero")"** — the database instantly seeds and navigates to the 4-scene Mumbai sci-fi cyber thriller production.
+3. Observe Scene 3 (Mukesh Mills & Heritage Power Hall):
    - 6-dimension score breakdown (94.5/100)
    - Real Parallel Search quotes and verified source links
-   - Permit and noise risks with concrete mitigations
-4. Click the **"VFX & Moodboards (Imagen 3)"** tab to view director-level camera focal lengths, color palettes, and cinematography prompts.
+   - Permit and acoustic risks with concrete mitigations
+4. Click the **"VFX & Moodboards (Imagen 3)"** and **"Soundtrack & Audio (Lyria 3)"** tabs to review sensory director packages.
 5. Open the **"Production Plan"** tab to review the 3-day shooting schedule with daily call times and logistics.
-6. Click **"Modify Constraint"** and enter: *"Mukesh Mills unavailable on Saturday"*.
-7. Watch the agent autonomously invalidate the candidate, re-query Parallel Search for alternatives, and reschedule!
+6. Click **"Export Hub"** in the top navigation to download:
+   - **Official Production Bible (PDF)** via ReportLab
+   - **Daily Call Sheet (PDF)** for Day 1, 2, or 3
+   - **Shooting Calendar (.ICS)** for Google Calendar / Apple Calendar
+   - **Master Schedule (.CSV)** for Google Sheets & Excel
+7. Click **"Modify Constraint"** and enter: *"Mukesh Mills unavailable on Saturday"*.
+8. Watch the agent autonomously invalidate the candidate, re-query Parallel Search for alternatives, and reschedule!
+
+📖 **Full Presentation Guide:** See **[3-Minute Demo Script (docs/DEMO_SCRIPT.md)](./docs/DEMO_SCRIPT.md)**.
 
 ---
 
-## ☁️ Production Deployment (Google Cloud Run)
+## 📑 Production Exports & Document Engine
 
-StudioScout AI is packaged as a unified, hardened full-stack container running on Google Cloud Run with Vertex AI Application Default Credentials (ADC) and Google Secret Manager.
+StudioScout AI provides official, publication-ready production deliverables generated directly from canonical project data:
 
-### Quick Deployment
+* **Production Bible (PDF):** Full editorial dossier with cover page, executive summary, 6-dimension candidate cards, Parallel Search citations, scene specs, and master schedule.
+* **Daily Call Sheets (PDF):** Single-day on-set call sheets with crew call time, wrap time, scene sequence, and emergency contact placeholders.
+* **Shooting Calendar (.ICS):** RFC 5545 compliant calendar export ready for one-click import into Google Calendar, Apple Calendar, and Outlook.
+* **Shooting Schedule (CSV):** RFC 4180 spreadsheet with UTF-8 BOM encoding for Google Sheets and Excel.
+
+📖 **Detailed Schema & API Docs:** See **[Export Documentation (docs/EXPORTS.md)](./docs/EXPORTS.md)**.
+
+---
+
+## ☁️ Production Deployment & CI/CD
+
+StudioScout AI is packaged as a hardened full-stack container running on Google Cloud Run with Vertex AI Application Default Credentials (ADC), Google Secret Manager, and automated GitHub Actions CI/CD with Workload Identity Federation (WIF).
 
 ```bash
 # 1. Run automated GCP infrastructure provisioning
@@ -230,8 +248,9 @@ StudioScout AI is packaged as a unified, hardened full-stack container running o
 ./scripts/verify-production.sh
 ```
 
-For complete step-by-step instructions, cost controls, and rollback guides, see:
+For complete documentation:
 - 📖 **[Production Deployment Guide (docs/DEPLOYMENT.md)](./docs/DEPLOYMENT.md)**
+- 🚀 **[CI/CD & Workload Identity Federation (docs/CI_CD.md)](./docs/CI_CD.md)**
 - 🛡️ **[Security Architecture & Governance (docs/SECURITY.md)](./docs/SECURITY.md)**
 - 🏛️ **[System Architecture (docs/architecture.md)](./docs/architecture.md)**
 
@@ -239,11 +258,13 @@ For complete step-by-step instructions, cost controls, and rollback guides, see:
 
 ## 🏆 Hackathon Compliance Checklist
 
-- [x] **Google Cloud Platform:** Configured for Google Cloud Run with Vertex AI Application Default Credentials.
+- [x] **Google Cloud Platform:** Deployed on Google Cloud Run with Vertex AI Application Default Credentials.
 - [x] **Google Gemini AI:** Uses Gemini 3.1 Flash / 2.5 Flash for structured screenplay parsing, 6-dimension candidate scoring, and schedule optimization.
 - [x] **Parallel Track Integration:** Real-world runtime web location discovery via official `parallel-web` Python SDK (`Parallel` client).
 - [x] **No Fake Citations:** All sources, quotes, URLs, and interaction IDs are ground-truth Parallel Search responses.
+- [x] **Hollywood Deliverables:** Full ReportLab PDF Production Bibles, Daily Call Sheets, RFC 5545 iCalendar, and CSV schedules.
 - [x] **Autonomous Agent Workflow:** Multi-step deterministic state machine with live timeline feedback and adaptive constraint replanning.
+- [x] **Automated CI/CD:** GitHub Actions test gate and Workload Identity Federation deployment pipeline.
 - [x] **Production Security:** Non-root container, Secret Manager key isolation, and sliding-window rate limiting.
 
 ---

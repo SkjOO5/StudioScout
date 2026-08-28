@@ -170,4 +170,67 @@ export const api = {
     const res = await client.get<AgentRun[]>(`/projects/${projectId}/runs`);
     return res.data;
   },
+
+  // Document & Schedule Exports
+  downloadProductionBible: async (projectId: string, filename?: string): Promise<void> => {
+    const res = await client.get(`/projects/${projectId}/export/production-bible`, {
+      responseType: 'blob',
+    });
+    const blob = new Blob([res.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename || 'StudioScout-Production-Bible.pdf';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
+
+  downloadCallSheet: async (projectId: string, day: number = 1, filename?: string): Promise<void> => {
+    const res = await client.get(`/projects/${projectId}/export/call-sheet`, {
+      params: { day },
+      responseType: 'blob',
+    });
+    const blob = new Blob([res.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename || `StudioScout-Call-Sheet-Day-${day.toString().padStart(2, '0')}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
+
+  downloadCalendar: async (projectId: string, filename?: string): Promise<void> => {
+    const res = await client.get(`/projects/${projectId}/export/calendar`, {
+      responseType: 'blob',
+    });
+    const blob = new Blob([res.data], { type: 'text/calendar;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename || 'StudioScout-Shooting-Calendar.ics';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
+
+  downloadScheduleCsv: async (projectId: string, filename?: string): Promise<void> => {
+    const res = await client.get(`/projects/${projectId}/export/schedule`, {
+      responseType: 'blob',
+    });
+    const blob = new Blob([res.data], { type: 'text/csv;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename || 'StudioScout-Shooting-Schedule.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  },
 };
+
