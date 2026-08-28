@@ -17,6 +17,7 @@ from app.api.runs import router as runs_router
 from app.api.storyboards import router as storyboards_router
 from app.api.audio import router as audio_router
 from app.api.tableread import router as tableread_router
+from app.api.exports import router as exports_router
 from app.demo_seed import seed_demo_project, DEMO_PROJECT_ID
 from app.store import store
 
@@ -47,7 +48,7 @@ async def lifespan(app: FastAPI):
 
     # Automatically seed demo project if no projects exist in database
     if not store.list_projects():
-        logger.info("[Startup] Seeding initial 'Neon Shadows' demo project for instant judging...")
+        logger.info("[Startup] Seeding initial 'Cipher Zero' demo project for instant judging...")
         try:
             seed_demo_project()
         except Exception as e:
@@ -85,6 +86,7 @@ def create_app() -> FastAPI:
     app.include_router(storyboards_router, prefix="/api", tags=["storyboards"])
     app.include_router(audio_router, prefix="/api", tags=["audio"])
     app.include_router(tableread_router, prefix="/api", tags=["tableread"])
+    app.include_router(exports_router, prefix="/api", tags=["exports"])
 
     # Health checks (both root and /api/health)
     @app.get("/health")

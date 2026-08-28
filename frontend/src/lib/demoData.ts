@@ -1,62 +1,50 @@
-export const DEMO_PROJECT_NAME = "Neon Shadows";
+export const DEMO_PROJECT_NAME = "Cipher Zero";
 export const DEMO_PROJECT_CITY = "Mumbai";
-export const DEMO_PROJECT_GENRE = "thriller" as const;
+export const DEMO_PROJECT_GENRE = "sci-fi" as const;
 export const DEMO_PROJECT_BUDGET = "mid" as const;
 
-export const DEMO_SCREENPLAY_TEXT = `TITLE: NEON SHADOWS
-GENRE: Neo-Noir Thriller
-WRITTEN BY: Alex Thorne
+export const DEMO_SCREENPLAY_TEXT = `TITLE: CIPHER ZERO
+GENRE: Sci-Fi Cyber Thriller
+WRITTEN BY: Marcus Vance
 
 SCENE 1
-INT. KAVITA'S APARTMENT - NIGHT
-Rain hammers the single high-rise window overlooking the neon haze of the city below. 
-KAVITA (32, investigative journalist, bruised knuckles) frantically packs hard drives into a waterproof duffel. 
-ARJUN (35, ex-intelligence, soaked jacket) stands guard by the cracked door, holding a silenced sidearm.
-Shadows stretch across the cramped, dimly lit room. 
-ARJUN
-We have fifteen minutes before their sweep team hits the perimeter.
-KAVITA
-The audio files are decrypting. I'm not leaving without the raw logs.
-A sharp knock on the hallway fire door freezes both of them.
+INT. QUANTUM LAB & SERVER VAULT - NIGHT
+Sub-zero cooling mist rolls across black anodized server racks in a subterranean research vault.
+Flashing optical fiber banks bathe the sterile concrete in pulsing sapphire light.
+ELENA (29, biometrics cryptographer, tactical jumpsuit) rapidly bypasses security locks on a glowing quantum core.
+MARCUS (36, black-ops operative, scarred jaw) keeps his thermal carbine trained on the heavy blast doors.
+MARCUS
+Neural handshake protocol verified. We have three minutes before containment seals.
+ELENA
+The core encryption key is cycling. If I pull the drive prematurely, the neural net wipes.
+A red klaxon begins to strobe across the ceiling. Heavy magnetic locks disengage down the corridor.
 
 SCENE 2
-INT. UNDERGROUND PARKING GARAGE - NIGHT
-Echoes of dripping pipes. Steam rises from sewer grates in the subterranean darkness.
-Two black SUVs idle at opposite ends of the concrete ramp.
-Arjun guides Kavita behind massive load-bearing pillars. The concrete floor is damp with oil slicks.
-Low visibility, flickering fluorescent tubes overhead. 
-Headlights suddenly swing across the pillars, sweeping the shadows.
-Tires screech as an unmarked sedan blocks the exit gate. 
-ARJUN
-Get down. Behind the transformer box.
+EXT. CARGO CONTAINER TERMINAL - NIGHT
+Towering stacks of weathered ISO shipping containers loom like a steel labyrinth under coastal rain.
+Massive overhead gantry cranes stand idle in the sea mist.
+Two armored transport haulers idle at the dockside freight entrance.
+Marcus leads Elena between container aisles. Headlight beams sweep across wet corrugated steel.
+Pneumatic brakes hiss as pursuit drones deploy from the crane gantry.
+MARCUS
+Take cover behind the ballast crates. Vehicle clearance incoming on aisle four.
 
 SCENE 3
-INT. ABANDONED INDUSTRIAL WAREHOUSE - NIGHT
-A cavernous, decommissioned textile mill with rusted corrugated iron roof and exposed steel trusses.
-High ceiling clerestory windows let in fractured moonlight and sodium streetlamp glow.
-Debris, old machinery, and wooden pallets are scattered across 8,000 sq ft of open industrial floor.
-Kavita sets her laptop on an iron workbench. 
-ARJUN enters from the loading dock, breathing hard, locking the heavy steel chain sliding doors.
-ARJUN
-They tracked the transponder. We hold this position till daybreak.
-KAVITA
-Look around us Arjun. There's only one viable exit and it faces the container yard.
-Vehicles approach outside; headlight beams cut through the broken window panes.
+INT. DECOMMISSIONED THERMAL POWER STATION - NIGHT
+Cavernous 10,000 sq ft industrial turbine hall with soaring thirty-foot iron truss ceilings.
+Abandoned copper generators, massive steam pipes, and rusted metal catwalks stretch into deep shadow.
+Elena sets her mobile field terminal on an oxidized generator housing.
+Marcus seals the hydraulic bay doors with an emergency steel chain hoist.
+ELENA
+Look at the acoustic resonance in this hall. Any perimeter breach will echo across the turbine floor.
+MARCUS
+Good. That gives us sightlines on both stairwells until extraction arrives at dawn.
+Exterior floodlights suddenly flare against the broken glass skylights.
 
 SCENE 4
-EXT. ROOFTOP CHASE - NIGHT (DUSK / NIGHT)
-Wind whips across the gravel-topped commercial rooftop. 
-Rain slicked HVAC units, water towers, and cellular antennas create an obstacle course.
-Arjun sprints across the roof ledge, vaulting over ventilation ducts.
-Gunshots spark against metallic exhaust chimneys.
-The illuminated skyline looms in the backdrop. Below: eight stories of sheer drop to the asphalt alley.
-Arjun reaches the fire escape ladder and kicks open the security gate.
-
-SCENE 5
-INT. CITY GENERAL HOSPITAL - DAY (DAWN)
-Bleached fluorescent lighting, polished linoleum floors, sterile corridors.
-Nurses and security staff move briskly between patient triage bays.
-Kavita, disguise cap pulled low, slips into the records archive corridor.
-Medical trolleys, emergency gurneys, and active clinical signage line the ward.
-She delivers the encrypted drive to DR. MEHTA in consultation room 4B before security patrol passes.
+EXT. COMMERCIAL TOWER HELIPAD - DAWN
+Gale force winds whip across the rooftop helipad eighty stories above the waking metropolis.
+The morning sun breaks through low storm clouds, casting golden reflections on the glass facade.
+Elena clutches the insulated quantum drive case as Marcus coordinates the extraction approach.
+A twin-turbine tactical transport helicopter flares over the perimeter ledge.
 `;

@@ -28,24 +28,25 @@ def test_status_endpoint():
 
 
 def test_demo_seed_endpoint():
+    from app.demo_seed import DEMO_PROJECT_ID
     response = client.post("/api/demo/seed")
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "success"
-    assert data["project_id"] == "demo-neon-shadows"
+    assert data["project_id"] == DEMO_PROJECT_ID
 
     # Verify project exists
-    get_res = client.get("/api/projects/demo-neon-shadows")
+    get_res = client.get(f"/api/projects/{DEMO_PROJECT_ID}")
     assert get_res.status_code == 200
-    assert get_res.json()["name"] == "Neon Shadows"
+    assert get_res.json()["name"] == "Cipher Zero"
 
     # Verify scenes exist
-    scenes_res = client.get("/api/projects/demo-neon-shadows/scenes")
+    scenes_res = client.get(f"/api/projects/{DEMO_PROJECT_ID}/scenes")
     assert scenes_res.status_code == 200
     assert len(scenes_res.json()) == 4
 
     # Verify plan exists
-    plan_res = client.get("/api/projects/demo-neon-shadows/plan")
+    plan_res = client.get(f"/api/projects/{DEMO_PROJECT_ID}/plan")
     assert plan_res.status_code == 200
     assert plan_res.json()["total_days"] == 3
 
