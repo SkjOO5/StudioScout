@@ -157,7 +157,7 @@ The script verifies:
 1. `GET /health` → HTTP 200 `{"status": "ok"}`
 2. `GET /api/health` → Verification of Gemini and Parallel status
 3. `GET /api/status` → Verification of model and search provider metadata
-4. `GET /api/projects` → Verification of pre-seeded *Neon Shadows* showcase project
+4. `GET /api/projects` → Verification of pre-seeded *Cipher Zero* showcase project
 5. Promotes the candidate revision to 100% traffic upon success.
 
 ---
