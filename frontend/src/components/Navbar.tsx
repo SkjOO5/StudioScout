@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Clapperboard, Film, Sparkles, Terminal, ChevronDown } from 'lucide-react';
+import { Clapperboard, Film, Sparkles, ChevronDown } from 'lucide-react';
 import { api } from '../lib/api';
 import { HealthStatus } from '../types';
 import { useAuth } from '../context/AuthContext';
@@ -10,24 +10,11 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const { user, setIsAuthModalOpen } = useAuth();
   const [health, setHealth] = useState<HealthStatus | null>(null);
-  const [timecode, setTimecode] = useState('');
 
   useEffect(() => {
     api.getHealth()
       .then(setHealth)
       .catch(() => setHealth(null));
-
-    // Live studio timecode generator (HH:MM:SS:FF)
-    const interval = setInterval(() => {
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
-      const f = String(Math.floor((now.getMilliseconds() / 1000) * 24)).padStart(2, '0');
-      setTimecode(`${h}:${m}:${s}:${f}`);
-    }, 41);
-
-    return () => clearInterval(interval);
   }, []);
 
   const isActive = (path: string) => {
@@ -91,13 +78,6 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Theme Toggle */}
           <ThemeToggle />
-
-          {/* Studio Timecode Pill */}
-          <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-studio-surface border-2 border-studio-border shadow-pop-xs text-xs font-mono text-studio-text">
-            <Terminal className="w-3.5 h-3.5 text-[#8B5CF6]" />
-            <span className="font-bold">{timecode || '00:00:00:00'}</span>
-            <span className="text-[9px] font-bold text-[#F472B6]">24FPS</span>
-          </div>
 
           {/* AI Providers Sticker */}
           <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-studio-surface border-2 border-studio-border shadow-pop-xs text-xs font-display font-bold">
