@@ -113,7 +113,7 @@ export const LandingPage: React.FC = () => {
             className="btn-candy-yellow w-full sm:w-auto !py-4 !px-7 text-sm font-bold flex items-center justify-center gap-2 shadow-pop hover:-translate-y-0.5 active:translate-y-0"
           >
             <PlayCircle className="w-5 h-5 text-[#1E293B]" />
-            <span>{isCreatingDemo ? 'SEEDING DEMO...' : 'EXPLORE DEMO ("NEON SHADOWS")'}</span>
+            <span>{isCreatingDemo ? 'SEEDING DEMO...' : 'EXPLORE DEMO ("CIPHER ZERO")'}</span>
           </button>
         </div>
 

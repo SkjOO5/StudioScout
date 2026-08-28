@@ -116,7 +116,7 @@ export const NewProjectPage: React.FC = () => {
           className="btn-candy-yellow !py-2.5 !px-5 text-xs self-start sm:self-auto group"
         >
           <PlayCircle className="w-4 h-4 text-[#1E293B] group-hover:scale-110 transition-transform" />
-          <span>Load "Neon Shadows" Preset</span>
+          <span>Load "Cipher Zero" Preset</span>
         </button>
       </div>
 
@@ -147,7 +147,7 @@ export const NewProjectPage: React.FC = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Neon Shadows"
+                placeholder="e.g. Cipher Zero"
                 className="input"
                 required
               />

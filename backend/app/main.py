@@ -132,12 +132,12 @@ def create_app() -> FastAPI:
     # Demo seed endpoint
     @app.post("/api/demo/seed")
     async def seed_demo():
-        """Seed or reset the 'Neon Shadows' showcase demo project."""
+        """Seed or reset the 'Cipher Zero' showcase demo project."""
         try:
             proj = seed_demo_project()
             return {
                 "status": "success",
-                "message": "Demo project 'Neon Shadows' seeded successfully",
+                "message": "Demo project 'Cipher Zero' seeded successfully",
                 "project_id": proj.id,
                 "scene_count": proj.scene_count,
             }
