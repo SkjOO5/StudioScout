@@ -2,6 +2,7 @@
 > **Turn a screenplay into a production-ready scouting plan.**
 > *An autonomous AI production-planning assistant for filmmakers, location scouts, and studio crews.*
 
+[![Live Production Demo](https://img.shields.io/badge/Live_Demo-Google_Cloud_Run-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://studioscout-ai-111556269084.asia-south1.run.app)
 [![Hackathon Track](https://img.shields.io/badge/Google_Cloud_Agentic_Cinema-Parallel_Track_2026-blue.svg)](https://agentic-cinema.devpost.com/)
 [![AI Layer](https://img.shields.io/badge/Reasoning-Google_Gemini_3.1_Flash-orange.svg)](https://ai.google.dev/)
 [![Visual Layer](https://img.shields.io/badge/Visual_VFX-Google_Imagen_3-purple.svg)](https://cloud.google.com/vertex-ai/generative-ai/docs/image/overview)
@@ -10,6 +11,8 @@
 [![Search Tool](https://img.shields.io/badge/Web_Research-Parallel_Search_API-amber.svg)](https://platform.parallel.ai/)
 [![Database](https://img.shields.io/badge/Persistence-SQLite_WAL-emerald.svg)](https://sqlite.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+
+🌐 **Live Production Application:** [https://studioscout-ai-111556269084.asia-south1.run.app](https://studioscout-ai-111556269084.asia-south1.run.app)
 
 ---
 
