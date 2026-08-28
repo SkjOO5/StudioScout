@@ -41,21 +41,30 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand & Identity */}
         <div className="flex items-center gap-5">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-[#FBBF24] border-2 border-studio-border flex items-center justify-center shadow-pop group-hover:-rotate-6 transition-transform">
-              <Film className="w-6 h-6 text-[#1E293B]" />
+          <Link to="/" className="flex items-center gap-3.5 group">
+            {/* Holographic Aperture Icon Badge */}
+            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#8B5CF6] via-[#6366F1] to-[#38BDF8] p-[2px] shadow-pop transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3">
+              <div className="w-full h-full rounded-[14px] bg-[#0F172A] flex items-center justify-center relative overflow-hidden">
+                {/* Background glow sweep */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#8B5CF6]/30 via-transparent to-[#38BDF8]/40 opacity-80" />
+                <Sparkles className="w-5 h-5 text-[#38BDF8] absolute top-1 right-1 opacity-60 animate-pulse" />
+                <Film className="w-5 h-5 text-white relative z-10 drop-shadow-md" />
+              </div>
             </div>
+
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-display font-extrabold text-xl tracking-tight text-studio-text">
-                  StudioScout
+                <span className="font-display font-black text-xl tracking-tight text-studio-text">
+                  Studio<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#A78BFA] via-[#F472B6] to-[#38BDF8]">Scout</span>
                 </span>
-                <span className="px-2 py-0.5 text-[10px] font-display font-black uppercase tracking-wider rounded-full bg-[#8B5CF6] text-white border border-studio-border shadow-pop-xs">
-                  AI CORE
+                <span className="px-2 py-0.5 text-[9px] font-display font-black uppercase tracking-wider rounded-full bg-[#10B981]/15 text-[#059669] dark:text-[#34D399] border border-[#10B981]/40 flex items-center gap-1 shadow-pop-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping" />
+                  <span>AI OS</span>
                 </span>
               </div>
-              <span className="text-[10px] font-display font-bold text-studio-muted hidden sm:block tracking-wide">
-                AUTONOMOUS PRODUCTION ASSISTANT
+              <span className="text-[9px] font-display font-black text-studio-muted hidden sm:flex items-center gap-1.5 tracking-wider uppercase">
+                <span className="w-1 h-1 rounded-full bg-[#8B5CF6]" />
+                AUTONOMOUS PRODUCTION & SCOUTING OS
               </span>
             </div>
           </Link>
