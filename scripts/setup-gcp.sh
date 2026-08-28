@@ -60,13 +60,23 @@ ROLES=(
 )
 
 for role in "${ROLES[@]}"; do
-  echo "  - Granting ${role}..."
+  echo "  - Granting ${role} to ${SA_EMAIL}..."
   gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
     --member="serviceAccount:${SA_EMAIL}" \
     --role="${role}" \
     --condition=None \
     --quiet >/dev/null
 done
+
+# Grant Cloud Build / Compute default account permissions to read build sources
+PROJECT_NUM=$(gcloud projects describe "${PROJECT_ID}" --format='value(projectNumber)')
+COMPUTE_SA="${PROJECT_NUM}-compute@developer.gserviceaccount.com"
+echo "➡️  Granting Storage permissions to default compute service account (${COMPUTE_SA})..."
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+  --member="serviceAccount:${COMPUTE_SA}" \
+  --role="roles/storage.admin" \
+  --condition=None \
+  --quiet >/dev/null
 
 # 4. Initialize Secret Manager for Parallel API Key
 echo "➡️  [4/4] Setting up Secret Manager for PARALLEL_API_KEY..."
