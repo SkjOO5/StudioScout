@@ -28,8 +28,15 @@ Write-Host "Region      : $Region"
 Write-Host "Identity    : $SaEmail"
 Write-Host "============================================================" -ForegroundColor Cyan
 
-# Deploy to Cloud Run as a tagged candidate revision (0% initial traffic for smoke testing)
-Write-Host "➡️  Building and deploying candidate revision to Cloud Run..." -ForegroundColor Yellow
+# Check if service already exists
+$ServiceExists = gcloud run services describe $ServiceName --region=$Region --project=$ProjectId 2>$null
+
+$ExtraArgs = @()
+if ($ServiceExists) {
+    $ExtraArgs += @("--no-traffic", "--tag", "candidate")
+}
+
+Write-Host "➡️  Building and deploying container to Cloud Run..." -ForegroundColor Yellow
 gcloud run deploy $ServiceName `
   --source . `
   --platform managed `
@@ -45,8 +52,7 @@ gcloud run deploy $ServiceName `
   --memory 1Gi `
   --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=$ProjectId,GOOGLE_CLOUD_LOCATION=$Region,GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" `
   --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" `
-  --no-traffic `
-  --tag candidate `
+  $ExtraArgs `
   --project $ProjectId
 
 Write-Host ""
