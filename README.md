@@ -212,23 +212,40 @@ npm run build
 
 ## ☁️ Production Deployment (Google Cloud Run)
 
-To deploy StudioScout AI backend to Google Cloud Run:
+StudioScout AI is packaged as a unified, hardened full-stack container running on Google Cloud Run with Vertex AI Application Default Credentials (ADC) and Google Secret Manager.
+
+### Quick Deployment
 
 ```bash
-# 1. Build and push container
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/studioscout-backend
+# 1. Run automated GCP infrastructure provisioning
+./scripts/setup-gcp.sh
 
-# 2. Deploy to Cloud Run
-gcloud run deploy studioscout-backend \
-  --image gcr.io/YOUR_PROJECT_ID/studioscout-backend \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars GOOGLE_API_KEY=YOUR_KEY,PARALLEL_API_KEY=YOUR_KEY,GEMINI_MODEL=gemini-2.5-flash
+# 2. Deploy candidate revision to Cloud Run
+./scripts/deploy-cloudrun.sh
+
+# 3. Run smoke test and promote to 100% traffic
+./scripts/verify-production.sh
 ```
+
+For complete step-by-step instructions, cost controls, and rollback guides, see:
+- 📖 **[Production Deployment Guide (docs/DEPLOYMENT.md)](./docs/DEPLOYMENT.md)**
+- 🛡️ **[Security Architecture & Governance (docs/SECURITY.md)](./docs/SECURITY.md)**
+- 🏛️ **[System Architecture (docs/architecture.md)](./docs/architecture.md)**
+
+---
+
+## 🏆 Hackathon Compliance Checklist
+
+- [x] **Google Cloud Platform:** Configured for Google Cloud Run with Vertex AI Application Default Credentials.
+- [x] **Google Gemini AI:** Uses Gemini 3.1 Flash / 2.5 Flash for structured screenplay parsing, 6-dimension candidate scoring, and schedule optimization.
+- [x] **Parallel Track Integration:** Real-world runtime web location discovery via official `parallel-web` Python SDK (`Parallel` client).
+- [x] **No Fake Citations:** All sources, quotes, URLs, and interaction IDs are ground-truth Parallel Search responses.
+- [x] **Autonomous Agent Workflow:** Multi-step deterministic state machine with live timeline feedback and adaptive constraint replanning.
+- [x] **Production Security:** Non-root container, Secret Manager key isolation, and sliding-window rate limiting.
 
 ---
 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+

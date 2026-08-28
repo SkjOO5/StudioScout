@@ -86,16 +86,15 @@ def create_app() -> FastAPI:
     app.include_router(audio_router, prefix="/api", tags=["audio"])
     app.include_router(tableread_router, prefix="/api", tags=["tableread"])
 
-    # Health check
+    # Health checks (both root and /api/health)
+    @app.get("/health")
     @app.get("/api/health")
     async def health():
         settings = get_settings()
         return {
             "status": "ok",
             "version": settings.app_version,
-            "database": "sqlite_persistent",
-            "db_path": store.db_path,
-            "projects_count": len(store.projects),
+            "database": "sqlite_local",
             "gemini_configured": settings.gemini_configured,
             "parallel_configured": settings.parallel_configured,
             "gemini_model": settings.gemini_model,

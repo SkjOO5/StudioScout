@@ -3,9 +3,10 @@ StudioScout AI — Storyboards & Visual Concept API Routes
 """
 import logging
 from typing import Dict, Any
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from app.models.project import Project
+from app.rate_limiter import rate_limit_expensive
 from app.store import store
 from app.tools.storyboard_generator import generate_storyboard_concept
 
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/projects/{project_id}/scenes/{scene_id}/storyboard")
+@router.post("/projects/{project_id}/scenes/{scene_id}/storyboard", dependencies=[Depends(rate_limit_expensive)])
 async def create_scene_storyboard(project_id: str, scene_id: str):
     """Generate or retrieve a visual storyboard moodboard for a scene."""
     project = store.get_project(project_id)

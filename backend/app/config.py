@@ -31,6 +31,16 @@ class Settings(BaseSettings):
     app_version: str = "1.0.0"
     debug: bool = False
 
+    # ─── Agent Safety Limits & Cost Protection ────────────────────────────────
+    max_agent_steps: int = 25
+    max_searches_per_run: int = 10
+    max_run_time_seconds: int = 300
+    max_tool_calls: int = 20
+
+    # ─── Rate Limiting (Per-Instance Sliding Window) ───────────────────────────
+    rate_limit_enabled: bool = True
+    rate_limit_per_minute: int = 15
+
     # ─── CORS ─────────────────────────────────────────────────────────────────
     cors_origins: str = "http://localhost:5173,http://localhost:4173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:4173,*"
 
