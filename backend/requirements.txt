@@ -1,0 +1,15 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic==2.12.5
+pydantic-settings==2.15.0
+google-genai==1.73.1
+google-generativeai==0.8.6
+parallel-web==1.3.0
+pdfplumber==0.11.10
+python-multipart==0.0.22
+python-dotenv==1.2.2
+aiofiles==25.1.0
+httpx==0.28.1
+anyio==4.12.1
+google-cloud-aiplatform[agent_engines,adk]>=1.101.0
+
