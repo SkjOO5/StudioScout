@@ -38,24 +38,63 @@ if [[ "${SERVICE_EXISTS}" == "yes" ]]; then
   EXTRA_FLAGS+=(--no-traffic --tag candidate)
 fi
 
-echo "➡️  Building and deploying container to Cloud Run..."
-gcloud run deploy "${SERVICE_NAME}" \
-  --source . \
-  --platform managed \
-  --region "${REGION}" \
-  --service-account "${SA_EMAIL}" \
-  --allow-unauthenticated \
-  --port 8080 \
-  --min-instances 0 \
-  --max-instances 2 \
-  --concurrency 80 \
-  --timeout 300 \
-  --cpu 1 \
-  --memory 1Gi \
-  --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" \
-  --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" \
-  "${EXTRA_FLAGS[@]}" \
-  --project "${PROJECT_ID}"
+IMAGE_URI="${REGION}-docker.pkg.dev/${PROJECT_ID}/cloud-run-source-deploy/${SERVICE_NAME}:latest"
+
+if command -v docker &>/dev/null; then
+  echo "➡️  [1/3] Ensuring Artifact Registry repository exists..."
+  gcloud artifacts repositories create cloud-run-source-deploy \
+    --repository-format=docker \
+    --location="${REGION}" \
+    --project="${PROJECT_ID}" \
+    --description="Cloud Run source deploy repository" 2>/dev/null || true
+
+  echo "➡️  [2/3] Configuring Docker authentication..."
+  gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+
+  echo "➡️  [3/3] Building container image locally with Docker..."
+  docker build -t "${IMAGE_URI}" .
+
+  echo "➡️  Pushing container image to Artifact Registry..."
+  docker push "${IMAGE_URI}"
+
+  echo "➡️  Deploying pre-built container to Cloud Run..."
+  gcloud run deploy "${SERVICE_NAME}" \
+    --image "${IMAGE_URI}" \
+    --platform managed \
+    --region "${REGION}" \
+    --service-account "${SA_EMAIL}" \
+    --allow-unauthenticated \
+    --port 8080 \
+    --min-instances 0 \
+    --max-instances 2 \
+    --concurrency 80 \
+    --timeout 300 \
+    --cpu 1 \
+    --memory 1Gi \
+    --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" \
+    --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" \
+    "${EXTRA_FLAGS[@]}" \
+    --project "${PROJECT_ID}"
+else
+  echo "➡️  Building and deploying container to Cloud Run via Cloud Build..."
+  gcloud run deploy "${SERVICE_NAME}" \
+    --source . \
+    --platform managed \
+    --region "${REGION}" \
+    --service-account "${SA_EMAIL}" \
+    --allow-unauthenticated \
+    --port 8080 \
+    --min-instances 0 \
+    --max-instances 2 \
+    --concurrency 80 \
+    --timeout 300 \
+    --cpu 1 \
+    --memory 1Gi \
+    --set-env-vars "GOOGLE_GENAI_USE_VERTEXAI=true,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=gemini-3.1-flash,APP_ENV=production" \
+    --set-secrets "PARALLEL_API_KEY=parallel-api-key:latest" \
+    "${EXTRA_FLAGS[@]}" \
+    --project "${PROJECT_ID}"
+fi
 
 echo ""
 echo "============================================================"
