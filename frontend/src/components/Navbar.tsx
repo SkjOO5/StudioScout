@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Clapperboard, Sparkles, ChevronDown, Menu, X } from 'lucide-react';
+import { Clapperboard, Sparkles, ChevronDown, Menu, X, Sun, Moon, Laptop } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
+
+/** Single-icon compact cycle button: light → system → dark → light */
+const MobileThemeCycleButton: React.FC = () => {
+  const { theme, setTheme } = useTheme();
+  const next = theme === 'light' ? 'system' : theme === 'system' ? 'dark' : 'light';
+  const Icon = theme === 'light' ? Sun : theme === 'system' ? Laptop : Moon;
+  const label = theme === 'light' ? 'Switch to System theme' : theme === 'system' ? 'Switch to Dark theme' : 'Switch to Light theme';
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(next)}
+      aria-label={label}
+      title={label}
+      className="touch-target min-w-[44px] min-h-[44px] p-2.5 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs text-studio-text hover:bg-studio-hover transition-all active:scale-95 flex items-center justify-center shrink-0"
+    >
+      <Icon className="w-5 h-5" />
+    </button>
+  );
+};
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
@@ -19,8 +39,8 @@ export const Navbar: React.FC = () => {
     <header className="sticky top-0 z-40 w-full bg-studio-bg border-b-[2.5px] border-studio-border transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand & Identity */}
-        <div className="flex items-center gap-4 sm:gap-6">
-          <Link to="/" className="flex items-center gap-3 group">
+        <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+          <Link to="/" className="flex items-center gap-3 group min-w-0">
             {/* Hand-Drawn Clapperboard Frame */}
             <div className="w-11 h-11 rounded-wobbly bg-studio-surface border-[2.5px] border-studio-border text-studio-text flex items-center justify-center shadow-sketch-xs group-hover:scale-105 group-hover:rotate-[-2deg] transition-all shrink-0">
               <Clapperboard className="w-5 h-5 text-studio-red" />
@@ -95,12 +115,12 @@ export const Navbar: React.FC = () => {
           </Link>
         </div>
 
-        {/* Mobile Menu & Theme Toggle Trigger */}
-        <div className="flex md:hidden items-center gap-2">
-          <ThemeToggle />
+        {/* Mobile: compact theme cycle icon + hamburger only */}
+        <div className="flex md:hidden items-center gap-2 shrink-0">
+          <MobileThemeCycleButton />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="touch-target min-w-[44px] min-h-[44px] p-2.5 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs text-studio-text hover:bg-studio-hover transition-transform active:scale-95"
+            className="touch-target min-w-[44px] min-h-[44px] p-2.5 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs text-studio-text hover:bg-studio-hover transition-transform active:scale-95 flex items-center justify-center"
             aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -133,6 +153,14 @@ export const Navbar: React.FC = () => {
               <span>New Screenplay Ingestion</span>
               <Sparkles className="w-4 h-4 text-studio-yellow" />
             </Link>
+          </div>
+
+          {/* Theme toggle in drawer — full 3-way control */}
+          <div className="pt-3 border-t-2 border-dashed border-studio-border/40">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-hand font-bold uppercase tracking-wider text-studio-muted">Theme</span>
+              <ThemeToggle />
+            </div>
           </div>
 
           <div className="pt-3 border-t-2 border-dashed border-studio-border/40 flex items-center justify-between">
