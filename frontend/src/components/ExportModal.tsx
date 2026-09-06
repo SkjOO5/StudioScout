@@ -3,17 +3,13 @@ import { Project, ProductionPlan } from '../types';
 import { api } from '../lib/api';
 import {
   FileText,
-  Calendar,
-  Table as TableIcon,
   Download,
   CheckCircle2,
   AlertCircle,
   X,
-  Sparkles,
   Film,
-  Clock,
-  ExternalLink,
-  Layers,
+  Calendar,
+  Table as TableIcon,
   Printer
 } from 'lucide-react';
 
@@ -97,33 +93,35 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-pop-in text-left">
       <div 
-        className="bg-studio-surface w-full max-w-4xl rounded-3xl border-2 border-studio-border shadow-pop overflow-hidden flex flex-col max-h-[90vh] transition-all"
+        className="bg-studio-surface w-full max-w-4xl rounded-wobbly-md border-[2.5px] border-studio-border shadow-sketch-lg overflow-hidden flex flex-col max-h-[90vh] transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
         <div className="px-7 py-5 bg-studio-bg border-b-2 border-studio-border flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[#8B5CF6]/10 text-[#8B5CF6] border-2 border-[#8B5CF6]/30">
+            <div className="w-11 h-11 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center shadow-sketch-xs shrink-0">
               <Download className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-display font-black tracking-wider uppercase px-2 py-0.5 rounded-full bg-[#8B5CF6] text-white">
+                <span className="text-xs font-display font-black tracking-wider uppercase px-2 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border">
                   EXPORT HUB
                 </span>
-                <span className="text-xs text-studio-muted font-medium">Canonical Production Artifacts</span>
+                <span className="text-xs font-hand text-studio-secondary font-bold">Canonical Production Artifacts</span>
               </div>
-              <h2 className="text-xl font-display font-extrabold text-studio-text">
+              <h2 className="text-2xl font-display font-extrabold text-studio-text">
                 Export Production Package — {project.name}
               </h2>
             </div>
           </div>
 
+          {/* FIX 4: Close button touch target >= 44x44px */}
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-studio-muted hover:text-studio-text hover:bg-studio-surface border border-transparent hover:border-studio-border transition-colors"
+            className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly text-studio-text hover:bg-studio-red hover:text-white border-2 border-studio-border shadow-sketch-xs transition-colors cursor-pointer"
+            aria-label="Close export hub"
           >
             <X className="w-5 h-5" />
           </button>
@@ -131,15 +129,16 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
         {/* Feedback Alerts */}
         {successMessage && (
-          <div className="mx-7 mt-5 p-3.5 rounded-xl bg-emerald-500/10 border-2 border-emerald-500/30 text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-2 animate-slide-up">
+          <div className="mx-7 mt-5 p-3.5 rounded-wobbly bg-emerald-100 dark:bg-emerald-950/60 border-2 border-studio-border text-sm font-hand font-bold text-emerald-800 dark:text-emerald-200 flex items-center gap-2 shadow-sketch-xs">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{successMessage}</span>
           </div>
         )}
 
+        {/* FIX 1: WCAG AA compliant error contrast */}
         {errorMessage && (
-          <div className="mx-7 mt-5 p-3.5 rounded-xl bg-rose-500/10 border-2 border-rose-500/30 text-xs font-semibold text-rose-600 dark:text-rose-400 flex items-center gap-2 animate-slide-up">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="mx-7 mt-5 p-3.5 rounded-wobbly bg-red-100 dark:bg-rose-950/60 border-2 border-studio-border text-sm font-hand font-bold text-accent-red-safe flex items-center gap-2 shadow-sketch-xs">
+            <AlertCircle className="w-4 h-4 shrink-0 text-accent-red-safe" />
             <span>{errorMessage}</span>
           </div>
         )}
@@ -149,34 +148,32 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
             {/* 1. Production Bible PDF */}
-            <div className="p-5 rounded-2xl bg-studio-bg border-2 border-studio-border shadow-pop-xs flex flex-col justify-between hover:border-[#8B5CF6] transition-all group">
+            <div className="p-5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border shadow-sketch-xs flex flex-col justify-between hover:border-studio-red transition-all group">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 rounded-xl bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/30">
-                    <FileText className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border flex items-center justify-center shadow-sketch-xs">
+                    <FileText className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-display font-black uppercase px-2.5 py-1 rounded-md bg-[#8B5CF6]/20 text-[#8B5CF6]">
+                  <span className="text-xs font-display font-black uppercase px-2.5 py-1 rounded-wobbly bg-studio-surface border border-studio-border text-studio-text">
                     OFFICIAL PDF
                   </span>
                 </div>
-                <h3 className="text-base font-display font-bold text-studio-text mb-1.5 flex items-center gap-1.5">
+                <h3 className="text-xl font-display font-bold text-studio-text mb-1.5 flex items-center gap-1.5">
                   <span>Production Bible</span>
                 </h3>
-                <p className="text-xs text-studio-muted leading-relaxed font-medium mb-4">
+                <p className="text-sm text-studio-secondary leading-relaxed font-hand mb-4">
                   Complete editorial production dossier including title page, executive summary, 6-dimension candidate breakdown, Parallel Search citations, risk matrix, and full shooting schedule.
                 </p>
               </div>
 
+              {/* FIX 4: >=44px touch target */}
               <button
                 onClick={handleExportBible}
                 disabled={activeExport === 'bible'}
-                className="w-full btn-candy-purple !py-2.5 text-xs font-display font-bold flex items-center justify-center gap-2"
+                className="w-full btn-sketch min-h-[44px] !py-3 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 {activeExport === 'bible' ? (
-                  <>
-                    <span className="animate-spin text-sm">⏳</span>
-                    <span>Generating PDF...</span>
-                  </>
+                  <span>Generating PDF...</span>
                 ) : (
                   <>
                     <Printer className="w-4 h-4" />
@@ -187,27 +184,27 @@ export const ExportModal: React.FC<ExportModalProps> = ({
             </div>
 
             {/* 2. Daily Call Sheet PDF */}
-            <div className="p-5 rounded-2xl bg-studio-bg border-2 border-studio-border shadow-pop-xs flex flex-col justify-between hover:border-[#F472B6] transition-all group">
+            <div className="p-5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border shadow-sketch-xs flex flex-col justify-between hover:border-studio-yellow transition-all group">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 rounded-xl bg-[#F472B6]/10 text-[#F472B6] border border-[#F472B6]/30">
-                    <Film className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-wobbly bg-studio-red text-white border border-studio-border flex items-center justify-center shadow-sketch-xs">
+                    <Film className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-display font-black uppercase px-2.5 py-1 rounded-md bg-[#F472B6]/20 text-[#F472B6]">
+                  <span className="text-xs font-display font-black uppercase px-2.5 py-1 rounded-wobbly bg-studio-surface border border-studio-border text-studio-text">
                     DAILY SHEET
                   </span>
                 </div>
-                <h3 className="text-base font-display font-bold text-studio-text mb-1.5">
+                <h3 className="text-xl font-display font-bold text-studio-text mb-1.5">
                   Daily Call Sheet
                 </h3>
-                <p className="text-xs text-studio-muted leading-relaxed font-medium mb-3">
+                <p className="text-sm text-studio-secondary leading-relaxed font-hand mb-3">
                   Single-day production call sheet with crew call time, estimated wrap, scene timeline, cast and equipment notes, location access, and emergency contact placeholders.
                 </p>
 
                 {/* Day Selector */}
                 {shootingDays.length > 0 && (
                   <div className="mb-4">
-                    <label className="text-[11px] font-display font-bold text-studio-text block mb-1.5">
+                    <label className="text-xs font-display font-bold text-studio-text block mb-1.5">
                       Select Shooting Day:
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -216,10 +213,11 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                           key={d.day_number}
                           type="button"
                           onClick={() => setSelectedDay(d.day_number)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-display font-bold border transition-all ${
+                          /* FIX 4: min-h-[44px] touch target */
+                          className={`touch-target min-h-[44px] px-3.5 py-2 rounded-wobbly text-xs font-hand font-bold border-2 transition-all cursor-pointer ${
                             selectedDay === d.day_number
-                              ? 'bg-[#F472B6] text-white border-studio-border shadow-pop-xs'
-                              : 'bg-studio-surface text-studio-muted border-studio-border hover:text-studio-text'
+                              ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch-xs'
+                              : 'bg-studio-surface text-studio-secondary border-studio-border hover:text-studio-text'
                           }`}
                         >
                           Day {d.day_number} ({d.call_time})
@@ -230,116 +228,95 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                 )}
               </div>
 
+              {/* FIX 4: >=44px touch target */}
               <button
                 onClick={handleExportCallSheet}
                 disabled={activeExport === 'callsheet' || shootingDays.length === 0}
-                className="w-full btn-candy-pink !py-2.5 text-xs font-display font-bold flex items-center justify-center gap-2"
+                className="w-full btn-sketch-yellow min-h-[44px] !py-3 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 {activeExport === 'callsheet' ? (
-                  <>
-                    <span className="animate-spin text-sm">⏳</span>
-                    <span>Generating Call Sheet...</span>
-                  </>
+                  <span>Generating Call Sheet...</span>
                 ) : (
                   <>
-                    <Download className="w-4 h-4" />
+                    <Download className="w-4 h-4 text-slate-900" />
                     <span>Export Call Sheet — Day {selectedDay} (PDF)</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* 3. Shooting Calendar (.ICS) */}
-            <div className="p-5 rounded-2xl bg-studio-bg border-2 border-studio-border shadow-pop-xs flex flex-col justify-between hover:border-[#38BDF8] transition-all group">
+            {/* 3. Shooting Calendar .ICS */}
+            <div className="p-5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border shadow-sketch-xs flex flex-col justify-between hover:border-studio-blue transition-all group">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 rounded-xl bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/30">
-                    <Calendar className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-wobbly bg-sky-200 text-slate-950 border border-studio-border flex items-center justify-center shadow-sketch-xs">
+                    <Calendar className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-display font-black uppercase px-2.5 py-1 rounded-md bg-[#38BDF8]/20 text-[#38BDF8]">
-                    ICALENDAR .ICS
+                  <span className="text-xs font-display font-black uppercase px-2.5 py-1 rounded-wobbly bg-studio-surface border border-studio-border text-studio-text">
+                    CALENDAR SYNC
                   </span>
                 </div>
-                <h3 className="text-base font-display font-bold text-studio-text mb-1.5">
-                  Shooting Calendar (.ics)
+                <h3 className="text-xl font-display font-bold text-studio-text mb-1.5">
+                  Calendar Schedule (.ICS)
                 </h3>
-                <p className="text-xs text-studio-muted leading-relaxed font-medium mb-4">
-                  RFC 5545 compliant calendar export with shooting blocks, scene assignments, and crew calls. One-click import into Google Calendar, Apple Calendar, and Outlook.
+                <p className="text-sm text-studio-secondary leading-relaxed font-hand mb-4">
+                  Standard RFC 5545 iCalendar feed. Imports multi-day call times, wrap hours, and venue locations directly into Apple Calendar, Google Calendar, or Outlook.
                 </p>
               </div>
 
+              {/* FIX 4: >=44px touch target */}
               <button
                 onClick={handleExportCalendar}
-                disabled={activeExport === 'calendar' || shootingDays.length === 0}
-                className="w-full bg-[#38BDF8] text-[#0F172A] border-2 border-studio-border py-2.5 rounded-xl shadow-pop-xs hover:shadow-pop font-display font-bold text-xs flex items-center justify-center gap-2 transition-all"
+                disabled={activeExport === 'calendar'}
+                className="w-full btn-secondary min-h-[44px] !py-3 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 {activeExport === 'calendar' ? (
-                  <>
-                    <span className="animate-spin text-sm">⏳</span>
-                    <span>Preparing .ICS File...</span>
-                  </>
+                  <span>Exporting Calendar...</span>
                 ) : (
                   <>
-                    <Calendar className="w-4 h-4 text-[#0F172A]" />
+                    <Calendar className="w-4 h-4 text-studio-text" />
                     <span>Download Calendar (.ICS)</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* 4. Google Sheets / CSV Schedule */}
-            <div className="p-5 rounded-2xl bg-studio-bg border-2 border-studio-border shadow-pop-xs flex flex-col justify-between hover:border-[#10B981] transition-all group">
+            {/* 4. Shooting Schedule CSV */}
+            <div className="p-5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border shadow-sketch-xs flex flex-col justify-between hover:border-emerald-500 transition-all group">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 rounded-xl bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/30">
-                    <TableIcon className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-wobbly bg-emerald-300 text-slate-950 border border-studio-border flex items-center justify-center shadow-sketch-xs">
+                    <TableIcon className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-display font-black uppercase px-2.5 py-1 rounded-md bg-[#10B981]/20 text-[#10B981]">
-                    GOOGLE SHEETS / CSV
+                  <span className="text-xs font-display font-black uppercase px-2.5 py-1 rounded-wobbly bg-studio-surface border border-studio-border text-studio-text">
+                    SPREADSHEET
                   </span>
                 </div>
-                <h3 className="text-base font-display font-bold text-studio-text mb-1.5">
-                  Shooting Schedule (CSV)
+                <h3 className="text-xl font-display font-bold text-studio-text mb-1.5">
+                  Production Schedule (CSV)
                 </h3>
-                <p className="text-xs text-studio-muted leading-relaxed font-medium mb-4">
-                  Formatted spreadsheet schedule with UTF-8 BOM encoding. Ready to open directly in Google Sheets or Microsoft Excel with dates, times, scenes, cast counts, and risk tags.
+                <p className="text-sm text-studio-secondary leading-relaxed font-hand mb-4">
+                  Tabular shooting breakdown with scene numbers, call times, estimated wrap, locations, and crew notes for Excel, Google Sheets, or Movie Magic Scheduling.
                 </p>
               </div>
 
+              {/* FIX 4: >=44px touch target */}
               <button
                 onClick={handleExportSchedule}
-                disabled={activeExport === 'schedule' || shootingDays.length === 0}
-                className="w-full bg-[#10B981] text-white border-2 border-studio-border py-2.5 rounded-xl shadow-pop-xs hover:shadow-pop font-display font-bold text-xs flex items-center justify-center gap-2 transition-all"
+                disabled={activeExport === 'schedule'}
+                className="w-full btn-sketch min-h-[44px] !py-3 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
                 {activeExport === 'schedule' ? (
-                  <>
-                    <span className="animate-spin text-sm">⏳</span>
-                    <span>Exporting Schedule...</span>
-                  </>
+                  <span>Exporting CSV...</span>
                 ) : (
                   <>
-                    <TableIcon className="w-4 h-4" />
-                    <span>Export to Google Sheets (CSV)</span>
+                    <Download className="w-4 h-4 text-studio-yellow" />
+                    <span>Download Schedule (CSV)</span>
                   </>
                 )}
               </button>
             </div>
-
           </div>
-        </div>
-
-        {/* Modal Footer */}
-        <div className="px-7 py-4 bg-studio-bg border-t-2 border-studio-border flex items-center justify-between text-xs text-studio-muted font-medium">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#FBBF24]" />
-            <span>All exports are generated deterministically from your canonical project plan.</span>
-          </div>
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-studio-surface border-2 border-studio-border text-studio-text font-display font-bold text-xs hover:bg-studio-bg transition-colors"
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>

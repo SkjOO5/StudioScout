@@ -7,10 +7,7 @@ import {
   Loader2, 
   Search, 
   Sparkles, 
-  Layers, 
-  Calendar,
   Activity,
-  Radar,
   Zap
 } from 'lucide-react';
 
@@ -22,12 +19,12 @@ interface AgentActivityTimelineProps {
 export const AgentActivityTimeline: React.FC<AgentActivityTimelineProps> = ({ run, isLoading }) => {
   if (!run && !isLoading) {
     return (
-      <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted transition-colors duration-250">
-        <div className="w-12 h-12 rounded-full bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 border-2 border-studio-border flex items-center justify-center mx-auto mb-3 shadow-pop-xs">
-          <Zap className="w-6 h-6 text-[#8B5CF6] dark:text-[#A78BFA]" />
+      <div className="sketch-card p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted transition-colors duration-200">
+        <div className="w-12 h-12 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center mx-auto mb-3 shadow-sketch-xs">
+          <Zap className="w-6 h-6 text-slate-950" />
         </div>
-        <p className="text-xs font-display font-black uppercase tracking-wider text-studio-text">Autonomous Agent Idle</p>
-        <p className="text-[11px] text-studio-muted mt-1 font-medium">Ready to receive screenplay material</p>
+        <p className="text-sm font-display font-black uppercase tracking-wider text-studio-text">Autonomous Agent Idle</p>
+        <p className="text-sm text-studio-secondary mt-1 font-hand font-normal">Ready to receive screenplay material</p>
       </div>
     );
   }
@@ -35,14 +32,14 @@ export const AgentActivityTimeline: React.FC<AgentActivityTimelineProps> = ({ ru
   const getToolBadge = (tool?: string) => {
     if (tool === 'parallel_search') {
       return (
-        <span className="px-2 py-0.5 rounded-full text-[9px] font-display font-black bg-[#FBBF24] text-[#1E293B] border border-studio-border shadow-pop-xs flex items-center gap-1">
+        <span className="px-2 py-0.5 rounded-wobbly text-[10px] font-hand font-bold bg-studio-yellow text-slate-950 border border-studio-border shadow-sketch-xs flex items-center gap-1">
           <Search className="w-2.5 h-2.5" /> Parallel Search
         </span>
       );
     }
     if (tool === 'gemini') {
       return (
-        <span className="px-2 py-0.5 rounded-full text-[9px] font-display font-black bg-[#8B5CF6] text-white border border-studio-border shadow-pop-xs flex items-center gap-1">
+        <span className="px-2 py-0.5 rounded-wobbly text-[10px] font-hand font-bold bg-studio-red text-white border border-studio-border shadow-sketch-xs flex items-center gap-1">
           <Sparkles className="w-2.5 h-2.5" /> Gemini
         </span>
       );
@@ -53,22 +50,22 @@ export const AgentActivityTimeline: React.FC<AgentActivityTimelineProps> = ({ ru
   const getStatusIcon = (status: StepStatus) => {
     switch (status) {
       case 'completed':
-        return <CheckCircle2 className="w-4 h-4 text-[#059669] dark:text-[#34D399] shrink-0" />;
+        return <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />;
       case 'running':
-        return <Loader2 className="w-4 h-4 text-[#8B5CF6] dark:text-[#A78BFA] animate-spin shrink-0" />;
+        return <Loader2 className="w-4 h-4 text-studio-red animate-spin shrink-0" />;
       case 'failed':
-        return <AlertTriangle className="w-4 h-4 text-[#E11D48] shrink-0" />;
+        return <AlertTriangle className="w-4 h-4 text-accent-red-safe shrink-0" />;
       default:
-        return <Clock className="w-4 h-4 text-studio-dim shrink-0" />;
+        return <Clock className="w-4 h-4 text-studio-muted shrink-0" />;
     }
   };
 
   return (
-    <div className="bg-studio-surface p-5 rounded-2xl border-2 border-studio-border shadow-pop relative overflow-hidden text-left transition-colors duration-250">
+    <div className="sketch-card p-5 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch relative overflow-hidden text-left transition-colors duration-200">
       {/* Header */}
-      <div className="flex items-center justify-between pb-3.5 mb-4 border-b-2 border-studio-border/20">
+      <div className="flex items-center justify-between pb-3.5 mb-4 border-b-2 border-dashed border-studio-border/30">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-[#8B5CF6] text-white flex items-center justify-center border border-studio-border shadow-pop-xs">
+          <div className="w-8 h-8 rounded-wobbly bg-studio-yellow text-slate-950 flex items-center justify-center border-2 border-studio-border shadow-sketch-xs">
             <Activity className="w-4 h-4" />
           </div>
           <h3 className="text-xs font-display font-black uppercase tracking-wider text-studio-text">
@@ -76,12 +73,12 @@ export const AgentActivityTimeline: React.FC<AgentActivityTimelineProps> = ({ ru
           </h3>
         </div>
         {run && (
-          <span className={`px-2.5 py-0.5 rounded-full text-xs font-display font-black uppercase tracking-wide border border-studio-border shadow-pop-xs ${
+          <span className={`px-2.5 py-0.5 rounded-wobbly text-xs font-hand font-bold uppercase tracking-wide border border-studio-border shadow-sketch-xs ${
             run.state === 'completed'
-              ? 'bg-[#34D399] text-[#1E293B]'
+              ? 'bg-emerald-400 text-slate-950'
               : run.state === 'failed'
-              ? 'bg-[#F472B6] text-white'
-              : 'bg-[#FBBF24] text-[#1E293B] animate-pulse'
+              ? 'bg-studio-red text-white' // FIX 1: safe contrast white on red
+              : 'bg-studio-yellow text-slate-950 animate-pulse'
           }`}>
             {run.state}
           </span>
@@ -90,74 +87,56 @@ export const AgentActivityTimeline: React.FC<AgentActivityTimelineProps> = ({ ru
 
       {/* Telemetry Counters */}
       {run && (
-        <div className="grid grid-cols-3 gap-2 mb-4 p-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-center font-display shadow-pop-xs">
+        <div className="grid grid-cols-3 gap-2 mb-4 p-2.5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border text-center font-hand shadow-sketch-xs">
           <div>
-            <span className="block text-[9px] font-bold uppercase tracking-wider text-studio-muted">Scenes</span>
-            <span className="text-sm font-black text-studio-text">{run.scenes_processed}</span>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-studio-muted">Scenes</span>
+            <span className="text-base font-black text-studio-text font-display">{run.scenes_processed}</span>
           </div>
           <div>
-            <span className="block text-[9px] font-bold uppercase tracking-wider text-[#D97706] dark:text-[#FBBF24]">Parallel Hits</span>
-            <span className="text-sm font-black text-[#D97706] dark:text-[#FBBF24]">{run.searches_performed}</span>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-studio-text">Parallel Hits</span>
+            <span className="text-base font-black text-studio-text font-display">{run.searches_performed}</span>
           </div>
           <div>
-            <span className="block text-[9px] font-bold uppercase tracking-wider text-[#8B5CF6] dark:text-[#A78BFA]">Candidates</span>
-            <span className="text-sm font-black text-[#8B5CF6] dark:text-[#A78BFA]">{run.candidates_found}</span>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-studio-muted">Scored</span>
+            <span className="text-base font-black text-studio-text font-display">{run.candidates_found}</span>
           </div>
         </div>
       )}
 
-      {/* Steps Sequence */}
-      <div className="space-y-2.5 relative before:absolute before:top-2 before:bottom-2 before:left-[13px] before:w-[2px] before:bg-studio-border/30">
+      {/* Steps List */}
+      <div className="space-y-3 max-h-[380px] overflow-y-auto pr-1">
         {run?.steps.map((step, idx) => (
           <div
-            key={step.id || idx}
-            className={`relative pl-7 transition-all duration-200 ${
+            key={idx}
+            className={`p-3 rounded-wobbly border-2 text-xs transition-all ${
               step.status === 'running'
-                ? 'scale-[1.01] opacity-100'
-                : step.status === 'pending'
-                ? 'opacity-40'
-                : 'opacity-100'
+                ? 'bg-amber-50 dark:bg-amber-950/40 border-studio-yellow shadow-sketch-xs'
+                : step.status === 'completed'
+                ? 'bg-studio-bg border-studio-border'
+                : 'bg-studio-bg border-dashed border-studio-border/50 opacity-80'
             }`}
           >
-            {/* Status node */}
-            <div className="absolute left-1 top-1 -translate-x-1/2 bg-studio-surface rounded-full p-0.5 z-10 border-2 border-studio-border shadow-pop-xs">
-              {getStatusIcon(step.status)}
-            </div>
-
-            {/* Step card */}
-            <div className={`p-3 rounded-xl border-2 text-xs transition-all ${
-              step.status === 'running'
-                ? 'bg-[#DDD6FE]/30 dark:bg-[#8B5CF6]/20 border-[#8B5CF6] text-studio-text shadow-pop-xs'
-                : step.status === 'failed'
-                ? 'bg-[#FFE4E6] dark:bg-rose-950/40 border-[#E11D48] text-[#9F1239] dark:text-rose-200'
-                : 'bg-studio-surface border-studio-border text-studio-text shadow-pop-xs'
-            }`}>
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="font-display font-bold text-studio-text truncate text-xs">
-                  {step.name}
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                {getStatusIcon(step.status)}
+                <span className="font-display font-bold text-studio-text">
+                  {step.title}
                 </span>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {getToolBadge(step.tool_used)}
-                  {step.duration_ms && (
-                    <span className="text-[10px] text-studio-muted font-mono font-bold">
-                      {(step.duration_ms / 1000).toFixed(1)}s
-                    </span>
-                  )}
-                </div>
               </div>
-
-              {step.detail && (
-                <p className="text-[11px] text-studio-muted leading-relaxed font-sans font-medium mt-0.5">
-                  {step.detail}
-                </p>
-              )}
-
-              {step.error && (
-                <p className="text-[11px] text-[#E11D48] dark:text-rose-300 font-mono font-bold bg-studio-bg p-2 rounded-lg border border-[#FDA4AF] dark:border-rose-800 mt-1">
-                  {step.error}
-                </p>
-              )}
+              {getToolBadge(step.tool)}
             </div>
+
+            {step.description && (
+              <p className="text-xs text-studio-secondary font-hand pl-6 leading-relaxed">
+                {step.description}
+              </p>
+            )}
+
+            {step.error && (
+              <p className="text-xs text-accent-red-safe font-hand pl-6 mt-1 font-bold">
+                {step.error}
+              </p>
+            )}
           </div>
         ))}
       </div>

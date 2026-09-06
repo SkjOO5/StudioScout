@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles, AlertCircle, RefreshCw, Layers, Zap } from 'lucide-react';
+import { X, RefreshCw } from 'lucide-react';
 import { Scene } from '../types';
 
 interface ReplanModalProps {
@@ -41,24 +41,26 @@ export const ReplanModal: React.FC<ReplanModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-pop-in">
-      <div className="bg-studio-surface w-full max-w-lg p-7 rounded-2xl border-2 border-studio-border shadow-pop-2xl relative text-left transition-colors duration-250">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-pop-in text-left">
+      <div className="sketch-card w-full max-w-lg p-7 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch-lg relative transition-colors duration-200">
+        {/* FIX 4: Close button touch target >= 44x44px */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 text-studio-text hover:bg-studio-hover p-1.5 rounded-full border-2 border-studio-border shadow-pop-xs transition-transform hover:scale-105"
+          className="touch-target min-w-[44px] min-h-[44px] absolute top-5 right-5 text-studio-text hover:bg-studio-red hover:text-white p-2 rounded-wobbly border-2 border-studio-border shadow-sketch-xs transition-transform hover:scale-105 cursor-pointer"
+          aria-label="Close replan modal"
         >
           <X className="w-4 h-4" />
         </button>
 
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] dark:bg-amber-950/40 border-2 border-studio-border flex items-center justify-center text-[#D97706] dark:text-[#FBBF24] shadow-pop-xs">
-            <RefreshCw className="w-6 h-6 text-[#D97706] dark:text-[#FBBF24]" />
+          <div className="w-12 h-12 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center shadow-sketch-xs">
+            <RefreshCw className="w-6 h-6 text-slate-950" />
           </div>
           <div>
-            <h2 className="text-xl font-display font-black text-studio-text leading-snug">
+            <h2 className="text-2xl font-display font-black text-studio-text leading-snug">
               Autonomous Production Re-planning
             </h2>
-            <p className="text-xs font-display font-bold text-studio-muted">
+            <p className="text-xs font-hand font-bold text-studio-secondary">
               Simulate production shifts, venue blackouts, or budget pivots
             </p>
           </div>
@@ -76,81 +78,56 @@ export const ReplanModal: React.FC<ReplanModalProps> = ({
                     setConstraint(sc.text);
                     setConstraintType(sc.type);
                   }}
-                  className="w-full text-left p-2.5 rounded-xl bg-studio-bg hover:bg-studio-hover border-2 border-studio-border text-xs font-medium text-studio-text transition-all flex items-start gap-2 shadow-pop-xs"
+                  className="w-full text-left p-2.5 rounded-wobbly bg-studio-bg hover:bg-studio-hover border-2 border-studio-border text-xs font-hand font-bold text-studio-text transition-all flex items-start gap-2 shadow-sketch-xs cursor-pointer min-h-[44px]"
                 >
-                  <span className="text-[#8B5CF6] dark:text-[#A78BFA] font-bold">&bull;</span>
+                  <span className="text-studio-redText font-bold">&bull;</span>
                   <span>{sc.text}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Custom constraint text */}
           <div>
             <label className="label">Constraint Description</label>
             <textarea
               value={constraint}
               onChange={(e) => setConstraint(e.target.value)}
               placeholder="e.g. Warehouse location A is unavailable on Saturday; need alternative venue or day shift..."
-              className="input h-24 resize-none text-xs font-medium"
+              className="input h-24 resize-none text-sm font-hand"
               required
             />
           </div>
 
-          {/* Constraint Category */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="label">Constraint Type</label>
-              <select
-                value={constraintType}
-                onChange={(e) => setConstraintType(e.target.value)}
-                className="input text-xs"
-              >
-                <option value="availability">Venue Availability</option>
-                <option value="weather">Weather Conflict</option>
-                <option value="permit">Permit / Legal</option>
-                <option value="budget">Budget Constraint</option>
-                <option value="access">Access / Curfew</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="label">Target Location (Optional)</label>
-              <input
-                type="text"
-                value={affectsLocation}
-                onChange={(e) => setAffectsLocation(e.target.value)}
-                placeholder="e.g. Warehouse"
-                className="input text-xs font-medium"
-              />
-            </div>
+          <div>
+            <label className="label">Constraint Category</label>
+            <select
+              value={constraintType}
+              onChange={(e) => setConstraintType(e.target.value)}
+              className="input"
+            >
+              <option value="availability">Venue Availability Blackout</option>
+              <option value="weather">Inclement Weather Shift</option>
+              <option value="permit">Municipal Permit Delay</option>
+              <option value="access">Access / Curfew Constraint</option>
+              <option value="budget">Budget / Resource Limitation</option>
+            </select>
           </div>
 
-          <div className="mt-6 pt-4 border-t-2 border-studio-border/20 flex justify-end gap-3">
+          <div className="pt-4 border-t-2 border-dashed border-studio-border/30 flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="btn-secondary !py-2.5 !px-5 text-xs"
-              disabled={isSubmitting}
+              className="btn-secondary min-h-[44px] !py-2.5 !px-5 text-sm font-hand font-bold cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="btn-candy-yellow !py-2.5 !px-6 text-xs font-display font-bold flex items-center gap-2"
               disabled={isSubmitting || !constraint.trim()}
+              className="btn-sketch min-h-[44px] !py-2.5 !px-6 text-sm font-hand font-bold flex items-center gap-2 cursor-pointer"
             >
-              {isSubmitting ? (
-                <>
-                  <RefreshCw className="w-4 h-4 animate-spin text-[#1E293B]" />
-                  <span>Agent Re-planning...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4 text-[#1E293B]" />
-                  <span>Trigger Autonomous Re-plan</span>
-                </>
-              )}
+              <RefreshCw className={`w-4 h-4 text-studio-yellow ${isSubmitting ? 'animate-spin' : ''}`} />
+              <span>{isSubmitting ? 'Triggering Re-plan...' : 'Re-calculate Production Schedule'}</span>
             </button>
           </div>
         </form>
