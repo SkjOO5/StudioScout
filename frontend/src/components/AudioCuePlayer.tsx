@@ -279,34 +279,35 @@ export const AudioCuePlayer: React.FC<AudioCueProps> = ({ cue, sceneNumber }) =>
   const progressPct = Math.min(100, (currentTime / DURATION) * 100);
 
   return (
-    <div className="space-y-3.5 mt-4">
+    <div className="space-y-3.5 mt-4 text-left">
       {/* Top audio badges */}
-      <div className="flex flex-wrap gap-2 text-[11px] font-display font-bold">
-        <span className="px-2.5 py-1 rounded-md bg-[#FEF3C7] dark:bg-amber-950/40 text-[#D97706] dark:text-[#FBBF24] border border-studio-border flex items-center gap-1 shadow-pop-xs">
+      <div className="flex flex-wrap gap-2 text-xs font-hand font-bold">
+        <span className="px-3 py-1 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border flex items-center gap-1 shadow-sketch-xs">
           <Radio className="w-3.5 h-3.5" />
           {cue.bpm || 80} BPM
         </span>
-        <span className="px-2.5 py-1 rounded-md bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 text-[#8B5CF6] dark:text-[#A78BFA] border border-studio-border flex items-center gap-1 shadow-pop-xs">
-          <Disc className="w-3.5 h-3.5" />
+        <span className="px-3 py-1 rounded-wobbly bg-studio-muted text-studio-text border border-studio-border flex items-center gap-1 shadow-sketch-xs">
+          <Disc className="w-3.5 h-3.5 text-studio-red" />
           Key: {cue.key_signature || 'D Minor'}
         </span>
-        <span className="px-2.5 py-1 rounded-md bg-[#E0F2FE] dark:bg-sky-950/40 text-[#0284C7] dark:text-sky-300 border border-studio-border shadow-pop-xs">
+        <span className="px-3 py-1 rounded-wobbly bg-sky-200 dark:bg-sky-950/60 text-slate-950 dark:text-sky-200 border border-studio-border shadow-sketch-xs">
           {cue.genre || 'Industrial Sci-Fi Score'}
         </span>
       </div>
 
       {/* Interactive Audio Player & Dynamic Visualizer */}
-      <div className="p-4 bg-[#0B0F17] rounded-xl border-2 border-studio-border shadow-pop-xs space-y-3 text-white">
+      <div className="p-4 bg-studio-bg rounded-wobbly-md border-[2.5px] border-studio-border shadow-sketch-xs space-y-3 text-studio-text">
         <div className="flex items-center justify-between gap-3">
-          {/* Play/Pause Button */}
+          {/* Play/Pause Button - FIX 4: min-w-[44px] min-h-[44px] */}
           <button
             onClick={togglePlay}
-            className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 border-2 border-studio-border shadow-pop-xs transition-all ${
+            className={`touch-target min-w-[44px] min-h-[44px] rounded-wobbly flex items-center justify-center shrink-0 border-2 border-studio-border shadow-sketch-xs transition-all cursor-pointer ${
               isPlaying
-                ? 'bg-[#EF4444] text-white hover:scale-105'
-                : 'bg-[#FBBF24] text-[#1E293B] hover:scale-105 active:scale-95'
+                ? 'bg-studio-red text-white hover:scale-105'
+                : 'bg-studio-yellow text-slate-950 hover:scale-105 active:scale-95'
             }`}
             title={isPlaying ? 'Pause Audio Cue' : 'Play Live Synthesized Audio Cue'}
+            aria-label={isPlaying ? 'Pause Audio Cue' : 'Play Live Synthesized Audio Cue'}
           >
             {isPlaying ? (
               <Pause className="w-5 h-5 fill-current" />
@@ -316,7 +317,7 @@ export const AudioCuePlayer: React.FC<AudioCueProps> = ({ cue, sceneNumber }) =>
           </button>
 
           {/* Animated Waveform Visualizer */}
-          <div className="flex-1 flex items-center gap-1 h-8 px-2 bg-slate-900/80 rounded-lg border border-slate-800 overflow-hidden">
+          <div className="flex-1 flex items-center gap-1 h-9 px-2.5 bg-studio-surface rounded-wobbly border-2 border-studio-border overflow-hidden">
             {[45, 70, 85, 35, 95, 60, 80, 50, 90, 65, 40, 85, 55, 75, 100, 45, 90, 65, 35, 80, 50, 70, 95, 60].map(
               (baseHeight, bIdx) => {
                 const isPassed = (bIdx / 24) * 100 <= progressPct;
@@ -330,7 +331,7 @@ export const AudioCuePlayer: React.FC<AudioCueProps> = ({ cue, sceneNumber }) =>
                   <div
                     key={bIdx}
                     className={`flex-1 rounded-full transition-all duration-75 ${
-                      isPassed ? 'bg-[#FBBF24]' : 'bg-slate-700'
+                      isPassed ? 'bg-studio-yellow' : 'bg-studio-border/30'
                     }`}
                     style={{ height: `${animatedHeight}%` }}
                   />
@@ -341,13 +342,15 @@ export const AudioCuePlayer: React.FC<AudioCueProps> = ({ cue, sceneNumber }) =>
 
           {/* Time & Download Controls */}
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs font-mono font-bold text-amber-400 min-w-[50px] text-right">
+            <span className="text-xs font-mono font-bold text-studio-text min-w-[50px] text-right">
               {formatTime(currentTime)} / {formatTime(DURATION)}
             </span>
+            {/* FIX 4: min-w-[44px] min-h-[44px] */}
             <button
               onClick={handleDownloadWav}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-all"
+              className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface hover:bg-studio-hover text-studio-text border-2 border-studio-border shadow-sketch-xs transition-all cursor-pointer"
               title="Download Synthesized WAV Audio Track"
+              aria-label="Download Synthesized WAV Audio Track"
             >
               <Download className="w-4 h-4" />
             </button>
@@ -355,13 +358,14 @@ export const AudioCuePlayer: React.FC<AudioCueProps> = ({ cue, sceneNumber }) =>
         </div>
 
         {/* Volume & Scrub Track */}
-        <div className="flex items-center justify-between gap-4 pt-1 border-t border-slate-800/80 text-[11px] text-slate-400">
+        <div className="flex items-center justify-between gap-4 pt-1 border-t border-dashed border-studio-border/30 text-xs text-studio-muted font-hand">
           <div className="flex items-center gap-2">
-            <button onClick={toggleMute} className="hover:text-white transition-colors">
+            {/* FIX 4: min-w-[44px] min-h-[44px] */}
+            <button onClick={toggleMute} className="touch-target min-w-[44px] min-h-[44px] hover:text-studio-text transition-colors cursor-pointer" aria-label="Toggle mute">
               {isMuted || volume === 0 ? (
-                <VolumeX className="w-3.5 h-3.5 text-rose-400" />
+                <VolumeX className="w-4 h-4 text-accent-red-safe" />
               ) : (
-                <Volume2 className="w-3.5 h-3.5" />
+                <Volume2 className="w-4 h-4" />
               )}
             </button>
             <input

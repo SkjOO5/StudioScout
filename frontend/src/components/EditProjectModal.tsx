@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Film, MapPin, Building, Save } from 'lucide-react';
+import { X, Save } from 'lucide-react';
 import { Project, Genre, BudgetTier } from '../types';
 import { api } from '../lib/api';
 
@@ -61,120 +61,115 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-fade-in text-left">
-      <div className="bg-studio-surface w-full max-w-lg rounded-2xl border-2 border-studio-border shadow-pop-lg overflow-hidden flex flex-col transition-colors duration-250">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-pop-in text-left">
+      <div className="sketch-card w-full max-w-lg rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch-lg overflow-hidden flex flex-col transition-colors duration-200">
         {/* Header */}
-        <div className="p-5 bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 border-b-2 border-studio-border flex items-center justify-between">
+        <div className="p-5 bg-studio-bg border-b-2 border-studio-border flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-studio-surface border-2 border-studio-border flex items-center justify-center shadow-pop-xs text-xl">
+            <div className="w-10 h-10 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center shadow-sketch-xs text-lg font-display font-bold">
               ✏️
             </div>
             <div>
-              <h3 className="text-lg font-display font-extrabold text-studio-text">
+              <h3 className="text-xl font-display font-extrabold text-studio-text">
                 Edit Production Details
               </h3>
-              <p className="text-xs font-bold text-studio-muted">
-                Update metadata for <span className="text-[#7C3AED] dark:text-[#A78BFA]">{project.name}</span>
+              <p className="text-xs font-hand font-bold text-studio-secondary">
+                Update metadata for <span className="text-studio-text font-bold">{project.name}</span>
               </p>
             </div>
           </div>
+
+          {/* FIX 4: Close button touch target >= 44x44px */}
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-studio-surface text-studio-text border-2 border-studio-border flex items-center justify-center shadow-pop-xs hover:bg-[#FEE2E2] dark:hover:bg-red-950/40 transition-all"
+            className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface text-studio-text border-2 border-studio-border flex items-center justify-center shadow-sketch-xs hover:bg-studio-red hover:text-white transition-all cursor-pointer"
+            aria-label="Close edit project modal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {/* FIX 1: WCAG AA compliant error message */}
           {error && (
-            <div className="p-3 rounded-xl bg-[#FEE2E2] dark:bg-red-950/40 border-2 border-[#EF4444] text-xs font-bold text-[#B91C1C] dark:text-red-200">
+            <div className="p-3 rounded-wobbly bg-red-100 dark:bg-rose-950/60 border-2 border-studio-border text-xs font-hand font-bold text-accent-red-safe">
               {error}
             </div>
           )}
 
           <div>
-            <label className="text-xs font-display font-black text-studio-text block mb-1">
-              Project Name / Title
-            </label>
+            <label className="label">Project Title</label>
             <input
               type="text"
-              required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface focus:shadow-pop-xs"
+              className="input font-display text-base"
+              required
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Target City
-              </label>
-              <input
-                type="text"
-                required
-                value={productionCity}
-                onChange={(e) => setProductionCity(e.target.value)}
-                placeholder="e.g. Mumbai, Atlanta, London"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface focus:shadow-pop-xs"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Genre
-              </label>
-              <select
-                value={genre}
-                onChange={(e) => setGenre(e.target.value as Genre)}
-                className="w-full px-3 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
-              >
-                <option value="thriller">Thriller</option>
-                <option value="action">Action</option>
-                <option value="drama">Drama</option>
-                <option value="sci-fi">Sci-Fi</option>
-                <option value="horror">Horror</option>
-                <option value="comedy">Comedy</option>
-                <option value="romance">Romance</option>
-                <option value="documentary">Documentary</option>
-              </select>
-            </div>
+          <div>
+            <label className="label">Genre</label>
+            <select
+              value={genre}
+              onChange={(e) => setGenre(e.target.value as Genre)}
+              className="input"
+            >
+              <option value="thriller">Thriller / Neo-Noir</option>
+              <option value="action">Action / Adventure</option>
+              <option value="drama">Drama</option>
+              <option value="sci-fi">Sci-Fi / Futuristic</option>
+              <option value="horror">Horror / Mystery</option>
+              <option value="comedy">Comedy</option>
+              <option value="documentary">Documentary</option>
+              <option value="romance">Romance</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
           <div>
-            <label className="text-xs font-display font-black text-studio-text block mb-1">
-              Budget Tier
-            </label>
+            <label className="label">Production City</label>
+            <input
+              type="text"
+              value={productionCity}
+              onChange={(e) => setProductionCity(e.target.value)}
+              className="input"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="label">Budget Scale Tier</label>
             <select
               value={budgetTier}
               onChange={(e) => setBudgetTier(e.target.value as BudgetTier)}
-              className="w-full px-3 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
+              className="input"
             >
-              <option value="micro">Micro (&lt; $100K)</option>
-              <option value="low">Low ($100K - $1M)</option>
+              <option value="micro">Micro-Budget (&lt; $100K)</option>
+              <option value="low">Low Budget ($100K - $1M)</option>
               <option value="mid">Mid Tier ($1M - $10M)</option>
               <option value="high">High Budget ($10M - $100M)</option>
               <option value="blockbuster">Studio Blockbuster (&gt; $100M)</option>
             </select>
           </div>
 
-          <div className="pt-3 border-t-2 border-studio-border/20 flex items-center justify-end gap-3">
+          {/* Action Footer */}
+          <div className="pt-4 border-t-2 border-dashed border-studio-border/30 flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="btn-secondary !py-2.5 !px-5 text-xs"
+              className="btn-secondary min-h-[44px] !py-2.5 !px-5 text-sm font-hand font-bold cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSaving}
-              className="btn-candy !py-2.5 !px-6 text-xs font-display font-black flex items-center gap-2"
+              className="btn-sketch min-h-[44px] !py-2.5 !px-6 text-sm font-hand font-bold flex items-center gap-2 cursor-pointer"
             >
-              <Save className="w-3.5 h-3.5" />
-              <span>{isSaving ? 'SAVING...' : 'SAVE CHANGES'}</span>
+              <Save className="w-4 h-4 text-studio-yellow" />
+              <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
             </button>
           </div>
         </form>

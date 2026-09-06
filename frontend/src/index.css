@@ -2,57 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   HAND-DRAWN SKETCHBOOK (LIGHT) & CHALKBOARD (DARK) DESIGN SYSTEM TOKENS
+   ========================================================================== */
+
 :root,
 html[data-theme="light"] {
-  /* Backgrounds */
-  --bg-primary: #FFFDF5;
-  --bg-secondary: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-elevated: #FFFFFF;
-  --bg-hover: #F1F5F9;
-  --bg-muted: #F1F5F9;
+  /* Canvas & Paper Backgrounds */
+  --bg-primary: #fdfbf7;        /* Warm natural sketchbook paper */
+  --bg-secondary: #f6f2e9;
+  --bg-surface: #ffffff;        /* Crisp paper cutout card */
+  --bg-elevated: #ffffff;
+  --bg-hover: #f3eee3;
+  --bg-muted: #e8e2d7;          /* Erased pencil / old parchment tone */
+  --bg-postit: #fff9c4;         /* Authentic yellow post-it note */
 
-  /* Typography */
-  --text-primary: #1E293B;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --text-dim: #94A3B8;
+  /* Handwritten Ink Typography */
+  --text-primary: #2d2d2d;      /* Soft pencil black - never harsh pure #000 */
+  --text-secondary: #4a4a4a;    /* Graphite pencil gray */
+  --text-muted: #5e5951;        /* Muted pencil lead (>5.8:1 on #fdfbf7) */
+  --text-dim: #7d776f;
 
-  /* Borders */
-  --border-color: #1E293B;
-  --border-subtle: #CBD5E1;
-  --border-light: #E2E8F0;
+  /* Pencil Stroke Borders */
+  --border-color: #2d2d2d;      /* 2.5px - 3px solid pencil lead */
+  --border-subtle: #d0c9be;
+  --border-light: #e5e0d8;
 
-  /* Shadows */
-  --shadow-pop-color: #1E293B;
-  --shadow-pop-xs: 2px 2px 0px 0px #1E293B;
-  --shadow-pop-sm: 3px 3px 0px 0px #1E293B;
-  --shadow-pop: 4px 4px 0px 0px #1E293B;
-  --shadow-pop-md: 5px 5px 0px 0px #1E293B;
-  --shadow-pop-lg: 6px 6px 0px 0px #1E293B;
-  --shadow-pop-xl: 8px 8px 0px 0px #1E293B;
-  --shadow-pop-2xl: 12px 12px 0px 0px #1E293B;
+  /* Tactile Hard Offset Shadows (NO BLUR) */
+  --shadow-color: #2d2d2d;
+  --shadow-paper-xs: 2px 2px 0px 0px #2d2d2d;
+  --shadow-paper-sm: 3px 3px 0px 0px #2d2d2d;
+  --shadow-paper: 4px 4px 0px 0px #2d2d2d;
+  --shadow-paper-md: 5px 5px 0px 0px #2d2d2d;
+  --shadow-paper-lg: 6px 6px 0px 0px #2d2d2d;
+  --shadow-paper-xl: 8px 8px 0px 0px #2d2d2d;
 
-  /* Colored Shadows */
-  --shadow-pop-violet: 4px 4px 0px 0px #8B5CF6;
-  --shadow-pop-pink: 4px 4px 0px 0px #F472B6;
-  --shadow-pop-yellow: 4px 4px 0px 0px #FBBF24;
-  --shadow-pop-mint: 4px 4px 0px 0px #34D399;
-  --shadow-pop-cyan: 4px 4px 0px 0px #38BDF8;
-  --shadow-cinema: 4px 4px 0px 0px #1E293B;
+  /* Accent Colored Shadows */
+  --shadow-paper-red: 4px 4px 0px 0px #ff4d4d;
+  --shadow-paper-blue: 4px 4px 0px 0px #2d5da1;
+  --shadow-paper-yellow: 4px 4px 0px 0px #d97706;
 
-  /* Accents */
-  --accent-violet: #8B5CF6;
-  --accent-pink: #F472B6;
-  --accent-yellow: #FBBF24;
-  --accent-mint: #34D399;
-  --accent-cyan: #38BDF8;
+  /* Hand-Drawn Color Accents */
+  --accent-red: #ff4d4d;        /* Red correction marker (backgrounds, borders, buttons) */
+  --accent-red-text: #b91c1c;   /* FIX 1: WCAG AA verified red text (>5.7:1 on #fdfbf7 & #ffffff) */
+  --accent-blue: #2d5da1;       /* Blue ballpoint pen */
+  --accent-yellow: #f59e0b;     /* Highlighter sunny amber */
+  --accent-green: #10b981;      /* Field green pencil */
+  --accent-purple: #7c3aed;     /* Purple calligraphy ink */
 
-  /* Grids & Backdrops */
-  --grid-dot-color: #CBD5E1;
-  --modal-backdrop: rgba(30, 41, 59, 0.7);
-  --scrollbar-track: #FFFDF5;
-  --scrollbar-thumb: #1E293B;
+  /* Textures & Accents */
+  --grid-dot-color: #e5e0d8;
+  --tape-color: rgba(220, 214, 198, 0.75);
+  --modal-backdrop: rgba(45, 45, 45, 0.6);
+  --scrollbar-track: #fdfbf7;
+  --scrollbar-thumb: #2d2d2d;
 }
 
 html.dark,
@@ -60,55 +63,54 @@ html[data-theme="dark"],
 :root.dark,
 :root[data-theme="dark"],
 .dark {
-  /* Backgrounds: Layered Cinematic Charcoal / Control Room Graphite */
-  --bg-primary: #0B0F17;
-  --bg-secondary: #0F172A;
-  --bg-surface: #131B2B;
-  --bg-elevated: #1C2940;
-  --bg-hover: #243452;
-  --bg-muted: #1E293B;
+  /* Canvas & Chalkboard Backgrounds */
+  --bg-primary: #1a1a1a;        /* Deep charcoal chalkboard */
+  --bg-secondary: #222222;
+  --bg-surface: #252525;        /* Slightly lighter slate chalkboard panel */
+  --bg-elevated: #2d2d2d;
+  --bg-hover: #333333;
+  --bg-muted: #2f2f2f;
+  --bg-postit: #38341e;         /* Chalkboard amber post-it */
 
-  /* Typography: High-Contrast Crisp Off-White & Soft Slate */
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --text-dim: #64748B;
+  /* Chalk Typography */
+  --text-primary: #fdfbf7;      /* Crisp off-white chalk stroke */
+  --text-secondary: #ded9d0;    /* Crisp soft chalk gray */
+  --text-muted: #b8b2a7;        /* Highly legible chalk text (>6.8:1 on #1a1a1a, >5.2:1 on #252525) */
+  --text-dim: #8e887f;
 
-  /* Borders: Clean, High-Contrast Dark Slate */
-  --border-color: #334155;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-light: rgba(255, 255, 255, 0.14);
+  /* Chalk Stroke Borders */
+  --border-color: #e5e0d8;      /* Off-white chalk line */
+  --border-subtle: rgba(229, 224, 216, 0.25);
+  --border-light: rgba(229, 224, 216, 0.15);
 
-  /* Shadows: Deep Ink Stroke with Atmospheric Ambient Ambient Glow */
-  --shadow-pop-color: #020617;
-  --shadow-pop-xs: 1px 1px 0px 0px #334155;
-  --shadow-pop-sm: 2px 2px 0px 0px #334155;
-  --shadow-pop: 0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --shadow-pop-md: 0 6px 24px -2px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-pop-lg: 0 8px 30px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  --shadow-pop-xl: 0 12px 36px -4px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.12);
-  --shadow-pop-2xl: 0 20px 48px -8px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.14);
+  /* Tactile Hard Offset Chalk Shadows (NO BLUR) */
+  --shadow-color: #0d0d0d;
+  --shadow-paper-xs: 2px 2px 0px 0px #0d0d0d;
+  --shadow-paper-sm: 3px 3px 0px 0px #0d0d0d;
+  --shadow-paper: 4px 4px 0px 0px #0d0d0d;
+  --shadow-paper-md: 5px 5px 0px 0px #0d0d0d;
+  --shadow-paper-lg: 6px 6px 0px 0px #0d0d0d;
+  --shadow-paper-xl: 8px 8px 0px 0px #0d0d0d;
 
-  /* Colored Shadows in Dark Mode (Luminous Control Room Glow) */
-  --shadow-pop-violet: 0 0 20px -2px rgba(139, 92, 246, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.3);
-  --shadow-pop-pink: 0 0 20px -2px rgba(244, 114, 182, 0.4), 0 0 0 1px rgba(244, 114, 182, 0.3);
-  --shadow-pop-yellow: 0 0 20px -2px rgba(251, 191, 36, 0.4), 0 0 0 1px rgba(251, 191, 36, 0.3);
-  --shadow-pop-mint: 0 0 20px -2px rgba(52, 211, 153, 0.4), 0 0 0 1px rgba(52, 211, 153, 0.3);
-  --shadow-pop-cyan: 0 0 20px -2px rgba(56, 189, 248, 0.4), 0 0 0 1px rgba(56, 189, 248, 0.3);
-  --shadow-cinema: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  /* Accent Colored Shadows in Dark Mode */
+  --shadow-paper-red: 4px 4px 0px 0px #ff5e5e;
+  --shadow-paper-blue: 4px 4px 0px 0px #5c8bd6;
+  --shadow-paper-yellow: 4px 4px 0px 0px #fde047;
 
-  /* Luminous Studio Accents */
-  --accent-violet: #A78BFA;
-  --accent-pink: #F472B6;
-  --accent-yellow: #FBBF24;
-  --accent-mint: #34D399;
-  --accent-cyan: #38BDF8;
+  /* Chalkboard Accents */
+  --accent-red: #ff5e5e;        /* Brightened chalk red (passes WCAG AA at ~5.8:1 on #1a1a1a) */
+  --accent-red-text: #ff5e5e;   /* FIX 1: Passes dark mode WCAG AA */
+  --accent-blue: #5c8bd6;       /* Chalk cyan/blue */
+  --accent-yellow: #fde047;     /* Chalk sunny yellow */
+  --accent-green: #34d399;      /* Chalk mint emerald */
+  --accent-purple: #c084fc;     /* Chalk soft lilac */
 
-  /* Grids & Backdrops */
-  --grid-dot-color: rgba(255, 255, 255, 0.07);
-  --modal-backdrop: rgba(2, 6, 23, 0.85);
-  --scrollbar-track: #0B0F17;
-  --scrollbar-thumb: #334155;
+  /* Textures & Accents */
+  --grid-dot-color: rgba(255, 255, 255, 0.08);
+  --tape-color: rgba(255, 255, 255, 0.14);
+  --modal-backdrop: rgba(10, 10, 10, 0.85);
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #e5e0d8;
 }
 
 * {
@@ -124,226 +126,315 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Patrick Hand', cursive, sans-serif;
   background-image: radial-gradient(var(--grid-dot-color) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Responsive theme-aware scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-  border-left: 1px solid var(--border-light);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-violet);
+/* Headings use Kalam marker display by default */
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Kalam', cursive, sans-serif;
 }
 
-/* Playful Geometric & Cinematic Component Classes */
+/* Wobbly border radius variables */
+:root {
+  --radius-wobbly: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --radius-wobbly-md: 255px 25px 225px 25px / 25px 225px 25px 255px;
+  --radius-wobbly-lg: 30px 180px 25px 190px / 190px 25px 180px 30px;
+  --radius-wobbly-pill: 255px 25px 225px 25px / 25px 225px 25px 255px;
+}
+
+/* ==========================================================================
+   HAND-DRAWN CONTAINER & CARD STYLES
+   ========================================================================== */
+
 .studio-panel,
 .sticker-card,
-.card {
+.card,
+.sketch-card {
   background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-pop);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+  border: 2.5px solid var(--border-color);
+  border-radius: var(--radius-wobbly-md);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.sketch-card-tilt-left {
+  transform: rotate(-0.5deg);
+}
+.sketch-card-tilt-right {
+  transform: rotate(0.5deg);
 }
 
 .sticker-card-pink {
   background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-pop-pink);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+  border: 2.5px solid var(--border-color);
+  border-radius: var(--radius-wobbly-md);
+  box-shadow: var(--shadow-paper-red);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
 }
 
 .sticker-card-yellow {
   background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-pop-yellow);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+  border: 2.5px solid var(--border-color);
+  border-radius: var(--radius-wobbly-md);
+  box-shadow: var(--shadow-paper-yellow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
 }
 
-.sticker-card-violet {
+.sticker-card-violet,
+.sticker-card-blue {
   background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-pop-violet);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+  border: 2.5px solid var(--border-color);
+  border-radius: var(--radius-wobbly-md);
+  box-shadow: var(--shadow-paper-blue);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
 }
 
-.sticker-card-mint {
-  background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-pop-mint);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease, border-color 0.25s ease;
+/* Authentic Tape Strip Overlay */
+.sketch-tape {
+  position: relative;
+}
+.sketch-tape::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  width: 76px;
+  height: 20px;
+  background-color: var(--tape-color);
+  border: 1px dashed rgba(45, 45, 45, 0.2);
+  border-radius: 2px;
+  z-index: 10;
+  pointer-events: none;
 }
 
-/* The Candy Button (Primary Brand Action) */
+/* Thumbtack Pin Overlay */
+.sketch-pin {
+  position: relative;
+}
+.sketch-pin::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background-color: var(--accent-red);
+  border: 2px solid var(--border-color);
+  border-radius: 9999px;
+  box-shadow: 1.5px 1.5px 0px 0px var(--border-color);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   HAND-DRAWN TACTILE BUTTONS ("PRESS FLAT" ACTIVE STATE)
+   ========================================================================== */
+
+.btn-sketch,
 .btn-candy,
 .btn-command-primary,
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.625rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  min-height: 44px; /* FIX 4: >= 44px touch target */
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
   font-weight: 700;
-  font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
-  background-color: #8B5CF6;
-  border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-pop);
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+  font-size: 1.0625rem;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
   cursor: pointer;
   user-select: none;
+  text-decoration: none;
 }
+.btn-sketch:hover,
 .btn-candy:hover,
 .btn-command-primary:hover,
 .btn-primary:hover {
   transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-pop-lg);
-  background-color: #7C3AED;
+  box-shadow: var(--shadow-paper-lg);
+  background-color: var(--accent-red);
+  color: #ffffff;
 }
+.btn-sketch:active,
 .btn-candy:active,
 .btn-command-primary:active,
 .btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-pop-xs);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
 
-/* Hot Pink Candy Button */
-.btn-candy-pink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 9999px;
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
-  background-color: #F472B6;
-  border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-pop);
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
-  cursor: pointer;
-}
-.btn-candy-pink:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-pop-lg);
-  background-color: #EC4899;
-}
-.btn-candy-pink:active {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-pop-xs);
-}
-
-/* Sunny Yellow Candy Button */
+/* Yellow / Amber Variant */
 .btn-candy-yellow,
-.btn-command-amber {
+.btn-command-amber,
+.btn-sketch-yellow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 9999px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  padding: 0.65rem 1.35rem;
+  min-height: 44px; /* FIX 4 */
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #1E293B;
-  background-color: #FBBF24;
-  border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-pop);
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+  font-size: 1.0625rem;
+  color: #1a1a1a;
+  background-color: var(--accent-yellow);
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
   cursor: pointer;
 }
 .btn-candy-yellow:hover,
-.btn-command-amber:hover {
+.btn-command-amber:hover,
+.btn-sketch-yellow:hover {
   transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-pop-lg);
-  background-color: #F59E0B;
+  box-shadow: var(--shadow-paper-lg);
+  background-color: #f59e0b;
 }
 .btn-candy-yellow:active,
-.btn-command-amber:active {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-pop-xs);
+.btn-command-amber:active,
+.btn-sketch-yellow:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
 
-/* Secondary Outline Pop Button */
+/* Red / Pink Variant */
+.btn-candy-pink,
+.btn-candy-red,
+.btn-sketch-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  min-height: 44px; /* FIX 4 */
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: #ffffff;
+  background-color: var(--accent-red);
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+  cursor: pointer;
+}
+.btn-candy-pink:hover,
+.btn-candy-red:hover,
+.btn-sketch-red:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-paper-lg);
+  background-color: #dc2626;
+}
+.btn-candy-pink:active,
+.btn-candy-red:active,
+.btn-sketch-red:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
+}
+
+/* Secondary / Outline Variant */
 .btn-command-secondary,
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border-radius: 9999px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  padding: 0.65rem 1.35rem;
+  min-height: 44px; /* FIX 4 */
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 1.0625rem;
   color: var(--text-primary);
-  background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-pop);
-  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, color 0.15s ease;
+  background-color: var(--bg-muted);
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
   cursor: pointer;
 }
 .btn-command-secondary:hover,
 .btn-secondary:hover {
   transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-pop-lg);
-  background-color: var(--bg-hover);
+  box-shadow: var(--shadow-paper-lg);
+  background-color: var(--accent-blue);
+  color: #ffffff;
 }
 .btn-command-secondary:active,
 .btn-secondary:active {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-pop-xs);
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
 
-/* Form Inputs & Controls */
+/* Purple / Ingestion variant */
+.btn-candy-purple {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  min-height: 44px; /* FIX 4 */
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: #ffffff;
+  background-color: var(--accent-purple);
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow-paper);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+  cursor: pointer;
+}
+.btn-candy-purple:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-paper-lg);
+  background-color: #6d28d9;
+}
+.btn-candy-purple:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
+}
+
+/* ==========================================================================
+   FORM INPUTS & LABELS
+   ========================================================================== */
+
 .studio-input,
 .input {
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
+  min-height: 44px; /* FIX 4 */
+  border-radius: var(--radius-wobbly-md);
   background-color: var(--bg-surface) !important;
   color: var(--text-primary) !important;
   border: 2px solid var(--border-color);
-  font-weight: 500;
-  font-size: 0.875rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.25s ease;
+  font-family: 'Patrick Hand', cursive, sans-serif;
+  font-size: 1.0625rem;
+  box-shadow: var(--shadow-paper-xs);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .studio-input:focus,
 .input:focus {
   outline: none;
-  border-color: var(--accent-violet);
-  box-shadow: var(--shadow-pop-violet);
+  border-color: var(--accent-blue);
+  box-shadow: 3px 3px 0px 0px var(--accent-blue);
 }
 
 select.input,
@@ -353,86 +444,139 @@ select.studio-input {
   color: var(--text-primary) !important;
   padding-right: 2.5rem;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238B5CF6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%232d2d2d' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.75rem center;
   background-repeat: no-repeat;
   background-size: 1.25em 1.25em;
 }
+html.dark select.input,
+html.dark select.studio-input {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e5e0d8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
 
 .label {
   display: block;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Kalam', cursive, sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 0.9375rem;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
-/* Playful Geometric Badges & Pills */
+/* ==========================================================================
+   STATUS BADGES & PILLS
+   ========================================================================== */
+
 .status-pill,
 .pop-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  border-radius: var(--radius-wobbly-pill);
+  font-family: 'Patrick Hand', cursive, sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.025em;
+  font-size: 0.875rem;
   border: 2px solid var(--border-color);
-  box-shadow: var(--shadow-pop-xs);
+  box-shadow: var(--shadow-paper-xs);
 }
-.status-pill-cyan,
-.status-pill-violet {
-  background-color: #8B5CF6;
-  color: #FFFFFF;
+
+.status-pill-amber,
+.status-pill-yellow {
+  background-color: var(--accent-yellow);
+  color: #1a1a1a;
 }
 .status-pill-emerald,
 .status-pill-mint {
-  background-color: #34D399;
-  color: #1E293B;
-}
-.status-pill-amber,
-.status-pill-yellow {
-  background-color: #FBBF24;
-  color: #1E293B;
+  background-color: var(--accent-green);
+  color: #1a1a1a;
 }
 .status-pill-rose,
 .status-pill-pink {
-  background-color: #F472B6;
-  color: #1E293B;
-}
-.status-pill-indigo {
-  background-color: #DDD6FE;
-  color: #1E293B;
+  background-color: var(--accent-red);
+  color: #ffffff;
 }
 
-/* Floating Icon Header Badge */
-.pop-icon-badge {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 9999px;
-  background-color: var(--bg-surface);
-  border: 2px solid var(--border-color);
-  display: flex;
+/* FIX 1: WCAG AA Compliant Red Alert Text & Badges */
+.text-accent-red-safe {
+  color: var(--accent-red-text) !important;
+}
+
+.badge-red-safe {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--accent-red-text);
+  border: 1.5px solid var(--border-color);
+}
+
+/* ==========================================================================
+   FIX 4: TOUCH TARGET ENFORCEMENT (>= 44x44px clickable area)
+   ========================================================================== */
+
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-pop);
-  font-weight: 700;
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Accessible Reduced Motion */
+/* ==========================================================================
+   FIX 3: ACCESSIBLE REDUCED MOTION
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   *,
-  ::before,
-  ::after {
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Suppress hover, active, and static transforms & animations per FIX 3 */
+  *:hover,
+  *:active,
+  *:focus {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .sketch-card-tilt-left,
+  .sketch-card-tilt-right,
+  [class*="rotate-"],
+  [class*="animate-"],
+  [class*="translate-"],
+  .btn-sketch:hover,
+  .btn-candy:hover,
+  .btn-candy-pink:hover,
+  .btn-candy-yellow:hover,
+  .btn-command-primary:hover,
+  .btn-secondary:hover,
+  .btn-sketch:active,
+  .btn-candy:active,
+  .btn-candy-pink:active,
+  .btn-candy-yellow:active,
+  .btn-command-primary:active,
+  .btn-secondary:active,
+  .card:hover,
+  .studio-panel:hover,
+  .sticker-card:hover {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }
+
+/* ==========================================================================
+   LEGIBILITY ENFORCEMENT UTILITIES
+   Guarantees text-studio-muted maps to --text-muted instead of --bg-muted
+   ========================================================================== */
+.text-studio-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-studio-dim {
+  color: var(--text-dim) !important;
+}
+

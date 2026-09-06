@@ -3,23 +3,23 @@ import { Sun, Moon, Laptop } from 'lucide-react';
 import { useTheme, Theme } from '../context/ThemeContext';
 
 export const ThemeToggle: React.FC = () => {
-  const { theme, resolvedTheme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const options: { value: Theme; label: string; icon: React.ReactNode }[] = [
     {
       value: 'light',
-      label: 'Light Mode',
-      icon: <Sun className="w-3.5 h-3.5" />,
+      label: 'Warm Paper (Light)',
+      icon: <Sun className="w-4 h-4" />,
     },
     {
       value: 'system',
       label: 'System Theme',
-      icon: <Laptop className="w-3.5 h-3.5" />,
+      icon: <Laptop className="w-4 h-4" />,
     },
     {
       value: 'dark',
-      label: 'Dark Mode',
-      icon: <Moon className="w-3.5 h-3.5" />,
+      label: 'Chalkboard (Dark)',
+      icon: <Moon className="w-4 h-4" />,
     },
   ];
 
@@ -27,7 +27,7 @@ export const ThemeToggle: React.FC = () => {
     <div
       role="radiogroup"
       aria-label="Theme preference selector"
-      className="inline-flex items-center p-1 rounded-full bg-studio-surface border-2 border-studio-border shadow-pop-xs transition-colors"
+      className="inline-flex items-center p-1 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs transition-colors"
     >
       {options.map((opt) => {
         const isSelected = theme === opt.value;
@@ -40,9 +40,9 @@ export const ThemeToggle: React.FC = () => {
             aria-label={opt.label}
             title={opt.label}
             onClick={() => setTheme(opt.value)}
-            className={`relative p-1.5 rounded-full transition-all duration-200 flex items-center justify-center ${
+            className={`relative min-w-[44px] min-h-[44px] p-2 rounded-wobbly transition-all duration-150 flex items-center justify-center cursor-pointer ${
               isSelected
-                ? 'bg-[#8B5CF6] text-white shadow-pop-xs scale-105'
+                ? 'bg-studio-red text-white shadow-sketch-xs scale-105 border-2 border-studio-border'
                 : 'text-studio-muted hover:text-studio-text hover:bg-studio-hover'
             }`}
           >

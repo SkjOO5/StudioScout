@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Film, MapPin, Save, Plus } from 'lucide-react';
+import { X, Save, Film } from 'lucide-react';
 import { Scene } from '../types';
 import { api } from '../lib/api';
 
 interface EditSceneModalProps {
   isOpen: boolean;
   projectId: string;
-  scene: Scene | null; // null means "Add New Scene"
+  scene: Scene | null;
   nextSceneNumber: number;
   onClose: () => void;
   onSuccess: (scene: Scene, isNew: boolean) => void;
@@ -107,112 +107,105 @@ export const EditSceneModal: React.FC<EditSceneModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-fade-in text-left">
-      <div className="bg-studio-surface w-full max-w-lg rounded-2xl border-2 border-studio-border shadow-pop-lg overflow-hidden flex flex-col max-h-[90vh] transition-colors duration-250">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm animate-pop-in text-left">
+      <div className="sketch-card w-full max-w-lg rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch-lg overflow-hidden flex flex-col max-h-[90vh] transition-colors duration-200">
         {/* Header */}
-        <div className="p-5 bg-[#FDE047] dark:bg-amber-950/40 border-b-2 border-studio-border flex items-center justify-between">
+        <div className="p-5 bg-studio-bg border-b-2 border-studio-border flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-studio-surface border-2 border-studio-border flex items-center justify-center shadow-pop-xs text-xl">
-              🎬
+            <div className="w-10 h-10 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center shadow-sketch-xs">
+              <Film className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-display font-extrabold text-studio-text">
-                {isNew ? `Add Scene #${nextSceneNumber}` : `Edit Scene #${scene?.scene_number}`}
+              <h3 className="text-xl font-display font-extrabold text-studio-text">
+                {isNew ? 'Add Screenplay Scene' : `Edit Scene #${scene?.scene_number}`}
               </h3>
-              <p className="text-xs font-bold text-studio-muted">
-                {isNew ? 'Define a new scene breakdown entry' : `Updating ${scene?.heading}`}
+              <p className="text-xs font-hand font-bold text-studio-secondary">
+                {isNew ? 'New Scene Extraction' : scene?.heading}
               </p>
             </div>
           </div>
+
+          {/* FIX 4: Close button touch target >= 44x44px */}
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-studio-surface text-studio-text border-2 border-studio-border flex items-center justify-center shadow-pop-xs hover:bg-[#FEE2E2] dark:hover:bg-red-950/40 transition-all"
+            className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface text-studio-text border-2 border-studio-border flex items-center justify-center shadow-sketch-xs hover:bg-studio-red hover:text-white transition-all cursor-pointer"
+            aria-label="Close edit scene modal"
           >
-            <X className="w-4 h-4" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
+          {/* FIX 1: WCAG AA compliant error message */}
           {error && (
-            <div className="p-3 rounded-xl bg-[#FEE2E2] dark:bg-red-950/40 border-2 border-[#EF4444] text-xs font-bold text-[#B91C1C] dark:text-red-200">
+            <div className="p-3 rounded-wobbly bg-red-100 dark:bg-rose-950/60 border-2 border-studio-border text-xs font-hand font-bold text-accent-red-safe">
               {error}
             </div>
           )}
 
           <div>
-            <label className="text-xs font-display font-black text-studio-text block mb-1">
-              Scene Heading (Slugline)
-            </label>
+            <label className="label">Scene Heading</label>
             <input
               type="text"
-              required
               value={heading}
               onChange={(e) => setHeading(e.target.value)}
-              placeholder="e.g. EXT. INDUSTRIAL HARBOR DOCKS - NIGHT"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-mono font-bold text-studio-text focus:outline-none focus:bg-studio-surface focus:shadow-pop-xs"
+              placeholder="e.g. INT. SECURE SERVER VAULT - NIGHT"
+              className="input font-mono text-sm"
+              required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Location Name
-              </label>
+              <label className="label">Location Name</label>
               <input
                 type="text"
-                required
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="e.g. Harbor Warehouse"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface focus:shadow-pop-xs"
+                placeholder="e.g. Server Vault"
+                className="input"
+                required
               />
             </div>
-
             <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Location Archetype
-              </label>
+              <label className="label">Location Type</label>
               <select
                 value={locationType}
                 onChange={(e) => setLocationType(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
+                className="input"
               >
                 <option value="industrial">Industrial</option>
-                <option value="commercial">Commercial</option>
+                <option value="commercial">Commercial / Office</option>
                 <option value="residential">Residential</option>
-                <option value="exterior">Exterior / Natural</option>
-                <option value="hospital">Hospital / Medical</option>
-                <option value="heritage">Heritage / Monument</option>
+                <option value="outdoor">Outdoor / Urban</option>
+                <option value="hospital">Medical / Institutional</option>
+                <option value="other">Other</option>
               </select>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Time of Day
-              </label>
+              <label className="label">Time of Day</label>
               <select
                 value={timeOfDay}
                 onChange={(e) => setTimeOfDay(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
+                className="input"
               >
-                <option value="night">Night</option>
                 <option value="day">Day</option>
-                <option value="dusk">Dusk</option>
+                <option value="night">Night</option>
+                <option value="magic_hour">Magic Hour / Sunset</option>
                 <option value="dawn">Dawn</option>
+                <option value="continuous">Continuous</option>
               </select>
             </div>
-
             <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Setting
-              </label>
+              <label className="label">Setting</label>
               <select
                 value={setting}
                 onChange={(e) => setSetting(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
+                className="input"
               >
                 <option value="interior">Interior (INT)</option>
                 <option value="exterior">Exterior (EXT)</option>
@@ -222,62 +215,57 @@ export const EditSceneModal: React.FC<EditSceneModalProps> = ({
           </div>
 
           <div>
-            <label className="text-xs font-display font-black text-studio-text block mb-1">
-              Scene Action Description & Physical Constraints
-            </label>
+            <label className="label">Scene Action Description</label>
             <textarea
-              rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Describe what happens in this scene, physical needs, camera requirements..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-medium text-studio-text focus:outline-none focus:bg-studio-surface focus:shadow-pop-xs resize-none"
+              placeholder="Describe what happens in this scene, physical space needs, camera atmosphere..."
+              className="input h-24 resize-y leading-relaxed text-sm"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-display font-black text-studio-text block mb-1">
-                Cast Members On-Set
-              </label>
+              <label className="label">Cast Count</label>
               <input
                 type="number"
-                min={1}
-                max={50}
+                min="1"
+                max="50"
                 value={characters}
                 onChange={(e) => setCharacters(parseInt(e.target.value) || 1)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-studio-bg border-2 border-studio-border text-xs font-bold text-studio-text focus:outline-none focus:bg-studio-surface"
+                className="input"
               />
             </div>
-
             <div className="flex items-center gap-2 pt-6">
               <input
                 type="checkbox"
-                id="vehiclesCheck"
+                id="scene-vehicles"
                 checked={vehicles}
                 onChange={(e) => setVehicles(e.target.checked)}
-                className="w-4 h-4 rounded border-2 border-studio-border accent-[#8B5CF6]"
+                className="w-5 h-5 rounded border-2 border-studio-border text-studio-red cursor-pointer"
               />
-              <label htmlFor="vehiclesCheck" className="text-xs font-display font-black text-studio-text cursor-pointer">
-                Requires Vehicles / Stunts
+              <label htmlFor="scene-vehicles" className="font-hand font-bold text-sm text-studio-text cursor-pointer">
+                Requires Vehicles
               </label>
             </div>
           </div>
 
-          <div className="pt-4 border-t-2 border-studio-border/20 flex items-center justify-end gap-3">
+          {/* Action Footer */}
+          <div className="pt-4 border-t-2 border-dashed border-studio-border/30 flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="btn-secondary !py-2.5 !px-5 text-xs"
+              className="btn-secondary min-h-[44px] !py-2.5 !px-5 text-sm font-hand font-bold cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSaving}
-              className="btn-candy-yellow !py-2.5 !px-6 text-xs font-display font-black flex items-center gap-2"
+              className="btn-sketch min-h-[44px] !py-2.5 !px-6 text-sm font-hand font-bold flex items-center gap-2 cursor-pointer"
             >
-              {isNew ? <Plus className="w-3.5 h-3.5 text-[#1E293B]" /> : <Save className="w-3.5 h-3.5 text-[#1E293B]" />}
-              <span>{isSaving ? 'SAVING...' : isNew ? 'ADD SCENE' : 'UPDATE SCENE'}</span>
+              <Save className="w-4 h-4 text-studio-yellow" />
+              <span>{isSaving ? 'Saving...' : isNew ? 'Add Scene' : 'Update Scene'}</span>
             </button>
           </div>
         </form>

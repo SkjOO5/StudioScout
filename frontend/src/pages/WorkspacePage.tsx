@@ -29,7 +29,6 @@ import {
   Calendar, 
   RefreshCw, 
   ArrowLeft,
-  Layers, 
   Radar,
   Award,
   ExternalLink,
@@ -37,14 +36,8 @@ import {
   Camera,
   Sliders,
   Music,
-  Volume2,
-  Radio,
-  Disc,
-  Play,
   Mic,
   Users,
-  MessageSquare,
-  Activity,
   Edit3,
   Trash2,
   Plus,
@@ -85,7 +78,6 @@ export const WorkspacePage: React.FC = () => {
   const [isGeneratingAudio, setIsGeneratingAudio] = useState<string | null>(null);
   const [isGeneratingTableRead, setIsGeneratingTableRead] = useState<string | null>(null);
   const [show3DMap, setShow3DMap] = useState(true);
-
 
   const pollingRef = useRef<any>(null);
 
@@ -304,34 +296,33 @@ export const WorkspacePage: React.FC = () => {
     }
   };
 
-  // Filter recommendations for currently selected scene
   const selectedSceneCandidates = candidates.filter(
     (c) => c.scene_id === selectedScene?.id
   );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-left">
-
-
       {/* Top Banner / Project Info */}
-      <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col md:flex-row md:items-center justify-between gap-5 transition-colors duration-250">
+      <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col md:flex-row md:items-center justify-between gap-5 transition-colors duration-200">
         <div className="flex items-center gap-4">
+          {/* FIX 4: min-w-[44px] min-h-[44px] touch target */}
           <Link
             to="/dashboard"
-            className="w-10 h-10 rounded-xl bg-studio-surface text-studio-text border-2 border-studio-border shadow-pop-xs flex items-center justify-center hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-pop hover:bg-studio-hover transition-all shrink-0"
+            className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface text-studio-text border-2 border-studio-border shadow-sketch-xs flex items-center justify-center hover:bg-studio-yellow hover:text-slate-950 transition-all shrink-0 cursor-pointer"
+            aria-label="Back to Dashboard"
           >
-            <ArrowLeft className="w-5 h-5 text-studio-text" />
+            <ArrowLeft className="w-5 h-5 text-current" />
           </Link>
           <div>
-            <div className="flex items-center gap-2 mb-1.5 font-display">
-              <span className="px-3 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 text-[#8B5CF6] dark:text-[#A78BFA] border border-studio-border shadow-pop-xs">
+            <div className="flex items-center gap-2 mb-1.5 font-hand font-bold">
+              <span className="px-3 py-0.5 rounded-wobbly text-xs uppercase tracking-wider bg-studio-yellow text-slate-950 border border-studio-border shadow-sketch-xs">
                 {project?.genre || 'Thriller'}
               </span>
-              <span className="text-xs text-studio-muted font-bold flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-[#8B5CF6]" />
+              <span className="text-xs text-studio-secondary flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-studio-red" />
                 {project?.production_city}
               </span>
-              <span className="text-xs text-studio-muted font-bold uppercase">
+              <span className="text-xs text-studio-secondary dark:text-slate-300 uppercase font-bold">
                 &bull; {project?.budget_tier} Tier
               </span>
             </div>
@@ -341,20 +332,23 @@ export const WorkspacePage: React.FC = () => {
               </h1>
               {project && (
                 <div className="flex items-center gap-1.5">
+                  {/* FIX 4: min-w-[44px] min-h-[44px] */}
                   <button
                     onClick={() => setIsEditProjectOpen(true)}
-                    className="p-1.5 rounded-lg bg-studio-surface border border-studio-border shadow-pop-xs hover:bg-[#FEF3C7] dark:hover:bg-amber-950/40 text-studio-text transition-all"
+                    className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs hover:bg-studio-yellow hover:text-slate-950 text-studio-text transition-all cursor-pointer"
                     title="Edit Production Details"
+                    aria-label="Edit Production Details"
                   >
-                    <Edit3 className="w-3.5 h-3.5" />
+                    <Edit3 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={handleDeleteProject}
                     disabled={isDeletingProject}
-                    className="p-1.5 rounded-lg bg-studio-surface border border-studio-border shadow-pop-xs hover:bg-[#FEE2E2] dark:hover:bg-red-950/40 text-[#EF4444] transition-all"
+                    className="touch-target min-w-[44px] min-h-[44px] p-2 rounded-wobbly bg-studio-surface border-2 border-studio-border shadow-sketch-xs hover:bg-studio-red hover:text-white text-accent-red-safe transition-all cursor-pointer"
                     title="Delete Project"
+                    aria-label="Delete Project"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               )}
@@ -362,15 +356,15 @@ export const WorkspacePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Action buttons in header */}
-        <div className="flex items-center gap-3">
+        {/* Action buttons in header - FIX 4: min-h-[44px] */}
+        <div className="flex flex-wrap items-center gap-2.5">
           {(!activeRun || activeRun.state === 'failed') && scenes.length === 0 && (
             <button
               onClick={handleStartScout}
               disabled={isStartingScout}
-              className="btn-candy !py-3 !px-6 text-xs"
+              className="btn-sketch min-h-[44px] !py-2.5 !px-5 text-sm font-hand font-bold cursor-pointer"
             >
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-4 h-4 text-studio-yellow" />
               <span>{isStartingScout ? 'INITIALIZING AGENT...' : 'START AUTONOMOUS SCOUT'}</span>
             </button>
           )}
@@ -378,9 +372,9 @@ export const WorkspacePage: React.FC = () => {
           {scenes.length > 0 && (
             <button
               onClick={() => setShow3DMap(!show3DMap)}
-              className="btn-secondary !py-2.5 !px-4 text-xs hidden sm:inline-flex"
+              className="btn-secondary min-h-[44px] !py-2.5 !px-4 text-sm font-hand font-bold hidden sm:inline-flex cursor-pointer"
             >
-              <Radar className="w-4 h-4 text-[#8B5CF6]" />
+              <Radar className="w-4 h-4 text-studio-red" />
               <span>{show3DMap ? 'Hide 3D Map' : 'Show 3D Map'}</span>
             </button>
           )}
@@ -388,10 +382,10 @@ export const WorkspacePage: React.FC = () => {
           {project && (
             <button
               onClick={() => setIsExportModalOpen(true)}
-              className="btn-candy-purple !py-2.5 !px-4 text-xs font-display font-bold flex items-center gap-1.5 shadow-pop-xs"
+              className="btn-sketch min-h-[44px] !py-2.5 !px-4 text-sm font-hand font-bold flex items-center gap-1.5 shadow-sketch-xs cursor-pointer"
               title="Export Production Bible, Call Sheets, Calendar, or CSV"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4 text-studio-yellow" />
               <span>Export Hub</span>
             </button>
           )}
@@ -399,9 +393,9 @@ export const WorkspacePage: React.FC = () => {
           {plan && (
             <button
               onClick={() => setIsReplanModalOpen(true)}
-              className="btn-candy-yellow !py-2.5 !px-4 text-xs font-display font-bold flex items-center gap-1.5"
+              className="btn-sketch-yellow min-h-[44px] !py-2.5 !px-4 text-sm font-hand font-bold flex items-center gap-1.5 cursor-pointer"
             >
-              <RefreshCw className="w-4 h-4 text-[#1E293B]" />
+              <RefreshCw className="w-4 h-4 text-slate-900" />
               <span>Modify Constraint</span>
             </button>
           )}
@@ -410,7 +404,7 @@ export const WorkspacePage: React.FC = () => {
 
       {/* 3D Production Map Container */}
       {show3DMap && scenes.length > 0 && (
-        <div className="bg-studio-surface p-4 rounded-2xl border-2 border-studio-border shadow-pop overflow-hidden transition-colors duration-250">
+        <div className="sketch-card p-4 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch overflow-hidden transition-colors duration-200">
           <ProductionMap3D
             scenes={scenes}
             selectedSceneId={selectedScene?.id || null}
@@ -419,62 +413,62 @@ export const WorkspacePage: React.FC = () => {
         </div>
       )}
 
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap items-center gap-3 border-b-2 border-studio-border/20 pb-3 text-xs font-display font-black">
+      {/* Navigation Tabs - FIX 4: min-h-[44px] touch targets */}
+      <div className="flex flex-wrap items-center gap-2.5 border-b-2 border-dashed border-studio-border/30 pb-3 text-xs font-hand font-bold">
         <button
           onClick={() => setActiveTab('scout')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'scout'
-              ? 'bg-[#8B5CF6] text-white border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
-          <Compass className="w-4 h-4" />
+          <Compass className="w-4 h-4 text-studio-red" />
           <span>LOCATION RADAR</span>
         </button>
 
         <button
           onClick={() => setActiveTab('storyboards')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'storyboards'
-              ? 'bg-[#F472B6] text-white border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-studio-red text-white border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Camera className="w-4 h-4" />
-          <span>VFX & STORYBOARDS (IMAGEN 3)</span>
+          <span>VFX &amp; STORYBOARDS</span>
         </button>
 
         <button
           onClick={() => setActiveTab('audio')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'audio'
-              ? 'bg-[#FBBF24] text-[#1E293B] border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Music className="w-4 h-4" />
-          <span>AUDIO & SCORE CUES (LYRIA 3)</span>
+          <span>AUDIO &amp; SCORE CUES (LYRIA 3)</span>
         </button>
 
         <button
           onClick={() => setActiveTab('tableread')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'tableread'
-              ? 'bg-[#A78BFA] text-[#1E293B] border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-studio-red text-white border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Mic className="w-4 h-4" />
-          <span>TABLE-READ & DIALOGUE (TTS)</span>
+          <span>TABLE-READ &amp; DIALOGUE (TTS)</span>
         </button>
 
         <button
           onClick={() => setActiveTab('plan')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'plan'
-              ? 'bg-[#34D399] text-[#1E293B] border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-emerald-400 text-slate-950 border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Calendar className="w-4 h-4" />
@@ -483,10 +477,10 @@ export const WorkspacePage: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('sources')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all border-2 ${
+          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'sources'
-              ? 'bg-[#38BDF8] text-[#1E293B] border-studio-border shadow-pop'
-              : 'bg-studio-surface text-studio-muted border-studio-border/40 shadow-pop-xs hover:bg-studio-hover hover:text-studio-text'
+              ? 'bg-sky-200 dark:bg-sky-900 text-slate-950 dark:text-sky-100 border-studio-border shadow-sketch font-black'
+              : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Search className="w-4 h-4" />
@@ -502,28 +496,29 @@ export const WorkspacePage: React.FC = () => {
             <AgentActivityTimeline run={activeRun} isLoading={isStartingScout} />
 
             {/* Scene Selector Deck */}
-            <div className="bg-studio-surface p-5 rounded-2xl border-2 border-studio-border shadow-pop space-y-3 transition-colors duration-250">
-              <div className="flex items-center justify-between pb-2 border-b-2 border-studio-border/20">
+            <div className="sketch-card p-5 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch space-y-3 transition-colors duration-200">
+              <div className="flex items-center justify-between pb-2 border-b-2 border-dashed border-studio-border/30">
                 <h3 className="text-xs font-display font-black uppercase tracking-wider text-studio-text flex items-center gap-2">
-                  <Film className="w-4 h-4 text-[#8B5CF6]" />
+                  <Film className="w-4 h-4 text-studio-red" />
                   Extracted Scenes ({scenes.length})
                 </h3>
+                {/* FIX 4: min-h-[40px] touch target */}
                 <button
                   onClick={() => {
                     setSceneToEdit(null);
                     setIsSceneModalOpen(true);
                   }}
-                  className="px-2.5 py-1 rounded-lg bg-[#FEF3C7] dark:bg-amber-950/40 text-[#D97706] dark:text-[#FBBF24] border border-studio-border text-[10px] font-display font-black shadow-pop-xs hover:bg-[#FDE047] transition-all flex items-center gap-1"
+                  className="touch-target min-h-[40px] px-3 py-1.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-hand font-bold shadow-sketch-xs hover:bg-amber-400 transition-all flex items-center gap-1 cursor-pointer"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Plus className="w-3.5 h-3.5" />
                   <span>Add Scene</span>
                 </button>
               </div>
 
               {scenes.length === 0 ? (
                 <div className="py-8 text-center text-studio-muted">
-                  <p className="text-xs font-display font-bold">No scenes extracted yet.</p>
-                  <p className="text-[11px] mt-1 font-medium">Click "Start Autonomous Scout" or "Add Scene".</p>
+                  <p className="text-sm font-hand font-bold">No scenes extracted yet.</p>
+                  <p className="text-xs mt-1 font-hand">Click "Start Autonomous Scout" or "Add Scene".</p>
                 </div>
               ) : (
                 <div className="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
@@ -550,61 +545,62 @@ export const WorkspacePage: React.FC = () => {
             {selectedScene ? (
               <div className="space-y-6">
                 {/* Selected Scene Hero Banner */}
-                <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop transition-colors duration-250">
+                <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch transition-colors duration-200">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-                    <span className="px-3 py-1 rounded-full bg-[#8B5CF6] text-white border border-studio-border text-xs font-display font-black shadow-pop-xs">
+                    <span className="px-3 py-1 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-display font-black shadow-sketch-xs">
                       SCENE {String(selectedScene.scene_number).padStart(2, '0')} SCOUTING REPORT
                     </span>
                     <div className="flex items-center gap-2">
+                      {/* FIX 4: min-h-[44px] */}
                       <button
                         onClick={() => {
                           setSceneToEdit(selectedScene);
                           setIsSceneModalOpen(true);
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-studio-surface border border-studio-border text-xs font-display font-bold shadow-pop-xs hover:bg-[#FEF3C7] dark:hover:bg-amber-950/40 text-studio-text flex items-center gap-1"
+                        className="touch-target min-h-[44px] px-3.5 py-1.5 rounded-wobbly bg-studio-surface border-2 border-studio-border text-xs font-hand font-bold shadow-sketch-xs hover:bg-studio-yellow hover:text-slate-950 text-studio-text flex items-center gap-1 cursor-pointer"
                       >
-                        <Edit3 className="w-3 h-3 text-studio-text" />
+                        <Edit3 className="w-3.5 h-3.5" />
                         <span>Edit Scene</span>
                       </button>
                       <button
                         onClick={() => handleDeleteScene(selectedScene)}
-                        className="px-2.5 py-1 rounded-lg bg-studio-surface border border-studio-border text-xs font-display font-bold shadow-pop-xs hover:bg-[#FEE2E2] dark:hover:bg-red-950/40 text-[#EF4444] flex items-center gap-1"
+                        className="touch-target min-h-[44px] px-3.5 py-1.5 rounded-wobbly bg-studio-surface border-2 border-studio-border text-xs font-hand font-bold shadow-sketch-xs hover:bg-studio-red hover:text-white text-accent-red-safe flex items-center gap-1 cursor-pointer"
                       >
-                        <Trash2 className="w-3 h-3" />
+                        <Trash2 className="w-3.5 h-3.5" />
                         <span>Delete</span>
                       </button>
                     </div>
                   </div>
 
-                  <h2 className="text-2xl font-display font-extrabold text-studio-text mb-2">
+                  <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-studio-text mb-2">
                     {selectedScene.heading}
                   </h2>
 
                   {selectedScene.description && (
-                    <p className="text-xs sm:text-sm text-studio-muted leading-relaxed font-medium mb-4">
+                    <p className="text-sm sm:text-base text-studio-secondary leading-relaxed font-hand mb-4">
                       {selectedScene.description}
                     </p>
                   )}
 
                   {/* Requirements Pills */}
                   {selectedScene.requirements.length > 0 && (
-                    <div className="pt-3 border-t-2 border-studio-border/20 space-y-2">
-                      <span className="text-[10px] font-display font-black uppercase tracking-wider text-studio-muted block">
-                        Technical Requirements for Scene
+                    <div className="pt-3 border-t-2 border-dashed border-studio-border/30 space-y-2">
+                      <span className="text-xs font-hand font-bold uppercase tracking-wider text-studio-secondary dark:text-slate-200 block">
+                        Technical Requirements for Scene:
                       </span>
                       <div className="flex flex-wrap gap-2">
                         {selectedScene.requirements.map((req, rIdx) => (
                           <span
                             key={rIdx}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-bold border border-studio-border shadow-pop-xs ${
+                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-wobbly text-xs font-hand font-bold border-2 border-studio-border shadow-sketch-xs ${
                               req.priority === 'required'
-                                ? 'bg-[#FFE4E6] dark:bg-rose-950/40 text-[#E11D48] dark:text-rose-300'
+                                ? 'bg-red-100 dark:bg-rose-950/60 text-accent-red-safe' // FIX 1: safe contrast
                                 : req.priority === 'preferred'
-                                ? 'bg-[#FEF3C7] dark:bg-amber-950/40 text-[#D97706] dark:text-amber-300'
+                                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200'
                                 : 'bg-studio-muted text-studio-text'
                             }`}
                           >
-                            <span className="capitalize">{req.category}:</span> {req.description}
+                            <span className="capitalize font-display">{req.category}:</span> {req.description}
                           </span>
                         ))}
                       </div>
@@ -615,21 +611,21 @@ export const WorkspacePage: React.FC = () => {
                 {/* Candidate Cards List */}
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xs font-display font-black uppercase tracking-wider text-studio-text flex items-center gap-2">
-                      <Award className="w-4 h-4 text-[#8B5CF6]" />
+                    <h3 className="text-sm font-display font-black uppercase tracking-wider text-studio-text flex items-center gap-2">
+                      <Award className="w-4 h-4 text-studio-yellow" />
                       Parallel Search Candidates ({selectedSceneCandidates.length})
                     </h3>
                   </div>
 
                   {selectedSceneCandidates.length === 0 ? (
-                    <div className="bg-studio-surface p-12 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-                      <div className="w-14 h-14 rounded-full bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 border-2 border-studio-border flex items-center justify-center mx-auto mb-3 shadow-pop-xs">
-                        <Search className="w-7 h-7 text-[#8B5CF6] dark:text-[#A78BFA]" />
+                    <div className="sketch-card p-12 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+                      <div className="w-14 h-14 rounded-wobbly bg-studio-yellow text-slate-950 border-2 border-studio-border flex items-center justify-center mx-auto mb-3 shadow-sketch-xs">
+                        <Search className="w-7 h-7 text-slate-950" />
                       </div>
-                      <p className="text-sm font-display font-bold text-studio-text">
+                      <p className="text-base font-display font-bold text-studio-text">
                         No scored candidates for this scene yet.
                       </p>
-                      <p className="text-xs mt-1 text-studio-muted font-medium">
+                      <p className="text-sm mt-1 text-studio-secondary font-hand">
                         The agent will query Parallel Search and evaluate matches via Gemini.
                       </p>
                     </div>
@@ -648,37 +644,36 @@ export const WorkspacePage: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-                <Film className="w-10 h-10 mx-auto mb-3 text-[#8B5CF6]" />
-                <p className="text-base font-display font-bold text-studio-text">Select a scene from the left to inspect scouting results.</p>
+              <div className="sketch-card p-16 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+                <Film className="w-10 h-10 mx-auto mb-3 text-studio-red" />
+                <p className="text-lg font-display font-bold text-studio-text">Select a scene from the left to inspect scouting results.</p>
               </div>
             )}
           </div>
         </div>
       )}
 
-
-      {/* Tab 2: VFX & Storyboard Moodboards (Imagen 3 & Gemini DP) */}
+      {/* Tab 2: VFX & Storyboard Moodboards */}
       {activeTab === 'storyboards' && (
         <div className="space-y-6">
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-250">
+          <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FCE7F3] dark:bg-[#F472B6]/30 border border-studio-border text-xs font-display font-black text-[#F472B6] mb-2 shadow-pop-xs">
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-wobbly bg-studio-red text-white border border-studio-border text-xs font-hand font-bold mb-2 shadow-sketch-xs">
                 <span>GEMINI 2.5 + IMAGEN 3 CINEMATOGRAPHY ENGINE</span>
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-studio-text">
-                Scene Storyboard & Camera Concept Moodboards
+              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-studio-text">
+                Scene Storyboard &amp; Camera Concept Moodboards
               </h2>
-              <p className="text-xs sm:text-sm text-studio-muted font-medium mt-1">
+              <p className="text-sm sm:text-base text-studio-secondary font-hand mt-1">
                 AI Director of Photography frames lighting schemes, camera lenses, and visual reference prompts for every scene.
               </p>
             </div>
           </div>
 
           {scenes.length === 0 ? (
-            <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-              <Palette className="w-12 h-12 mx-auto mb-3 text-[#F472B6]" />
-              <p className="text-sm font-display font-bold text-studio-text">No scenes extracted yet to generate storyboards.</p>
+            <div className="sketch-card p-16 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+              <Palette className="w-12 h-12 mx-auto mb-3 text-studio-red" />
+              <p className="text-base font-display font-bold text-studio-text">No scenes extracted yet to generate storyboards.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -689,26 +684,25 @@ export const WorkspacePage: React.FC = () => {
                 return (
                   <div
                     key={scene.id}
-                    className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all"
+                    className="sketch-card sketch-pin p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col justify-between space-y-4 hover:-translate-y-0.5 transition-all"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#8B5CF6] text-white border border-studio-border text-[11px] font-display font-black shadow-pop-xs">
+                        <span className="px-2.5 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-display font-black shadow-sketch-xs">
                           SCENE {scene.scene_number}
                         </span>
-                        <span className="text-xs font-display font-bold text-studio-muted">
+                        <span className="text-xs font-hand font-bold text-studio-secondary dark:text-slate-300">
                           {scene.time_of_day.toUpperCase()} &bull; {scene.setting.toUpperCase()}
                         </span>
                       </div>
 
-                      <h3 className="text-lg font-display font-extrabold text-studio-text mb-2">
+                      <h3 className="text-xl font-display font-extrabold text-studio-text mb-2">
                         {scene.heading}
                       </h3>
 
                       {sb ? (
                         <div className="space-y-3.5 mt-4">
-                          {/* Image preview with fallback to cinematic concept art */}
-                          <div className="rounded-xl border-2 border-studio-border overflow-hidden shadow-pop-xs relative group">
+                          <div className="rounded-wobbly-md border-2 border-studio-border overflow-hidden shadow-sketch-xs relative group">
                             <img
                               src={sb.image_url || `/storyboards/scene${scene.scene_number}.jpg`}
                               alt={sb.title || scene.heading}
@@ -717,35 +711,33 @@ export const WorkspacePage: React.FC = () => {
                                 (e.target as HTMLImageElement).src = `/storyboards/scene${scene.scene_number}.jpg`;
                               }}
                             />
-                            <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 text-[10px] font-display font-black text-white">
+                            <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-wobbly bg-black/75 backdrop-blur-sm border border-white/20 text-xs font-hand font-bold text-white">
                               IMAGEN 3 &bull; 8K CONCEPT STILL
                             </div>
                           </div>
 
-                          {/* Technical Specs Tags */}
-                          <div className="flex flex-wrap gap-2 text-[11px] font-display font-bold">
-                            <span className="px-2.5 py-1 rounded-md bg-[#DDD6FE] dark:bg-[#8B5CF6]/30 text-[#8B5CF6] dark:text-[#A78BFA] border border-studio-border flex items-center gap-1 shadow-pop-xs">
-                              <Camera className="w-3.5 h-3.5" />
+                          <div className="flex flex-wrap gap-2 text-xs font-hand font-bold">
+                            <span className="px-2.5 py-1 rounded-wobbly bg-studio-muted text-studio-text border border-studio-border flex items-center gap-1 shadow-sketch-xs">
+                              <Camera className="w-3.5 h-3.5 text-studio-red" />
                               {sb.lens_focal_length || '35mm Anamorphic'}
                             </span>
-                            <span className="px-2.5 py-1 rounded-md bg-[#FEF3C7] dark:bg-amber-950/40 text-[#D97706] dark:text-[#FBBF24] border border-studio-border flex items-center gap-1 shadow-pop-xs">
+                            <span className="px-2.5 py-1 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border flex items-center gap-1 shadow-sketch-xs">
                               <Sliders className="w-3.5 h-3.5" />
                               {sb.aspect_ratio || '2.39:1'}
                             </span>
-                            <span className="px-2.5 py-1 rounded-md bg-[#FCE7F3] dark:bg-[#F472B6]/30 text-[#F472B6] border border-studio-border shadow-pop-xs">
+                            <span className="px-2.5 py-1 rounded-wobbly bg-sky-200 dark:bg-sky-950/60 text-slate-950 dark:text-sky-200 border border-studio-border shadow-sketch-xs">
                               {sb.camera_angle || 'Wide Establishing'}
                             </span>
                           </div>
 
-                          {/* Color Palette Chips */}
                           {sb.color_palette && (
                             <div className="flex items-center gap-2 pt-1">
-                              <span className="text-[10px] font-display font-bold text-studio-muted">Palette:</span>
+                              <span className="text-xs font-hand font-bold text-studio-secondary dark:text-slate-300">Palette:</span>
                               <div className="flex items-center gap-1.5">
                                 {sb.color_palette.map((color: string, cIdx: number) => (
                                   <div
                                     key={cIdx}
-                                    className="w-5 h-5 rounded-full border border-studio-border shadow-pop-xs"
+                                    className="w-5 h-5 rounded-full border border-studio-border shadow-sketch-xs"
                                     style={{ backgroundColor: color }}
                                     title={color}
                                   />
@@ -754,37 +746,37 @@ export const WorkspacePage: React.FC = () => {
                             </div>
                           )}
 
-                          {/* Prompt & Notes */}
-                          <div className="p-3 bg-studio-bg rounded-xl border border-studio-border text-xs font-mono text-studio-text space-y-1.5">
-                            <p className="font-bold text-[10px] uppercase text-[#8B5CF6] dark:text-[#A78BFA] font-display">Imagen 3 Cinematic Prompt:</p>
-                            <p className="line-clamp-3 text-[11px] leading-relaxed">"{sb.visual_prompt}"</p>
+                          <div className="p-3 bg-studio-bg rounded-wobbly-md border border-studio-border text-xs font-mono text-studio-text space-y-1.5">
+                            <p className="font-bold text-xs uppercase text-studio-redText font-display">Imagen 3 Cinematic Prompt:</p>
+                            <p className="line-clamp-3 text-xs leading-relaxed">"{sb.visual_prompt}"</p>
                           </div>
 
                           {sb.director_notes && (
-                            <p className="text-xs text-studio-muted font-medium italic">
+                            <p className="text-xs text-studio-secondary font-hand italic">
                               <strong className="font-display not-italic text-studio-text">DP Notes:</strong> {sb.director_notes}
                             </p>
                           )}
                         </div>
                       ) : (
                         <div className="py-6 text-center text-studio-muted">
-                          <p className="text-xs font-display font-bold text-studio-text mb-1">
+                          <p className="text-sm font-hand font-bold text-studio-text mb-1">
                             Cinematic moodboard not yet generated.
                           </p>
-                          <p className="text-[11px] font-medium">
+                          <p className="text-xs font-hand">
                             Generate DP camera angles, lighting scheme, and Imagen prompt for this scene.
                           </p>
                         </div>
                       )}
                     </div>
 
-                    <div className="pt-3 border-t-2 border-studio-border/20">
+                    <div className="pt-3 border-t-2 border-dashed border-studio-border/30">
+                      {/* FIX 4: min-h-[44px] */}
                       <button
                         onClick={() => handleGenerateStoryboard(scene.id)}
                         disabled={isGen}
-                        className="btn-candy-pink w-full !py-2.5 text-xs font-display font-bold flex items-center justify-center gap-2"
+                        className="btn-sketch min-h-[44px] w-full !py-2.5 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <Palette className="w-4 h-4" />
+                        <Palette className="w-4 h-4 text-studio-yellow" />
                         <span>{isGen ? 'COMPUTING FRAME...' : sb ? 'RE-GENERATE CONCEPT' : 'GENERATE STORYBOARD'}</span>
                       </button>
                     </div>
@@ -799,25 +791,25 @@ export const WorkspacePage: React.FC = () => {
       {/* Tab 3: Lyria 3 Soundtrack & Audio Atmosphere */}
       {activeTab === 'audio' && (
         <div className="space-y-6">
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-250">
+          <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FEF3C7] dark:bg-amber-950/40 border border-studio-border text-xs font-display font-black text-[#D97706] dark:text-[#FBBF24] mb-2 shadow-pop-xs">
-                <Music className="w-3.5 h-3.5 text-[#1E293B] dark:text-[#FBBF24]" />
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-hand font-bold mb-2 shadow-sketch-xs">
+                <Music className="w-3.5 h-3.5 text-slate-900" />
                 <span>GOOGLE DEEPMIND LYRIA 3 CINEMATIC SOUNDTRACKS</span>
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-studio-text">
-                Scene Soundtracks & Acoustic Atmosphere Cues
+              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-studio-text">
+                Scene Soundtracks &amp; Acoustic Atmosphere Cues
               </h2>
-              <p className="text-xs sm:text-sm text-studio-muted font-medium mt-1">
+              <p className="text-sm sm:text-base text-studio-secondary font-hand mt-1">
                 Generates tempo (BPM), key signatures, sound design foley layers, instrumentation, and Lyria 3 music prompts for composers.
               </p>
             </div>
           </div>
 
           {scenes.length === 0 ? (
-            <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-              <Music className="w-12 h-12 mx-auto mb-3 text-[#FBBF24]" />
-              <p className="text-sm font-display font-bold text-studio-text">No scenes extracted yet to generate soundtrack cues.</p>
+            <div className="sketch-card p-16 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+              <Music className="w-12 h-12 mx-auto mb-3 text-studio-yellow" />
+              <p className="text-base font-display font-bold text-studio-text">No scenes extracted yet to generate soundtrack cues.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -828,20 +820,19 @@ export const WorkspacePage: React.FC = () => {
                 return (
                   <div
                     key={scene.id}
-                    className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all"
+                    className="sketch-card p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col justify-between space-y-4 hover:-translate-y-0.5 transition-all"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#FBBF24] text-[#1E293B] border border-studio-border text-[11px] font-display font-black shadow-pop-xs">
+                        <span className="px-2.5 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-display font-black shadow-sketch-xs">
                           SCENE {scene.scene_number} AUDIO
                         </span>
-                        <span className="text-xs font-display font-bold text-studio-muted flex items-center gap-1">
-                          <Volume2 className="w-3.5 h-3.5 text-[#D97706] dark:text-[#FBBF24]" />
+                        <span className="text-xs font-hand font-bold text-studio-secondary dark:text-slate-300">
                           {scene.location}
                         </span>
                       </div>
 
-                      <h3 className="text-lg font-display font-extrabold text-studio-text mb-2">
+                      <h3 className="text-xl font-display font-extrabold text-studio-text mb-2">
                         {cue ? cue.track_title : scene.heading}
                       </h3>
 
@@ -849,23 +840,24 @@ export const WorkspacePage: React.FC = () => {
                         <AudioCuePlayer cue={cue} sceneNumber={scene.scene_number} />
                       ) : (
                         <div className="py-6 text-center text-studio-muted">
-                          <p className="text-xs font-display font-bold text-studio-text mb-1">
+                          <p className="text-sm font-hand font-bold text-studio-text mb-1">
                             Soundtrack cue not yet generated.
                           </p>
-                          <p className="text-[11px] font-medium">
+                          <p className="text-xs font-hand">
                             Generate acoustic tempo, foley design, and Lyria prompt for this scene.
                           </p>
                         </div>
                       )}
                     </div>
 
-                    <div className="pt-3 border-t-2 border-studio-border/20">
+                    <div className="pt-3 border-t-2 border-dashed border-studio-border/30">
+                      {/* FIX 4: min-h-[44px] */}
                       <button
                         onClick={() => handleGenerateAudioCue(scene.id)}
                         disabled={isGen}
-                        className="btn-candy-yellow w-full !py-2.5 text-xs font-display font-bold flex items-center justify-center gap-2"
+                        className="btn-sketch-yellow min-h-[44px] w-full !py-2.5 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <Music className="w-4 h-4 text-[#1E293B]" />
+                        <Music className="w-4 h-4 text-slate-900" />
                         <span>{isGen ? 'COMPOSING AUDIO...' : cue ? 'RE-COMPOSE CUE' : 'GENERATE LYRIA 3 SCORE'}</span>
                       </button>
                     </div>
@@ -880,25 +872,25 @@ export const WorkspacePage: React.FC = () => {
       {/* Tab 4: Gemini 3.1 Flash TTS Multi-Speaker Table-Read & Dialogue Sentiment */}
       {activeTab === 'tableread' && (
         <div className="space-y-6">
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-250">
+          <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#FCE7F3] dark:bg-[#EC4899]/30 border border-studio-border text-xs font-display font-black text-[#EC4899] mb-2 shadow-pop-xs">
-                <Mic className="w-3.5 h-3.5 text-[#EC4899]" />
-                <span>GEMINI 3.1 FLASH TTS & MULTI-SPEAKER REHEARSAL</span>
+              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-wobbly bg-studio-red text-white border border-studio-border text-xs font-hand font-bold mb-2 shadow-sketch-xs">
+                <Mic className="w-3.5 h-3.5" />
+                <span>GEMINI 3.1 FLASH TTS &amp; MULTI-SPEAKER REHEARSAL</span>
               </div>
-              <h2 className="text-2xl font-display font-extrabold text-studio-text">
-                Script Table-Read & Dialogue Sentiment Analysis
+              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-studio-text">
+                Script Table-Read &amp; Dialogue Sentiment Analysis
               </h2>
-              <p className="text-xs sm:text-sm text-studio-muted font-medium mt-1">
+              <p className="text-sm sm:text-base text-studio-secondary font-hand mt-1">
                 AI Voice Director casts actor voice archetypes, breaks down line-by-line subtext/emotion tags, and generates multi-speaker table-read audio streams.
               </p>
             </div>
           </div>
 
           {scenes.length === 0 ? (
-            <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-              <Mic className="w-12 h-12 mx-auto mb-3 text-[#EC4899]" />
-              <p className="text-sm font-display font-bold text-studio-text">No scenes extracted yet to generate table-read rehearsals.</p>
+            <div className="sketch-card p-16 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+              <Mic className="w-12 h-12 mx-auto mb-3 text-studio-red" />
+              <p className="text-base font-display font-bold text-studio-text">No scenes extracted yet to generate table-read rehearsals.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -909,20 +901,20 @@ export const WorkspacePage: React.FC = () => {
                 return (
                   <div
                     key={scene.id}
-                    className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop flex flex-col justify-between space-y-4 hover:-translate-y-1 transition-all"
+                    className="sketch-card p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch flex flex-col justify-between space-y-4 hover:-translate-y-0.5 transition-all"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#EC4899] text-white border border-studio-border text-[11px] font-display font-black shadow-pop-xs">
+                        <span className="px-2.5 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-display font-black shadow-sketch-xs">
                           SCENE {scene.scene_number} TABLE-READ
                         </span>
-                        <span className="text-xs font-display font-bold text-studio-muted flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5 text-[#EC4899]" />
+                        <span className="text-xs font-hand font-bold text-studio-secondary dark:text-slate-300 flex items-center gap-1">
+                          <Users className="w-3.5 h-3.5 text-studio-red" />
                           {tr?.characters?.length || 2} Cast Members
                         </span>
                       </div>
 
-                      <h3 className="text-lg font-display font-extrabold text-studio-text mb-2">
+                      <h3 className="text-xl font-display font-extrabold text-studio-text mb-2">
                         {scene.heading}
                       </h3>
 
@@ -930,23 +922,24 @@ export const WorkspacePage: React.FC = () => {
                         <TableReadPlayer tableRead={tr} sceneNumber={scene.scene_number} />
                       ) : (
                         <div className="py-6 text-center text-studio-muted">
-                          <p className="text-xs font-display font-bold text-studio-text mb-1">
+                          <p className="text-sm font-hand font-bold text-studio-text mb-1">
                             Table-read rehearsal not yet generated.
                           </p>
-                          <p className="text-[11px] font-medium">
+                          <p className="text-xs font-hand">
                             Synthesize character voice casting, delivery direction, and dialogue sentiment.
                           </p>
                         </div>
                       )}
                     </div>
 
-                    <div className="pt-3 border-t-2 border-studio-border/20">
+                    <div className="pt-3 border-t-2 border-dashed border-studio-border/30">
+                      {/* FIX 4: min-h-[44px] */}
                       <button
                         onClick={() => handleGenerateTableRead(scene.id)}
                         disabled={isGen}
-                        className="btn-candy w-full !py-2.5 text-xs font-display font-bold flex items-center justify-center gap-2 !bg-[#EC4899] hover:!bg-[#DB2777]"
+                        className="btn-sketch min-h-[44px] w-full !py-2.5 text-sm font-hand font-bold flex items-center justify-center gap-2 cursor-pointer"
                       >
-                        <Mic className="w-4 h-4 text-white" />
+                        <Mic className="w-4 h-4 text-studio-yellow" />
                         <span>{isGen ? 'SYNTHESIZING READ...' : tr ? 'RE-DIRECT TABLE READ' : 'GENERATE TABLE READ (TTS)'}</span>
                       </button>
                     </div>
@@ -958,7 +951,7 @@ export const WorkspacePage: React.FC = () => {
         </div>
       )}
 
-      {/* Tab 5: Production Plan & Call Sheets */}
+      {/* Tab 5: Production Plan & Call Sheets (FIX 2 applied inside ProductionPlanView) */}
       {activeTab === 'plan' && (
         <div>
           {plan ? (
@@ -968,15 +961,15 @@ export const WorkspacePage: React.FC = () => {
               onOpenExportModal={() => setIsExportModalOpen(true)}
             />
           ) : (
-            <div className="bg-studio-surface p-16 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted transition-colors duration-250">
-              <Calendar className="w-12 h-12 mx-auto mb-3 text-[#8B5CF6]" />
-              <h3 className="text-lg font-display font-bold text-studio-text mb-1">Production Plan Pending</h3>
-              <p className="text-xs text-studio-muted font-medium max-w-md mx-auto mb-6">
+            <div className="sketch-card p-16 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted transition-colors duration-200">
+              <Calendar className="w-12 h-12 mx-auto mb-3 text-studio-yellow" />
+              <h3 className="text-xl font-display font-bold text-studio-text mb-1">Production Plan Pending</h3>
+              <p className="text-sm text-studio-secondary font-hand max-w-md mx-auto mb-6">
                 The agent generates call sheets and shooting schedules after candidate evaluations finish.
               </p>
               <button
                 onClick={handleStartScout}
-                className="btn-candy !py-3 !px-6 text-xs"
+                className="btn-sketch min-h-[44px] !py-3 !px-6 text-sm font-hand font-bold cursor-pointer"
               >
                 Launch Scout Workflow
               </button>
@@ -988,26 +981,26 @@ export const WorkspacePage: React.FC = () => {
       {/* Tab 6: Research Sources & Citations */}
       {activeTab === 'sources' && (
         <div className="space-y-6">
-          <div className="bg-studio-surface p-6 rounded-2xl border-2 border-studio-border shadow-pop transition-colors duration-250">
-            <h2 className="text-xl font-display font-extrabold text-studio-text mb-2">
+          <div className="sketch-card sketch-tape p-6 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch transition-colors duration-200">
+            <h2 className="text-2xl font-display font-extrabold text-studio-text mb-2">
               Parallel Search Verified Web Research
             </h2>
-            <p className="text-xs sm:text-sm text-studio-muted font-medium">
+            <p className="text-sm sm:text-base text-studio-secondary font-hand">
               Every location recommendation is grounded in real-time Parallel Search queries with full URLs and exact citation snippets.
             </p>
           </div>
 
           {sources.length === 0 ? (
-            <div className="bg-studio-surface p-14 rounded-2xl border-2 border-studio-border shadow-pop text-center text-studio-muted">
-              <Search className="w-10 h-10 mx-auto mb-3 text-[#8B5CF6]" />
-              <p className="text-sm font-display font-bold text-studio-text">No search sources retrieved yet.</p>
+            <div className="sketch-card p-14 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch text-center text-studio-muted">
+              <Search className="w-10 h-10 mx-auto mb-3 text-studio-yellow" />
+              <p className="text-base font-display font-bold text-studio-text">No search sources retrieved yet.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {sources.map((src, idx) => (
-                <div key={idx} className="bg-studio-surface p-5 rounded-2xl border-2 border-studio-border shadow-pop hover:-translate-y-1 transition-all">
+                <div key={idx} className="sketch-card p-5 rounded-wobbly-md border-[2.5px] border-studio-border bg-studio-surface shadow-sketch hover:-translate-y-0.5 transition-all">
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <h4 className="text-sm font-display font-bold text-studio-text line-clamp-2">
+                    <h4 className="text-base font-display font-bold text-studio-text line-clamp-2">
                       {src.title || 'Web Result'}
                     </h4>
                     {src.url && (
@@ -1015,18 +1008,19 @@ export const WorkspacePage: React.FC = () => {
                         href={src.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#8B5CF6] dark:text-[#A78BFA] hover:underline flex items-center gap-1 text-[11px] font-bold shrink-0"
+                        /* FIX 4: min-h-[44px] */
+                        className="touch-target min-h-[44px] px-2 text-studio-redText hover:underline flex items-center gap-1 text-xs font-hand font-bold shrink-0"
                       >
                         <span>Open</span>
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     )}
                   </div>
-                  <p className="text-xs text-studio-muted leading-relaxed mb-3 line-clamp-3 font-medium">
+                  <p className="text-xs text-studio-secondary leading-relaxed mb-3 line-clamp-3 font-sans italic">
                     "{src.excerpt}"
                   </p>
-                  <div className="pt-2 border-t-2 border-studio-border/20 flex items-center justify-between text-[10px] font-display font-bold text-studio-muted">
-                    <span className="text-[#8B5CF6] dark:text-[#A78BFA] font-mono">{src.domain}</span>
+                  <div className="pt-2 border-t-2 border-dashed border-studio-border/30 flex items-center justify-between text-xs font-hand font-bold text-studio-muted">
+                    <span className="text-studio-redText font-mono">{src.domain}</span>
                     <span>Query: {src.query_used}</span>
                   </div>
                 </div>
