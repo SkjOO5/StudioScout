@@ -1,3 +1,14 @@
+---
+title: StudioScout AI
+emoji: 🎬
+colorFrom: yellow
+colorTo: indigo
+sdk: gradio
+sdk_version: 4.44.0
+app_file: app.py
+pinned: false
+---
+
 # StudioScout AI 🎬
 ### Autonomous Film Pre-Production & Location Intelligence Operating System
 
