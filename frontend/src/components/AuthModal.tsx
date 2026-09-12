@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  ShieldCheck, 
-  UserCheck, 
-  ArrowRight, 
-  CheckCircle2, 
-  Zap, 
-  UserPlus
+import {
+  X,
+  ShieldCheck,
+  CheckCircle2,
+  Zap,
+  UserPlus,
+  ArrowRight
 } from 'lucide-react';
 import { useAuth, PRESET_PROFILES, UserProfile } from '../context/AuthContext';
 
@@ -42,15 +41,15 @@ export const AuthModal: React.FC = () => {
             </div>
             <div>
               <h3 className="text-xl font-display font-extrabold text-studio-text">
-                Studio Identity &amp; Access Control
+                Production Crew Profile
               </h3>
               <p className="text-xs font-hand font-bold text-studio-secondary">
-                Current Session: <span className="text-studio-text font-black">{user.name} ({user.role})</span>
+                Active Seat: <span className="text-studio-text font-black">{user.name} ({user.role})</span>
               </p>
             </div>
           </div>
 
-          {/* FIX 4: Close button touch target >= 44x44px */}
+          {/* Close button touch target >= 44x44px */}
           <button
             onClick={() => setIsAuthModalOpen(false)}
             className="touch-target min-w-[44px] min-h-[44px] rounded-wobbly bg-studio-surface text-studio-text border-2 border-studio-border flex items-center justify-center shadow-sketch-xs hover:bg-studio-red hover:text-white transition-all cursor-pointer"
@@ -60,7 +59,7 @@ export const AuthModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Tab Switcher - FIX 4: >=44px touch targets */}
+        {/* Tab Switcher - >=44px touch targets */}
         <div className="p-3 bg-studio-bg border-b-2 border-dashed border-studio-border/30 flex items-center gap-2">
           <button
             onClick={() => setTab('quick')}
@@ -71,7 +70,7 @@ export const AuthModal: React.FC = () => {
             }`}
           >
             <Zap className="w-4 h-4" />
-            <span>1-Click Studio Roles</span>
+            <span>Crew Role Presets</span>
           </button>
           <button
             onClick={() => setTab('custom')}
@@ -93,7 +92,7 @@ export const AuthModal: React.FC = () => {
               <div className="p-3 rounded-wobbly bg-amber-50 dark:bg-amber-950/40 border border-studio-border text-xs font-hand font-bold text-amber-900 dark:text-amber-200 flex items-center gap-2 shadow-sketch-xs">
                 <ShieldCheck className="w-4 h-4 text-studio-yellow shrink-0" />
                 <span>
-                  <strong>Instant Demo Access:</strong> Switch between simulated production crew members with 1-click.
+                  <strong>Crew Viewpoints:</strong> Switch between department heads to preview custom workflow and role perspectives.
                 </span>
               </div>
 
@@ -107,7 +106,6 @@ export const AuthModal: React.FC = () => {
                         loginAs(p.id);
                         setIsAuthModalOpen(false);
                       }}
-                      /* FIX 4: min-h-[44px] touch target */
                       className={`min-h-[52px] p-3 rounded-wobbly text-left border-2 flex items-center gap-3 transition-all cursor-pointer ${
                         isCurrent
                           ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch-xs scale-[1.02]'
@@ -140,7 +138,7 @@ export const AuthModal: React.FC = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Christopher Nolan"
+                  placeholder="e.g. Greta Gerwig"
                   className="input"
                   required
                 />
@@ -152,7 +150,7 @@ export const AuthModal: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="director@syncopy.com"
+                  placeholder="director@studio.film"
                   className="input"
                   required
                 />
@@ -168,9 +166,10 @@ export const AuthModal: React.FC = () => {
                   >
                     <option value="Director">Director</option>
                     <option value="Location Scout">Location Scout</option>
-                    <option value="Producer">Producer</option>
+                    <option value="Line Producer">Line Producer</option>
                     <option value="Cinematographer">Cinematographer (DP)</option>
-                    <option value="1st AD">1st AD / Unit Manager</option>
+                    <option value="Production Designer">Production Designer</option>
+                    <option value="Film Student">Film Student</option>
                   </select>
                 </div>
                 <div>
@@ -179,7 +178,7 @@ export const AuthModal: React.FC = () => {
                     type="text"
                     value={studio}
                     onChange={(e) => setStudio(e.target.value)}
-                    placeholder="Syncopy Films"
+                    placeholder="Independent Pictures"
                     className="input"
                   />
                 </div>

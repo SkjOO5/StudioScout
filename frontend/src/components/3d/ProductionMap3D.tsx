@@ -146,7 +146,10 @@ export const ProductionMap3D: React.FC<ProductionMap3DProps> = ({
   }
 
   return (
-    <div className="w-full h-72 sm:h-80 rounded-2xl bg-studio-surface border-2 border-studio-border relative overflow-hidden shadow-pop group transition-colors duration-250">
+    <div
+      style={{ touchAction: 'pan-y' }}
+      className="w-full h-72 sm:h-80 rounded-2xl bg-studio-surface border-2 border-studio-border relative overflow-hidden shadow-pop group transition-colors duration-250"
+    >
       {/* HUD Header Overlay */}
       <div className="absolute top-3 left-4 z-10 flex items-center gap-2 pointer-events-none">
         <span className="w-2 h-2 rounded-full bg-[#8B5CF6] animate-pulse"></span>

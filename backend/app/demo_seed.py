@@ -2,7 +2,7 @@
 StudioScout AI — Demo Data Seeder
 
 Seeds a complete, production-grade 'Cipher Zero' sci-fi cyber thriller project.
-Allows instant evaluation during hackathon judging and live demonstrations.
+Allows instant evaluation and interactive walkthroughs of the production pipeline.
 """
 import uuid
 from datetime import datetime, timedelta

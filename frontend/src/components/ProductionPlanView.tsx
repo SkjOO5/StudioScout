@@ -147,19 +147,18 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
               </div>
             </div>
 
-            {/* Hourly Schedule Blocks — FIX 2: Plain sans-serif body text for dense scanning */}
+            {/* Hourly Schedule Blocks — Responsive across mobile & desktop */}
             <div className="space-y-2.5 mb-4">
               {day.blocks.map((block, bIdx) => (
-                <div 
+                <div
                   key={bIdx}
-                  className="p-3 rounded-wobbly-md bg-studio-bg border-2 border-studio-border flex items-start justify-between gap-3 text-xs shadow-sketch-xs"
+                  className="p-3 sm:p-3.5 rounded-wobbly-md bg-studio-bg border-2 border-studio-border flex flex-col sm:flex-row sm:items-start justify-between gap-2.5 sm:gap-3 text-xs shadow-sketch-xs"
                 >
-                  <div className="flex items-start gap-3">
-                    <span className="font-mono text-xs font-bold text-studio-text shrink-0 w-28 pt-0.5">
+                  <div className="flex flex-col sm:flex-row sm:items-start gap-1.5 sm:gap-3 flex-1 min-w-0">
+                    <span className="font-mono text-xs font-bold text-studio-text shrink-0 sm:w-28 pt-0.5">
                       {block.start_time} - {block.end_time}
                     </span>
-                    <div>
-                      {/* FIX 2: Plain sans-serif for activity and notes */}
+                    <div className="flex-1 min-w-0">
                       <span className="font-sans font-semibold text-sm text-studio-text block">{block.activity}</span>
                       {block.notes && (
                         <span className="font-sans text-xs text-studio-secondary block mt-0.5 leading-relaxed">{block.notes}</span>
@@ -168,7 +167,7 @@ export const ProductionPlanView: React.FC<ProductionPlanViewProps> = ({
                   </div>
 
                   {block.scene_number && (
-                    <span className="px-2.5 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-hand font-black shrink-0 shadow-sketch-xs">
+                    <span className="self-start sm:self-auto px-2.5 py-0.5 rounded-wobbly bg-studio-yellow text-slate-950 border border-studio-border text-xs font-hand font-black shrink-0 shadow-sketch-xs">
                       Scene {block.scene_number}
                     </span>
                   )}

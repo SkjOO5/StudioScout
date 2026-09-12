@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Sparkles, 
-  Search, 
-  ShieldCheck, 
-  ArrowRight, 
+import {
+  Sparkles,
+  Search,
+  ShieldCheck,
+  ArrowRight,
   PlayCircle,
   Music,
   Compass,
@@ -42,7 +42,7 @@ export const LandingPage: React.FC = () => {
           <span className="w-2.5 h-2.5 rounded-full bg-studio-red animate-ping" />
           <span className="tracking-wide">AUTONOMOUS FILM PRODUCTION & LOCATION SCOUT</span>
           <span className="px-2 py-0.5 rounded-wobbly bg-studio-yellow text-slate-900 text-xs font-black border border-studio-border shadow-sketch-xs">
-            AI AGENT
+            STUDIO OS
           </span>
         </div>
 
@@ -70,7 +70,7 @@ export const LandingPage: React.FC = () => {
 
         {/* Tactile Action Buttons with Hand-Drawn Arrow */}
         <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto mb-16">
-          {/* Hand-Drawn Decorative Arrow pointing to CTA (hidden on small mobile to avoid wrap) */}
+          {/* Hand-Drawn Decorative Arrow pointing to CTA */}
           <div className="hidden lg:block absolute -left-28 top-3 text-studio-red transform -rotate-12 pointer-events-none">
             <svg width="90" height="50" viewBox="0 0 90 50" fill="none" className="stroke-current">
               <path d="M5 40 Q 40 45, 65 15" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="4 3" />
@@ -94,7 +94,7 @@ export const LandingPage: React.FC = () => {
             className="btn-sketch-yellow w-full sm:w-auto !py-3.5 !px-7 text-base font-hand font-bold tracking-wide flex items-center justify-center gap-2 cursor-pointer"
           >
             <PlayCircle className="w-5 h-5 text-slate-900" />
-            <span>{isCreatingDemo ? 'SEEDING DEMO...' : 'EXPLORE "CIPHER ZERO" DEMO'}</span>
+            <span>{isCreatingDemo ? 'LOADING SAMPLE PRODUCTION...' : 'LOAD SAMPLE SCREENPLAY ("CIPHER ZERO")'}</span>
           </button>
         </div>
 

@@ -131,7 +131,7 @@ export const api = {
     return res.data;
   },
 
-  // Demo Seeding (Instant Showcase for Hackathon Judges)
+  // Demo Seeding (Instant Sample Screenplay Showcase)
   seedDemo: async (): Promise<{ status: string; message: string; project_id: string; scene_count: number }> => {
     const res = await client.post<{ status: string; message: string; project_id: string; scene_count: number }>('/demo/seed');
     return res.data;
