@@ -1,15 +1,10 @@
 """
 StudioScout AI — Hugging Face Spaces & Production Entry Point
-<<<<<<< HEAD
 Runs the unified Gradio + FastAPI application for autonomous film pre-production.
-=======
-Runs the FastAPI application that serves both the AI backend and React 19 Frontend SPA.
->>>>>>> origin/main
 """
 import os
 import sys
 
-<<<<<<< HEAD
 # Priority 1: Prevent app.py from shadowing backend/app package
 current_dir = os.path.dirname(os.path.abspath(__file__))
 backend_dir = os.path.join(current_dir, "backend")
@@ -126,18 +121,4 @@ async def api_status():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
-    demo.launch(server_name="0.0.0.0", server_port=port)
-=======
-# Add backend directory to Python path
-current_dir = os.path.dirname(os.path.abspath(__file__))
-backend_dir = os.path.join(current_dir, "backend")
-if backend_dir not in sys.path:
-    sys.path.insert(0, backend_dir)
-
-from app.main import app
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 7860))
-    uvicorn.run(app, host="0.0.0.0", port=port)
->>>>>>> origin/main
+    demo.launch(server_name="0.0.0.0", server_port=port, ssr=False)
