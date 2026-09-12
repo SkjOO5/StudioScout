@@ -7,9 +7,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
-downloads/
-eggs/
 # Python build artifacts
 *.egg-info/
 .installed.cfg
@@ -17,6 +14,8 @@ eggs/
 .pytest_cache/
 .coverage
 htmlcov/
+!frontend/dist/
+!frontend/dist/**
 
 # Virtual Environments
 venv/
@@ -44,8 +43,7 @@ backend/uploads/
 # Node & Frontend Build
 node_modules/
 frontend/node_modules/
-frontend/dist/
-dist/
+# frontend/dist/ tracked for zero-config cloud deployments
 .vite/
 npm-debug.log*
 yarn-debug.log*

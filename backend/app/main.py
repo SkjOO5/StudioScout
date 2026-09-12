@@ -148,6 +148,8 @@ def create_app() -> FastAPI:
     # Optional: Serve production frontend SPA if dist folder is present
     dist_paths = [
         os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")),
+        os.path.abspath(os.path.join(os.getcwd(), "frontend", "dist")),
+        os.path.abspath(os.path.join(os.getcwd(), "dist")),
         "/app/frontend/dist",
         "/app/dist",
     ]

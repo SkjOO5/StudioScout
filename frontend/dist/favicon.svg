@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+  </defs>
+  <!-- Background rounded squircle -->
+  <rect x="2" y="2" width="28" height="28" rx="7" fill="#0F172A" stroke="#334155" stroke-width="1.5"/>
+  <!-- Clapperboard top arm with diagonal stripes -->
+  <path d="M7 9 L25 9 L25 13 L7 13 Z" fill="#F59E0B"/>
+  <path d="M10 9 L8 13" stroke="#0F172A" stroke-width="1.5"/>
+  <path d="M15 9 L13 13" stroke="#0F172A" stroke-width="1.5"/>
+  <path d="M20 9 L18 13" stroke="#0F172A" stroke-width="1.5"/>
+  <!-- Main board slate -->
+  <rect x="7" y="14" width="18" height="10" rx="1.5" fill="#1E293B" stroke="#F59E0B" stroke-width="1"/>
+  <!-- Play triangle symbol on slate -->
+  <polygon points="14,16.5 14,21.5 19,19" fill="#F59E0B"/>
+</svg>
