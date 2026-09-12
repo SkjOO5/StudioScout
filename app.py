@@ -40,8 +40,13 @@ if not store.list_projects():
     except Exception as e:
         print(f"[Startup] Demo seed notice: {e}")
 
-# Build the Gradio UI
-with gr.Blocks(title="StudioScout AI 🎬") as demo:
+# Build the Gradio UI (disable experimental Node.js SSR)
+try:
+    demo_blocks = gr.Blocks(title="StudioScout AI 🎬", ssr_mode=False)
+except TypeError:
+    demo_blocks = gr.Blocks(title="StudioScout AI 🎬")
+
+with demo_blocks as demo:
     gr.Markdown(
         """
         # 🎬 StudioScout AI
@@ -121,4 +126,4 @@ async def api_status():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 7860))
-    demo.launch(server_name="0.0.0.0", server_port=port, ssr=False)
+    demo.launch(server_name="0.0.0.0", server_port=port)
