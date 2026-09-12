@@ -66,8 +66,8 @@ def create_app() -> FastAPI:
         title="StudioScout AI",
         description="Autonomous AI production-planning assistant for filmmakers, location scouts, and studio crews",
         version=settings.app_version,
-        docs_url="/api/docs",
-        redoc_url="/api/redoc",
+        docs_url="/docs",
+        redoc_url="/redoc",
         lifespan=lifespan,
     )
 
@@ -79,6 +79,20 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # Root welcome & health endpoints
+    @app.get("/")
+    async def root():
+        settings = get_settings()
+        return {
+            "name": "StudioScout AI API",
+            "version": settings.app_version,
+            "status": "online",
+            "docs": "/docs",
+            "health": "/api/health",
+            "gemini_configured": settings.gemini_configured,
+            "parallel_configured": settings.parallel_configured,
+        }
 
     # API routes
     app.include_router(projects_router, prefix="/api", tags=["projects"])
