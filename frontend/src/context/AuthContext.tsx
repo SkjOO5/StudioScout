@@ -4,28 +4,19 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
-  role: 'Director' | 'Location Scout' | 'Line Producer' | 'Hackathon Judge' | 'Cinematographer';
+  role: 'Director' | 'Location Scout' | 'Line Producer' | 'Cinematographer' | 'Production Designer' | 'Film Student';
   studio: string;
   avatar: string;
-  tier: 'Studio Enterprise' | 'Pro Scout' | 'Judge Access';
+  tier: 'Studio Enterprise' | 'Pro Scout' | 'Indie Creator';
 }
 
 export const PRESET_PROFILES: UserProfile[] = [
   {
-    id: 'judge-google',
-    name: 'Hackathon Judge',
-    email: 'judge@agentic-cinema.devpost.com',
-    role: 'Hackathon Judge',
-    studio: 'Google Cloud & Parallel Cinema Lab',
-    avatar: '⚡',
-    tier: 'Judge Access',
-  },
-  {
     id: 'director-nolan',
-    name: 'Christopher Nolan',
-    email: 'nolan@syncopy.hollywood.com',
+    name: 'Christopher Vance',
+    email: 'vance@syncopystudios.com',
     role: 'Director',
-    studio: 'Syncopy Films / Warner Bros',
+    studio: 'Syncopy Film Unit',
     avatar: '🎬',
     tier: 'Studio Enterprise',
   },
@@ -47,11 +38,38 @@ export const PRESET_PROFILES: UserProfile[] = [
     avatar: '💼',
     tier: 'Studio Enterprise',
   },
+  {
+    id: 'cinematographer-kai',
+    name: 'Kai Takahashi',
+    email: 'kai.dp@tokyocine.jp',
+    role: 'Cinematographer',
+    studio: 'Aperture Vision Works',
+    avatar: '🎥',
+    tier: 'Pro Scout',
+  },
+  {
+    id: 'designer-elena',
+    name: 'Elena Rostova',
+    email: 'elena@artdept.film',
+    role: 'Production Designer',
+    studio: 'Atelier Set Design',
+    avatar: '📐',
+    tier: 'Indie Creator',
+  },
+  {
+    id: 'student-sam',
+    name: 'Sam Chen',
+    email: 'sam.chen@nyu.edu',
+    role: 'Film Student',
+    studio: 'Tisch Undergraduate Film',
+    avatar: '🎞️',
+    tier: 'Indie Creator',
+  },
 ];
 
 interface AuthContextType {
   user: UserProfile;
-  loginAs: (profile: UserProfile) => void;
+  loginAs: (profileOrId: string | UserProfile) => void;
   customLogin: (name: string, email: string, role: UserProfile['role'], studio: string) => void;
   logout: () => void;
   isAuthModalOpen: boolean;
@@ -65,12 +83,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const saved = localStorage.getItem('studioscout_user');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Ensure parsed profile isn't the legacy judge profile
+        if (parsed && parsed.id !== 'judge-google') {
+          return parsed;
+        }
       } catch (e) {
         // Fallback
       }
     }
-    // Default to Hackathon Judge for instant evaluation
+    // Default to Director profile
     return PRESET_PROFILES[0];
   });
 
@@ -80,8 +102,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('studioscout_user', JSON.stringify(user));
   }, [user]);
 
-  const loginAs = (profile: UserProfile) => {
-    setUser(profile);
+  const loginAs = (profileOrId: string | UserProfile) => {
+    if (typeof profileOrId === 'string') {
+      const found = PRESET_PROFILES.find((p) => p.id === profileOrId);
+      if (found) setUser(found);
+    } else {
+      setUser(profileOrId);
+    }
     setIsAuthModalOpen(false);
   };
 
@@ -92,7 +119,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: email || 'filmmaker@studio.ai',
       role: role || 'Director',
       studio: studio || 'Independent Production Unit',
-      avatar: role === 'Director' ? '🎬' : role === 'Location Scout' ? '📍' : '✨',
+      avatar: role === 'Director' ? '🎬' : role === 'Location Scout' ? '📍' : role === 'Cinematographer' ? '🎥' : role === 'Production Designer' ? '📐' : '✨',
       tier: 'Pro Scout',
     };
     setUser(customUser);
@@ -100,7 +127,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    // Reset to default judge access
     setUser(PRESET_PROFILES[0]);
   };
 

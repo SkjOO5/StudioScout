@@ -413,11 +413,11 @@ export const WorkspacePage: React.FC = () => {
         </div>
       )}
 
-      {/* Navigation Tabs - FIX 4: min-h-[44px] touch targets */}
-      <div className="flex flex-wrap items-center gap-2.5 border-b-2 border-dashed border-studio-border/30 pb-3 text-xs font-hand font-bold">
+      {/* Navigation Tabs - Mobile scrollable ribbon with >=44px touch targets */}
+      <div className="flex items-center gap-2 pb-2.5 border-b-2 border-dashed border-studio-border/30 overflow-x-auto no-scrollbar sm:flex-wrap text-xs font-hand font-bold">
         <button
           onClick={() => setActiveTab('scout')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'scout'
               ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
@@ -429,7 +429,7 @@ export const WorkspacePage: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('storyboards')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'storyboards'
               ? 'bg-studio-red text-white border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
@@ -441,31 +441,31 @@ export const WorkspacePage: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('audio')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'audio'
               ? 'bg-studio-yellow text-slate-950 border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Music className="w-4 h-4" />
-          <span>AUDIO &amp; SCORE CUES (LYRIA 3)</span>
+          <span>AUDIO &amp; SCORE CUES</span>
         </button>
 
         <button
           onClick={() => setActiveTab('tableread')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'tableread'
               ? 'bg-studio-red text-white border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
           }`}
         >
           <Mic className="w-4 h-4" />
-          <span>TABLE-READ &amp; DIALOGUE (TTS)</span>
+          <span>TABLE-READ &amp; DIALOGUE</span>
         </button>
 
         <button
           onClick={() => setActiveTab('plan')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'plan'
               ? 'bg-emerald-400 text-slate-950 border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
@@ -477,7 +477,7 @@ export const WorkspacePage: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('sources')}
-          className={`touch-target min-h-[44px] flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
+          className={`touch-target min-h-[44px] shrink-0 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-wobbly transition-all border-2 cursor-pointer ${
             activeTab === 'sources'
               ? 'bg-sky-200 dark:bg-sky-900 text-slate-950 dark:text-sky-100 border-studio-border shadow-sketch font-black'
               : 'bg-studio-surface text-studio-secondary dark:text-slate-200 border-studio-border/60 shadow-sketch-xs hover:bg-studio-hover hover:text-studio-text'
